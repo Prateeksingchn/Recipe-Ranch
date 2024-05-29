@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import axios from "axios";  // Make sure axios is imported
+
 const Home = () => {
     const [page, setpage] = useState(1);
     const [images, setimages] = useState([]);
@@ -13,9 +15,14 @@ const Home = () => {
             console.log(error);
         }
     };
+
+    useEffect(() => {
+        getimages();
+    }, [page]);  // Fetch images when the component mounts and when `page` changes
+
     return (
-        <div className="w-full flex justify-between items-center  h-[60vh]">
-            <div className="left w-1/2 ">
+        <div className="w-full flex justify-between items-center h-[60vh]">
+            <div className="left w-1/2">
                 <h1 className="text-7xl font-extrabold text-green-600 mt-8">
                     SIMPLE AND TASTY RECIPES
                 </h1>
@@ -39,3 +46,4 @@ const Home = () => {
 };
 
 export default Home;
+
