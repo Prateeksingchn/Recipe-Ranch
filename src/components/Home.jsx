@@ -1,29 +1,8 @@
-import { useEffect, useState } from "react";
-import axios from "axios";  // Make sure axios is imported
-
 const Home = () => {
-    const [page, setpage] = useState(1);
-    const [images, setimages] = useState([]);
-
-    const getimages = async () => {
-        try {
-            const { data } = await axios.get(
-                `https://picsum.photos/v2/list?page=${page}&limit=10`,
-            );
-            setimages(data);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    useEffect(() => {
-        getimages();
-    }, [page]);  // Fetch images when the component mounts and when `page` changes
-
     return (
-        <div className="w-full flex justify-between items-center h-[60vh]">
-            <div className="left w-1/2">
-                <h1 className="text-7xl font-extrabold text-green-600 mt-8">
+        <div className="w-full flex justify-between items-center  h-[60vh]">
+            <div className="left w-1/2 ">
+                <h1 className="text-7xl font-extrabold text-green-600">
                     SIMPLE AND TASTY RECIPES
                 </h1>
                 <p className="text-zinc-400 mt-5 mb-10">
@@ -46,4 +25,3 @@ const Home = () => {
 };
 
 export default Home;
-
