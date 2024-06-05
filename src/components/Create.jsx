@@ -1,7 +1,14 @@
-import React, { useState } from "react";
+import { nanoid } from "nanoid";
+import React, { useContext, useState } from "react";
+import { recipecontext } from "../contexts/RecipeContext";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Create = () => {
+    const navigate = useNavigate();
+
+    const [recipes, setrecipes] = useContext(recipecontext);
+
     const [image, setimage] = useState("");
     const [title, settitle] = useState("");
     const [description, setdescription] = useState("");
@@ -18,7 +25,15 @@ const Create = () => {
             ingredients,
             instructions,
         };
-        console.log(newRecipe);
+
+        // code to validate the input fields...
+        setrecipes([...recipes, newRecipe]);
+        localStorage.setItem(
+            "recipes",
+            JSON.stringify([...recipes, newRecipe])
+        );
+        toast.success("Recipe Created Successfully!");
+        navigate("/recipes");
     };
     return (
         <form onSubmit={SubmitHandler} className="w-[70%] m-auto  pb-5">
