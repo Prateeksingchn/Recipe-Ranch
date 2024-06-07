@@ -6,7 +6,14 @@ const RecipeContext = (props) => {
     const [recipes, setrecipes] = useState([]);
 
     useEffect(() => {
-        setrecipes(JSON.parse(localStorage.getItem("recipes")) || []);
+        try {
+            const storedRecipes = JSON.parse(localStorage.getItem("recipes"));
+            if (Array.isArray(storedRecipes)) {
+                setrecipes(storedRecipes);
+            }
+        } catch (error) {
+            console.error("Error parsing recipes from localStorage", error);
+        }
     }, []);
 
     return (

@@ -1,33 +1,36 @@
 import { Link } from "react-router-dom";
 
-const Card = (props) => {
-    const { id, title, image, description, instructions, ingredients } =
-        props.recipe;
+const Card = ({ recipe }) => {
+    const { id, title, image, summary, readyInMinutes, difficulty } = recipe;
 
     return (
         <Link
             to={`/recipes/${id}`}
-            className="mr-[3.3%] mb-[3%] text-center w-[30%]  b p-5 shadow-[10px_10px_15px_0px_rgba(0,0,0,0.1)] hover:scale-[1.02] duration-200"
+            className="text-center w-full sm:w-[45%] lg:w-[30%] bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-200 m-5"
         >
-            <img className="w-[80%]" src={image} alt={title} />
-            <h1 className="mt-5 mb-3 text-xl text-semibold">{title}</h1>
-            <p>{description.slice(0, 100)}...</p>
-            <div className="flex justify-between text-zinc-400 mt-5 ">
-                <p className="text-center ">
-                    <i className="ri-timer-line"></i>
-                    <br />
-                    <span className="text-sm">20min</span>
+            <img className="w-full h-48 object-cover" src={image} alt={title} />
+            <div className="p-5">
+                <h1 className="mt-2 mb-3 text-xl font-semibold text-green-600">{title}</h1>
+                <p className="text-gray-700 text-sm">
+                    {summary ? summary.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 100) : 'No summary available'}...
                 </p>
-                <p className="text-center">
-                    <i className="ri-thumb-up-line"></i>
-                    <br />
-                    <span className="text-sm">Easy</span>
-                </p>
-                <p className="text-center">
-                    <i className="ri-share-line"></i>
-                    <br />
-                    <span className="text-sm">Share</span>
-                </p>
+                <div className="flex justify-between text-gray-400 mt-5">
+                    <div className="text-center">
+                        <i className="ri-timer-line text-lg"></i>
+                        <br />
+                        <span className="text-sm">{readyInMinutes ? `${readyInMinutes} min` : 'N/A'}</span>
+                    </div>
+                    <div className="text-center">
+                        <i className="ri-thumb-up-line text-lg"></i>
+                        <br />
+                        <span className="text-sm">{difficulty || 'Easy'}</span>
+                    </div>
+                    <div className="text-center">
+                        <i className="ri-share-line text-lg"></i>
+                        <br />
+                        <span className="text-sm">Share</span>
+                    </div>
+                </div>
             </div>
         </Link>
     );
