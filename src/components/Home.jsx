@@ -38,7 +38,7 @@ const Home = () => {
                             className="w-full h-48 rounded-t-lg object-cover"
                             src={recipe.image}
                             alt={recipe.title}
-                        />
+                        />9
                         <div className="p-5">
                             <h2 className="text-2xl font-bold text-green-600">{recipe.title}</h2>
                             <p className="text-gray-700 mt-3">
