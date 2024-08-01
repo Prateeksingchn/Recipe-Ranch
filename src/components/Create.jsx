@@ -1,19 +1,19 @@
 import { nanoid } from "nanoid";
 import React, { useContext, useState } from "react";
-import { recipecontext } from "../contexts/RecipeContext";
+import { RecipeContext } from "../contexts/RecipeContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const Create = () => {
     const navigate = useNavigate();
 
-    const [recipes, setrecipes] = useContext(recipecontext);
+    const { recipes, setRecipes } = useContext(RecipeContext);
 
-    const [image, setimage] = useState("");
-    const [title, settitle] = useState("");
-    const [description, setdescription] = useState("");
-    const [ingredients, setingredients] = useState("");
-    const [instructions, setinstructions] = useState("");
+    const [image, setImage] = useState("");
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [ingredients, setIngredients] = useState("");
+    const [instructions, setInstructions] = useState("");
 
     const SubmitHandler = (e) => {
         e.preventDefault();
@@ -27,14 +27,13 @@ const Create = () => {
         };
 
         // code to validate the input fields...
-        setrecipes([...recipes, newRecipe]);
-        localStorage.setItem(
-            "recipes",
-            JSON.stringify([...recipes, newRecipe])
-        );
+        const updatedRecipes = [...recipes, newRecipe];
+        setRecipes(updatedRecipes);
+        localStorage.setItem("recipes", JSON.stringify(updatedRecipes));
         toast.success("Recipe Created Successfully!");
         navigate("/recipes");
     };
+
     return (
         <form onSubmit={SubmitHandler} className="w-[70%] m-auto  pb-5">
             <h1 className="text-7xl mt-5 font-extrabold text-green-600 mb-[5%]">

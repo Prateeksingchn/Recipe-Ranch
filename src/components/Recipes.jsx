@@ -2,11 +2,11 @@ import React, { useEffect, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import Card from "./Card";
 import axios from "axios";
-import { recipecontext } from "../contexts/RecipeContext";
+import { RecipeContext } from "../contexts/RecipeContext";
 
 const Recipes = () => {
     const { pathname } = useLocation();
-    const [recipes, setRecipes] = useContext(recipecontext);
+    const { recipes, setRecipes } = useContext(RecipeContext);
 
     useEffect(() => {
         const fetchRecipes = async () => {

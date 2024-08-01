@@ -1,19 +1,18 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useContext } from "react";
-import { recipecontext } from "../contexts/RecipeContext";
+import { RecipeContext } from "../contexts/RecipeContext";
 import { toast } from "react-toastify";
+
 const Details = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [recipes, setrecipes] = useContext(recipecontext);
+    const { recipes, setRecipes } = useContext(RecipeContext);
     const recipe = recipes.find((r) => r.id == id);
 
     const DeleteHandler = () => {
-        setrecipes(recipes.filter((r) => r.id != id));
-        localStorage.setItem(
-            "recipes",
-            JSON.stringify(recipes.filter((r) => r.id != id))
-        );
+        const updatedRecipes = recipes.filter((r) => r.id != id);
+        setRecipes(updatedRecipes);
+        localStorage.setItem("recipes", JSON.stringify(updatedRecipes));
         toast.success("Recipe Deleted Successfully!");
         navigate("/recipes");
     };
