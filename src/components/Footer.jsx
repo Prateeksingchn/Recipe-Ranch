@@ -1,3 +1,5 @@
+import React from "react";
+
 const Footer = () => {
     return (
         <div className="w-[80%] m-auto  p-10">

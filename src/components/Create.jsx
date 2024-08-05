@@ -1,19 +1,20 @@
 import { nanoid } from "nanoid";
-import React, { useContext, useState } from "react";
-import { RecipeContext } from "../contexts/RecipeContext";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { asyncgetrecipies } from "../store/actions/recipeActions";
 
 const Create = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { recipes } = useSelector((state) => state.recipeReducer);
 
-    const { recipes, setRecipes } = useContext(RecipeContext);
-
-    const [image, setImage] = useState("");
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [ingredients, setIngredients] = useState("");
-    const [instructions, setInstructions] = useState("");
+    const [image, setimage] = useState("");
+    const [title, settitle] = useState("");
+    const [description, setdescription] = useState("");
+    const [ingredients, setingredients] = useState("");
+    const [instructions, setinstructions] = useState("");
 
     const SubmitHandler = (e) => {
         e.preventDefault();
@@ -26,14 +27,14 @@ const Create = () => {
             instructions,
         };
 
-        // code to validate the input fields...
-        const updatedRecipes = [...recipes, newRecipe];
-        setRecipes(updatedRecipes);
-        localStorage.setItem("recipes", JSON.stringify(updatedRecipes));
+        localStorage.setItem(
+            "recipes",
+            JSON.stringify([...recipes, newRecipe])
+        );
+        dispatch(asyncgetrecipies());
         toast.success("Recipe Created Successfully!");
         navigate("/recipes");
     };
-
     return (
         <form onSubmit={SubmitHandler} className="w-[70%] m-auto  pb-5">
             <h1 className="text-7xl mt-5 font-extrabold text-green-600 mb-[5%]">

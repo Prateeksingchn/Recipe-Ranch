@@ -1,63 +1,42 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
+import homeRecipes from "../data/homeRecipes";
 
 const Home = () => {
-    const [recipes, setRecipes] = useState([]);
-
-    useEffect(() => {
-        const fetchRecipes = async () => {
-            try {
-                const response = await axios.get(
-                    `https://api.spoonacular.com/recipes/random?number=3&apiKey=3dc3ff0ca9d248ebbd21305dd7fbb906`
-                );
-                setRecipes(response.data.recipes);
-            } catch (error) {
-                console.error("Error fetching recipes:", error);
-            }
-        };
-        fetchRecipes();
-    }, []);
-
     return (
-        <div className="w-full flex flex-col items-center h-auto  px-5 lg:px-20 py-10">
-            <div className="text-center mb-10">
-                <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-green-600">
-                    SIMPLE AND TASTY RECIPES
-                </h1>
-                <p className="text-zinc-500 mt-5 mb-10">
-                    Discover delicious recipes with simple ingredients and easy steps. Perfect for home cooking enthusiasts and busy individuals alike.
-                </p>
-                <button className="bg-green-600 text-white py-2 px-5 rounded-lg hover:bg-green-700 duration-200">
-                    Get Started &nbsp; &#8594;
-                </button>
+        <div className="w-full">
+            <div className="flex justify-between items-center h-[60vh] mb-12">
+                <div className="left w-1/2 ">
+                    <h1 className="text-7xl font-extrabold text-green-600">
+                        SIMPLE AND TASTY RECIPES
+                    </h1>
+                    <p className="text-zinc-400 mt-5 mb-10">
+                        Discover delicious and easy-to-make recipes for every occasion. 
+                        From quick weeknight dinners to impressive dishes for entertaining, 
+                        we've got you covered with our collection of simple and tasty recipes.
+                    </p>
+                    <button className="bg-green-600 text-white py-2 px-5 hover:bg-green-700 duration-200">
+                        Get Started &nbsp; &#8594;
+                    </button>
+                </div>
+                <img
+                    className="w-1/2"
+                    src="https://www.pngall.com/wp-content/uploads/8/Cooking-Recipe-PNG-Clipart.png"
+                    alt="Cooking illustration"
+                />
             </div>
-            <div className="w-full flex flex-wrap justify-center gap-10">
-                {recipes.map((recipe) => (
-                    <div key={recipe.id} className="max-w-xs bg-white rounded-lg shadow-lg">
-                        <img
-                            className="w-full h-48 rounded-t-lg object-cover"
-                            src={recipe.image}
-                            alt={recipe.title}
-                        />9
-                        <div className="p-5">
-                            <h2 className="text-2xl font-bold text-green-600">{recipe.title}</h2>
-                            <p className="text-gray-700 mt-3">
-                                {recipe.summary
-                                    ? recipe.summary.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 100)
-                                    : "No summary available"}
-                                ...
-                            </p>
-                            <a
-                                href={recipe.sourceUrl}
-                                className="text-green-600 hover:text-green-800 duration-200 mt-5 block"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                View Recipe
-                            </a>
+            <div className="mt-12">
+                <h2 className="text-4xl font-bold text-green-600 mb-6">Top Recipes</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {homeRecipes.map((recipe) => (
+                        <div key={recipe.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+                            <img src={recipe.image} alt={recipe.name} className="w-full h-48 object-cover" />
+                            <div className="p-4">
+                                <h3 className="text-xl font-semibold mb-2">{recipe.name}</h3>
+                                <p className="text-gray-600">{recipe.description}</p>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
         </div>
     );

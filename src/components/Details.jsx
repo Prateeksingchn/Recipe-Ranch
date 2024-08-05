@@ -1,18 +1,39 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useContext } from "react";
-import { RecipeContext } from "../contexts/RecipeContext";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { asyncgetrecipies } from "../store/actions/recipeActions";
+import { useEffect, useState } from "react";
 
 const Details = () => {
-    const { id } = useParams();
     const navigate = useNavigate();
-    const { recipes, setRecipes } = useContext(RecipeContext);
-    const recipe = recipes.find((r) => r.id == id);
+    const dispatch = useDispatch();
+    const { id } = useParams();
 
-    const DeleteHandler = () => {
+    const { recipes } = useSelector((state) => state.recipeReducer);
+    const [recipe, setRecipe] = useState(null);
+
+    useEffect(() => {
+        // Fetch recipes if not already in the state
+        if (recipes.length === 0) {
+            dispatch(asyncgetrecipies());
+        } else {
+            const foundRecipe = recipes.find((r) => r.id == id);
+            setRecipe(foundRecipe);
+        }
+    }, [dispatch, recipes, id]);
+
+    useEffect(() => {
+        // Set the recipe if recipes are fetched
+        if (recipes.length > 0 && !recipe) {
+            const foundRecipe = recipes.find((r) => r.id == id);
+            setRecipe(foundRecipe);
+        }
+    }, [recipes, id, recipe]);
+
+    const deleteHandler = () => {
         const updatedRecipes = recipes.filter((r) => r.id != id);
-        setRecipes(updatedRecipes);
         localStorage.setItem("recipes", JSON.stringify(updatedRecipes));
+        dispatch(asyncgetrecipies()); // Update the Redux store
         toast.success("Recipe Deleted Successfully!");
         navigate("/recipes");
     };
@@ -20,11 +41,11 @@ const Details = () => {
     return recipe ? (
         <div className="w-[80%] m-auto p-5">
             <Link to="/recipes" className="text-3xl ri-arrow-left-line"></Link>
-            <div className="details w-full flex mt-3">
+            <div className="details w-full flex h-[75vh] mt-3">
                 <div className="dets w-[50%] p-[3%] shadow">
-                    <img src={recipe.image} alt="" />
+                    <img className="w-full h-auto" src={recipe.image} alt={recipe.name} />
                     <h1 className="text-xl mb-5 mt-[10%] text-center">
-                        {recipe.title}
+                        {recipe.name}
                     </h1>
                     <p className="text-zinc-400">{recipe.description}</p>
                     <div className="flex justify-between py-10 px-5">
@@ -35,7 +56,7 @@ const Details = () => {
                             Update
                         </Link>
                         <button
-                            onClick={DeleteHandler}
+                            onClick={deleteHandler}
                             className="text-red-400 border-red-400 border py-2 px-5"
                         >
                             Delete
@@ -46,20 +67,20 @@ const Details = () => {
                     <h1 className="text-3xl border-b border-green-600 text-green-600">
                         Ingredients
                     </h1>
-                    <ul className="text-zinc-600 list-disc  p-3 ">
-                        {recipe.ingredients.split(",").map((d, i) => (
-                            <li className="list-item text-sm  mb-2" key={i}>
-                                {d}
+                    <ul className="text-zinc-600 list-disc p-3">
+                        {recipe.ingredients.split(",").map((ingredient, index) => (
+                            <li className="list-item text-sm mb-2" key={index}>
+                                {ingredient}
                             </li>
                         ))}
                     </ul>
                     <h1 className="text-3xl border-b border-green-600 text-green-600">
                         Instructions
                     </h1>
-                    <ul className="text-zinc-600 list-decimal  p-3 ">
-                        {recipe.instructions.split(".").map((d, i) => (
-                            <li className="list-item text-sm  mb-2" key={i}>
-                                {d}
+                    <ul className="text-zinc-600 list-decimal p-3">
+                        {recipe.instructions.split(".").map((instruction, index) => (
+                            <li className="list-item text-sm mb-2" key={index}>
+                                {instruction}
                             </li>
                         ))}
                     </ul>
