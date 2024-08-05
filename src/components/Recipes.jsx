@@ -1,17 +1,23 @@
-import React, { useState } from 'react';
-import { Link, useLocation, Routes, Route } from "react-router-dom";
-import recipes from "../data/recipes";
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation, Routes, Route, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { asyncgetrecipies } from "../store/actions/recipeActions";
+import localRecipes from "../data/recipes";
+import homeRecipes from "../data/homeRecipes";
 import Details from "./Details";
+import { nanoid } from 'nanoid';
 
 const RecipeCard = ({ recipe }) => (
   <div className="border rounded-lg overflow-hidden m-2 w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.33%-1rem)] xl:w-[calc(25%-1rem)]">
-    <img src={recipe.image} alt={recipe.name} className="w-full h-48 object-cover" />
+    <img src={recipe.image} alt={recipe.title} className="w-full h-48 object-cover" />
     <div className="p-4">
-      <h3 className="text-xl font-bold">{recipe.name}</h3>
+      <h3 className="text-xl font-bold">{recipe.title}</h3>
       <p className="text-gray-600 mt-2">{recipe.description}</p>
-      <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mt-2">
-        {recipe.category}
-      </span>
+      {recipe.category && (
+        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mt-2">
+          {recipe.category}
+        </span>
+      )}
       <div className="mt-4 flex justify-between">
         <Link to={`/recipes/${recipe.id}`}>
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -29,7 +35,7 @@ const RecipeCard = ({ recipe }) => (
 const RecipeList = ({ filteredRecipes }) => (
   <div className="flex flex-wrap -mx-2">
     {filteredRecipes.length > 0 ? (
-      filteredRecipes.map((recipe) => <RecipeCard key={recipe.id} recipe={recipe} />)
+      filteredRecipes.map((recipe) => recipe && <RecipeCard key={recipe.id} recipe={recipe} />)
     ) : (
       <p className="w-full text-center text-xl text-gray-500 mt-10">No recipes found</p>
     )}
@@ -39,10 +45,32 @@ const RecipeList = ({ filteredRecipes }) => (
 const Recipes = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const { pathname } = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const reduxRecipes = useSelector((state) => state.recipeReducer.recipes);
 
-  const filteredRecipes = recipes.filter(recipe =>
-    recipe.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    recipe.description.toLowerCase().includes(searchTerm.toLowerCase())
+  useEffect(() => {
+    dispatch(asyncgetrecipies());
+  }, [dispatch]);
+
+  // Combine all recipes, filtering out any undefined values and assigning unique ids
+  const allRecipes = [...homeRecipes, ...localRecipes, ...(reduxRecipes || [])]
+    .filter(Boolean)
+    .map(recipe => ({
+      ...recipe,
+      id: recipe.id || nanoid(),
+      title: recipe.title || recipe.name, // Ensure we have a title property
+    }));
+
+  // Update localStorage with the new ids
+  useEffect(() => {
+    localStorage.setItem('recipes', JSON.stringify(allRecipes));
+  }, [allRecipes]);
+
+  const filteredRecipes = allRecipes.filter(recipe =>
+    recipe &&
+    (recipe.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+     recipe.description.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   return (
@@ -83,7 +111,7 @@ const Recipes = () => {
             <RecipeList filteredRecipes={filteredRecipes} />
           </>
         } />
-        <Route path="/recipes/:id" element={<Details />} />
+        <Route path=":id" element={<Details />} />
       </Routes> 
     </div>
   );
