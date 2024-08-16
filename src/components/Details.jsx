@@ -1,112 +1,133 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
-import { asyncgetrecipies } from "../store/actions/recipeActions";
-import localRecipes from "../data/recipes";
-import homeRecipes from "../data/homeRecipes";
-import { nanoid } from 'nanoid';
+import React, { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { Clock, Users, ChefHat, Bookmark } from 'lucide-react';
 
 const Details = () => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const { id } = useParams();
+  const [recipe, setRecipe] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const { id } = useParams();
 
-    const reduxRecipes = useSelector((state) => state.recipeReducer.recipes);
-    const [recipe, setRecipe] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        dispatch(asyncgetrecipies());
-    }, [dispatch]);
-
-    useEffect(() => {
-        setLoading(true);
-        setError(null);
-        
-        // Combine all recipes and assign nanoid if id is missing
-        const allRecipes = [...homeRecipes, ...localRecipes, ...(reduxRecipes || [])].map(r => ({
-            ...r,
-            id: r.id || nanoid()
-        }));
-        
-        console.log("All Recipes:", allRecipes); // Debug log
-        console.log("Looking for recipe with id:", id); // Debug log
-
-        // Find the recipe by id
-        const foundRecipe = allRecipes.find((r) => r.id.toString() === id.toString());
-        
-        console.log("Found Recipe:", foundRecipe); // Debug log
-
-        if (foundRecipe) {
-            setRecipe(foundRecipe);
-            setLoading(false);
-        } else {
-            console.log("Recipe not found");
-            setError("Recipe not found");
-            setLoading(false);
-            toast.error("Recipe not found");
-            setTimeout(() => navigate("/recipes"), 2000);
+  useEffect(() => {
+    const fetchRecipeDetails = async () => {
+      setIsLoading(true);
+      try {
+        const APP_ID = '7b948bd8';
+        const APP_KEY = 'c1f4f91b2d5ffb2918347647551d908f';
+        const response = await fetch(`https://api.edamam.com/search?r=http://www.edamam.com/ontologies/edamam.owl%23recipe_${id}&app_id=${APP_ID}&app_key=${APP_KEY}`);
+        const data = await response.json();
+        if (data && data[0]) {
+          setRecipe(data[0]);
         }
-    }, [reduxRecipes, id, navigate]);
-
-    const deleteHandler = () => {
-        const updatedRecipes = [...homeRecipes, ...localRecipes, ...(reduxRecipes || [])].filter((r) => r.id.toString() !== id.toString());
-        localStorage.setItem("recipes", JSON.stringify(updatedRecipes.filter(r => !homeRecipes.some(hr => hr.id === r.id))));
-        dispatch(asyncgetrecipies()); // Update the Redux store
-        toast.success("Recipe Deleted Successfully!");
-        navigate("/recipes");
+      } catch (error) {
+        console.error('Error fetching recipe details:', error);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
-   
-    if (loading) {
-        return <h1 className="w-full text-center text-4xl text-green-600 mt-10">Loading Recipe...</h1>;
-    }
+    fetchRecipeDetails();
+  }, [id]);
 
-    if (error) {
-        return <h1 className="w-full text-center text-4xl text-red-600 mt-10">{error}</h1>;
-    }
-
-    if (!recipe) {
-        return <h1 className="w-full text-center text-4xl text-red-600 mt-10">No recipe data available</h1>;
-    }
-
+  if (isLoading) {
     return (
-        <div className="w-[80%] m-auto p-5">
-            <Link to="/" className="text-3xl ri-arrow-left-line"></Link>
-            <div className="details w-full flex h-[75vh] mt-3">
-                <div className="dets w-[50%] p-[3%] shadow">
-                    <img className="w-full h-auto object-cover" src={recipe.image} alt={recipe.name} />
-                    <h1 className="text-xl mb-5 mt-[10%] text-center">
-                        {recipe.name}
-                    </h1>
-                    <p className="text-zinc-400">{recipe.description}</p>
-                    <div className="flex justify-between py-10 px-5">
-                        <Link
-                            to={`/update-recipe/${id}`}
-                            className="text-blue-400 border-blue-400 border py-2 px-5"
-                        >
-                            Update
-                        </Link>
-                        <button
-                            onClick={deleteHandler}
-                            className="text-red-400 border-red-400 border py-2 px-5"
-                        >
-                            Delete
-                        </button>
-                    </div>
-                </div>
-                <div className="desc w-[50%] px-[5%] py-[3%] overflow-auto">
-                    <h1 className="text-3xl border-b border-green-600 text-green-600">
-                        Recipe Details
-                    </h1>
-                    <p className="text-zinc-600 mt-4">{recipe.description}</p>
-                    {/* Add more details here if available in your recipe data */}
-                </div>
-            </div>
-        </div>
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
     );
+  }
+
+  if (!recipe) {
+    return (
+      <div className="container mx-auto px-4 py-8 text-center">
+        <h1 className="text-3xl font-bold mb-4">Recipe not found</h1>
+        <Link to="/" className="text-blue-500 hover:underline">
+          &larr; Back to Recipes
+        </Link>
+      </div>
+    );
+  }
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <Link to="/Recipes" className="text-blue-500 hover:underline mb-4 inline-block">
+        &larr; Back to Recipes
+      </Link>
+      <div className="bg-white shadow-xl rounded-lg overflow-hidden">
+        <div className="relative h-96">
+          <img src={recipe.image} alt={recipe.label} className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-end">
+            <div className="p-6 text-white">
+              <h1 className="text-4xl font-bold mb-2">{recipe.label}</h1>
+              <p className="text-lg">Source: {recipe.source}</p>
+            </div>
+          </div>
+        </div>
+        <div className="p-6">
+          <div className="flex flex-wrap justify-between mb-6">
+            <div className="flex items-center mr-4 mb-2">
+              <Clock className="w-5 h-5 mr-2 text-gray-600" />
+              <span>{recipe.totalTime} min</span>
+            </div>
+            <div className="flex items-center mr-4 mb-2">
+              <Users className="w-5 h-5 mr-2 text-gray-600" />
+              <span>{recipe.yield} servings</span>
+            </div>
+            <div className="flex items-center mr-4 mb-2">
+              <ChefHat className="w-5 h-5 mr-2 text-gray-600" />
+              <span>{recipe.cuisineType.join(', ')}</span>
+            </div>
+            <button className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+              <Bookmark className="w-5 h-5 mr-2" />
+              Save Recipe
+            </button>
+          </div>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <h2 className="text-2xl font-semibold mb-4">Ingredients</h2>
+              <ul className="list-disc list-inside space-y-2">
+                {recipe.ingredientLines.map((ingredient, index) => (
+                  <li key={index} className="text-gray-700">{ingredient}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h2 className="text-2xl font-semibold mb-4">Nutrition</h2>
+              <div className="bg-gray-100 p-4 rounded-lg">
+                <h3 className="font-semibold mb-2">Per serving:</h3>
+                <ul className="grid grid-cols-2 gap-2">
+                  {Object.entries(recipe.totalNutrients).slice(0, 8).map(([key, nutrient]) => (
+                    <li key={key} className="text-sm">
+                      <span className="font-semibold">{nutrient.label}:</span> {Math.round(nutrient.quantity)} {nutrient.unit}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div className="mt-8">
+            <h2 className="text-2xl font-semibold mb-4">Health Labels</h2>
+            <div className="flex flex-wrap">
+              {recipe.healthLabels.map((label, index) => (
+                <span key={index} className="bg-green-100 text-green-800 text-sm font-medium mr-2 mb-2 px-2.5 py-0.5 rounded">
+                  {label}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="mt-8 text-center">
+            <a
+              href={recipe.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full inline-block transition duration-300"
+            >
+              View Full Recipe Instructions
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Details;
