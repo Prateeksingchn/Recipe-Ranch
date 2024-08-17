@@ -1,73 +1,47 @@
 import React from "react";
+import { motion } from "framer-motion";
+import { ChefHat, GraduationCap, Apple, BookOpen, Thermometer } from "lucide-react";
 
 const Footer = () => {
+    const features = [
+        { icon: ChefHat, title: "Quality Food", description: "Discover recipes made with premium, hand-picked ingredients for exceptional taste." },
+        { icon: GraduationCap, title: "Cook like a Chef", description: "Learn professional techniques and tips to elevate your cooking skills." },
+        { icon: Apple, title: "Diverse Ingredients", description: "Explore a wide range of ingredients to create exciting and flavorful dishes." },
+        { icon: BookOpen, title: "Easy Recipes", description: "Find simple, step-by-step recipes perfect for beginners and busy cooks." },
+        { icon: Thermometer, title: "Serve Hot", description: "Get tips on keeping your dishes at the perfect temperature for serving." },
+    ];
+
     return (
-        <div className="w-[80%] m-auto  p-10">
-            <h2 className="text-green-600 text-center">Features</h2>
-            <h1 className="text-2xl font-bold text-center">
-                OUR AWESOME SERVICES
-            </h1>
-
-            <div className="features flex flex-wrap justify-between mt-[5%]">
-                <div className="w-[40%] flex items-center">
-                    <i className="text-[10vh] ri-restaurant-line mr-5"></i>
-                    <div className="">
-                        <h1 className="text-xl">Quality Food</h1>
-                        <p className="text-sm text-zinc-400">
-                            Lorem ipsum dolor, sit amet consectetur adipisicing
-                            elit. Deleniti nesciunt sit in? Consectetur, illum
-                            ipsum!
-                        </p>
-                    </div>
+        <footer className="bg-gray-100 py-16">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 className="text-green-600 text-center text-lg font-semibold">Features</h2>
+                <h1 className="text-3xl font-bold text-center mt-2 mb-12">
+                    OUR AWESOME SERVICES
+                </h1>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {features.map((feature, index) => (
+                        <motion.div
+                            key={feature.title}
+                            className="flex items-start space-x-4"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                        >
+                            <feature.icon className="flex-shrink-0 h-12 w-12 text-green-600" />
+                            <div>
+                                <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
+                                <p className="text-gray-600">{feature.description}</p>
+                            </div>
+                        </motion.div>
+                    ))}
                 </div>
 
-                <div className="w-[40%] flex items-center">
-                    <i className="text-[10vh] ri-graduation-cap-line mr-5"></i>
-                    <div className="">
-                        <h1 className="text-xl">Cook like a Chef</h1>
-                        <p className="text-sm text-zinc-400">
-                            Lorem ipsum dolor, sit amet consectetur adipisicing
-                            elit. Deleniti nesciunt sit in? Consectetur, illum
-                            ipsum!
-                        </p>
-                    </div>
-                </div>
-                <div className="w-[40%] flex items-center">
-                    <i className="text-[10vh] ri-bread-line mr-5"></i>
-                    <div className="">
-                        <h1 className="text-xl">Ingredients</h1>
-
-                        <p className="text-sm text-zinc-400">
-                            Lorem ipsum dolor, sit amet consectetur adipisicing
-                            elit. Deleniti nesciunt sit in? Consectetur, illum
-                            ipsum!
-                        </p>
-                    </div>
-                </div>
-                <div className="w-[40%] flex items-center">
-                    <i className="text-[10vh] ri-presentation-line mr-5"></i>
-                    <div className="">
-                        <h1 className="text-xl">Easy Recipe</h1>
-                        <p className="text-sm text-zinc-400">
-                            Lorem ipsum dolor, sit amet consectetur adipisicing
-                            elit. Deleniti nesciunt sit in? Consectetur, illum
-                            ipsum!
-                        </p>
-                    </div>
-                </div>
-                <div className="w-[40%] flex items-center">
-                    <i className="text-[10vh] ri-temp-hot-line mr-5"></i>
-                    <div className="">
-                        <h1 className="text-xl">Serve Hot</h1>
-                        <p className="text-sm text-zinc-400">
-                            Lorem ipsum dolor, sit amet consectetur adipisicing
-                            elit. Deleniti nesciunt sit in? Consectetur, illum
-                            ipsum!
-                        </p>
-                    </div>
+                <div className="mt-16 pt-8 border-t border-gray-200 text-center text-gray-500">
+                    <p>&copy; 2024 Your Recipe App. All rights reserved.</p>
                 </div>
             </div>
-        </div>
+        </footer>
     );
 };
 
