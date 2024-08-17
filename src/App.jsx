@@ -20,7 +20,7 @@ const App = () => {
     }, []);
 
     return (
-        <div className="w-[80%] m-auto ">
+        <div className="w-full m-auto p-5 bg-white ">
             <Nav />
 
             <Routes>
