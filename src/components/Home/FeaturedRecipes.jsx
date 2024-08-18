@@ -29,13 +29,13 @@ const FeaturedRecipes = () => {
 
   return (
     <motion.section
-      className="py-20 px-6 bg-green-50"
+      className="py-20 px-6 bg-green-400 rounded-3xl my-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
       <div className="container mx-auto">
-        <h2 className="text-4xl font-bold text-green-600 mb-12 text-center">
+        <h2 className="text-5xl font-[Lobster] font-bold text-[#5B320E] mb-12 text-start">
           Featured Recipes
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
