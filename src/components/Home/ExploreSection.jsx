@@ -8,13 +8,13 @@ const ExploreSection = () => {
 
   return (
     <motion.section
-      className="py-20 px-6"
+      className="py-20 px-6 bg-blue-300 rounded-3xl my-3"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
       <div className="container mx-auto">
-        <h2 className="text-4xl font-bold text-green-600 mb-12 text-center">
+        <h2 className="text-7xl font-bold text-green-600 mb-12 text-center">
           Explore Our Culinary World
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
