@@ -25,7 +25,7 @@ const FeatureCard = ({ feature, index }) => {
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <FeatureIcon Icon={feature.icon} />
-            <h3 className="text-xl font-semibold ml-4 text-gray-800">{feature.title}</h3>
+            <h3 className="text-xl font-semibold ml-4 mb-4 text-gray-800">{feature.title}</h3>
           </div>
           <ChevronDown
             className={`text-orange-600 transition-transform duration-300 ${

@@ -19,13 +19,13 @@ const ContactInfo = ({ Icon, title, content }) => (
 
 const Contact = () => {
   return (
-    <div className="bg-gradient-to-br from-green-50 to-green-100 min-h-screen py-16">
+    <div className="bg-gradient-to-br from-green-50 to-green-100 min-h-screen py-10 rounded-3xl my-4 mb-12">
       <div className="max-w-6xl mx-auto px-4">
         <motion.h1
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-5xl md:text-7xl font-extrabold text-green-600 mb-8 text-center"
+          className="text-5xl md:text-7xl lg:text-6xl font-extrabold text-green-600 mb-4 text-center"
         >
           Get in Touch
         </motion.h1>
@@ -34,7 +34,7 @@ const Contact = () => {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-xl text-gray-700 mb-12 text-center max-w-3xl mx-auto"
+          className="text-xl text-gray-700 mb-12 text-center max-w-3xl mx-auto font-[Poppins] "
         >
           We'd love to hear from you! Whether you have a question about recipes, want to collaborate, or just want to say hello, we're here for you.
         </motion.p>

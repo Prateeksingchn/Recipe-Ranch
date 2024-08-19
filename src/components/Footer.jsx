@@ -15,7 +15,7 @@ const Footer = () => {
   const MotionLink = motion(motion.a);
 
   return (
-    <footer className="bg-[#EE4130] text-white py-16 rounded-3xl -mt-8 mb-2">
+    <footer className="bg-[#EE4130] text-white py-16 rounded-3xl  mb-2">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {features.map((feature, index) => (

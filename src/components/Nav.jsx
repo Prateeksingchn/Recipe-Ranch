@@ -1,31 +1,33 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const navItems = [
     { name: "Home", path: "/" },
     { name: "Recipes", path: "/recipes" },
-    { name: "About", path: "/about" },
     { name: "Contact", path: "/contact" },
+    { name: "About", path: "/about" },
   ];
 
+  const isHomePage = location.pathname === "/";
+
   return (
-    <nav className="bg-[#EE4130] text-white rounded-t-3xl">
+    <nav className={`bg-[#EE4130] text-white ${isHomePage ? 'rounded-t-3xl' : 'rounded-3xl'}`}>
       <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-14 py-4">
         <div className="flex justify-between items-center">
           <div className="flex-shrink-0 flex items-center">
-            {" "}
             <img
-              className="h-[45px] w-auto  rounded-3xl"
+              className="h-[45px] w-auto rounded-3xl"
               src="https://static.vecteezy.com/system/resources/thumbnails/008/212/813/small/cooking-logo-design-vector.jpg"
               alt="Logo"
-            />{" "}
+            />
           </div>
           <div className="hidden sm:flex sm:space-x-8">
             {navItems.map((item) => (

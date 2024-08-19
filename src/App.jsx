@@ -11,29 +11,39 @@ import Contact from "./components/Contact";
 import Update from "./components/Update";
 import { useDispatch } from "react-redux";
 import { asyncgetrecipies } from "./store/actions/recipeActions";
+import Footer from "./components/Footer";
+
+import BreakfastRecipes from "./components/BreakfastRecipes";
+import LunchRecipes from "./components/LunchRecipes";
+import DinnerRecipes from "./components/DinnerRecipes";
 
 const App = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(asyncgetrecipies());
-    }, []);
+  useEffect(() => {
+    dispatch(asyncgetrecipies());
+  }, []);
 
-    return (
-        <div className="w-full m-auto p-3 bg-white ">
-            <Nav />
+  return (
+    <div className="w-full m-auto p-3 bg-white ">
+      <Nav />
 
-            <Routes>
-                <Route path="/" element={<Layout />} />
-                <Route path="/create-recipe" element={<Create />} />
-                <Route path="/update-recipe/:id" element={<Update />} />
-                <Route path="/recipes/*" element={<Recipes />} />
-                <Route path="/recipe/:id" element={<Details />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-            </Routes>
-        </div>
-    );
+      <Routes>
+        <Route path="/" element={<Layout />} />
+        <Route path="/create-recipe" element={<Create />} />
+        <Route path="/update-recipe/:id" element={<Update />} />
+        <Route path="/recipes/*" element={<Recipes />} />
+        <Route path="/recipe/:id" element={<Details />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/breakfast-recipes" element={<BreakfastRecipes />} />
+        <Route path="/lunch-recipes" element={<LunchRecipes />} />
+        <Route path="/dinner-recipes" element={<DinnerRecipes />} />
+      </Routes>
+
+      <Footer />
+    </div>
+  );
 };
 
 export default App;

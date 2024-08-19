@@ -40,7 +40,7 @@ const TestimonialsSection = () => {
     <section className="py-20 px-6 bg-gradient-to-br from-green-100 to-blue-50 my-4 rounded-3xl">
       <div className="container mx-auto">
         <motion.div
-          className="text-center mb-12"
+          className="text-center mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -48,7 +48,7 @@ const TestimonialsSection = () => {
           <h2 className="text-4xl font-bold text-green-600 mb-4">
             Culinary Voices
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-sm mx-auto">
             Discover the impact of our recipes through the words of our passionate community.
           </p>
         </motion.div>

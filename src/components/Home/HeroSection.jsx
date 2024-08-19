@@ -13,7 +13,7 @@ const HeroSection = ({ searchQuery, setSearchQuery }) => {
       >
         <div className="max-w-4xl mx-auto space-y-4 text-start -mt-5 ">
           <motion.h1
-            className="text-5xl lg:text-[11rem] lg:leading-[9rem] font-black font-[Rowdies]  leading-tight"
+            className="text-5xl lg:text-[9rem] lg:leading-[8.3rem] tracking-wide font-black font-[Bungee] leading-tight"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
@@ -21,14 +21,14 @@ const HeroSection = ({ searchQuery, setSearchQuery }) => {
             Discover <br />Delicious<br />Recipes
           </motion.h1>
           <motion.div
-            className="flex items-center justify-start ml-4 "
+            className="flex items-center justify-start ml-2 "
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
           >
-            <div className="w-36 h-1 bg-yellow-400 mr-2"></div>
+            <div className="w-28 h-1 bg-yellow-400 mr-2"></div>
             <span className="text-4xl">😋</span>
-            <div className="w-36 h-1 bg-yellow-400 ml-2"></div>
+            <div className="w-28 h-1 bg-yellow-400 ml-2"></div>
           </motion.div>
           <motion.div
             className="flex justify-start space-x-4 ml-4 mt-5"

@@ -1,11 +1,13 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Utensils, Users, Coffee } from "lucide-react";
+import { ArrowRight, Utensils, Users, Coffee, Book, Star, Clock } from "lucide-react";
 
 const FeatureCard = ({ Icon, title, description }) => (
   <motion.div
-    className="bg-white p-6 rounded-lg shadow-md"
-    whileHover={{ scale: 1.05 }}
+    className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
+    whileHover={{ y: -5 }}
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
     transition={{ type: "spring", stiffness: 300 }}
   >
     <Icon className="w-12 h-12 text-green-600 mb-4" />
@@ -14,9 +16,41 @@ const FeatureCard = ({ Icon, title, description }) => (
   </motion.div>
 );
 
+const TestimonialCard = ({ name, quote, rating }) => (
+  <motion.div
+    className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
+    whileHover={{ y: -5 }}
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ type: "spring", stiffness: 300 }}
+  >
+    <div className="flex items-center mb-4">
+      {[...Array(rating)].map((_, i) => (
+        <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+      ))}
+    </div>
+    <p className="text-gray-600 italic mb-4">"{quote}"</p>
+    <p className="text-right font-semibold">- {name}</p>
+  </motion.div>
+);
+
+const StatisticCard = ({ value, label, Icon }) => (
+  <motion.div
+    className="bg-white p-6 rounded-lg shadow-md text-center"
+    whileHover={{ y: -5 }}
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ type: "spring", stiffness: 300 }}
+  >
+    <Icon className="w-10 h-10 text-green-600 mb-2 mx-auto" />
+    <h3 className="text-3xl font-bold text-gray-800 mb-1">{value}</h3>
+    <p className="text-gray-600">{label}</p>
+  </motion.div>
+);
+
 const About = () => {
   return (
-    <div className="bg-gradient-to-br from-green-50 to-green-100 min-h-screen py-16">
+    <div className="bg-gradient-to-br from-green-100 to-green-300 min-h-screen py-16 mt-4 mb-12 rounded-3xl">
       <div className="max-w-6xl mx-auto px-4">
         <motion.h1
           initial={{ opacity: 0, y: -50 }}
@@ -57,6 +91,58 @@ const About = () => {
             title="Tips & Tricks"
             description="Learn professional cooking techniques to elevate your skills."
           />
+        </motion.div>
+
+        <motion.h2
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-4xl font-bold text-green-700 mb-8 text-center"
+        >
+          What Our Community Says
+        </motion.h2>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
+        >
+          <TestimonialCard
+            name="Sarah L."
+            quote="This website has transformed my cooking skills! The recipes are easy to follow and always delicious."
+            rating={5}
+          />
+          <TestimonialCard
+            name="Mike R."
+            quote="I love the community aspect. Sharing recipes and tips with other food enthusiasts is so fun and inspiring."
+            rating={4}
+          />
+          <TestimonialCard
+            name="Emily T."
+            quote="The variety of cuisines available is impressive. I've tried dishes from around the world without leaving my kitchen!"
+            rating={5}
+          />
+        </motion.div>
+
+        <motion.h2
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-4xl font-bold text-green-700 mb-8 text-center"
+        >
+          Our Impact
+        </motion.h2>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
+        >
+          <StatisticCard value="10,000+" label="Recipes" Icon={Book} />
+          <StatisticCard value="1M+" label="Community Members" Icon={Users} />
+          <StatisticCard value="5M+" label="Meals Cooked" Icon={Clock} />
         </motion.div>
         
         <motion.div
