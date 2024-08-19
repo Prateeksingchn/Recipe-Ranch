@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const NewsletterSection = () => {
   return (
-    <section className="py-20 px-6 bg-green-600 text-white">
+    <section className="py-20 px-6 bg-green-600 text-white rounded-3xl">
       <div className="container mx-auto">
         <motion.div
           className="text-center mb-12"
