@@ -132,18 +132,28 @@ const RecipeBlog = () => {
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
+  const [apiLimitReached, setApiLimitReached] = useState(false);
   const resultsPerPage = 9;
 
   const fetchRecipes = async () => {
     try {
       const response = await fetch(
-        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=${resultsPerPage}&offset=${
-          (currentPage - 1) * resultsPerPage
-        }&addRecipeInformation=true&query=${searchTerm}`
+        `https://api.spoonacular.com/recipes/complexSearch?apiKey=<span class="math-inline">\{API\_KEY\}&number\=</span>{resultsPerPage}&offset=<span class="math-inline">\{
+\(currentPage \- 1\) \* resultsPerPage
+\}&addRecipeInformation\=true&query\=</span>{searchTerm}`
       );
+
+      if (!response.ok) {
+        // Handle API limit error here
+        console.error("API limit reached or other error:", response.statusText);
+        setApiLimitReached(true);
+        return; // Exit the function without setting recipes or totalResults
+      }
+
       const data = await response.json();
       setRecipes(data.results);
       setTotalResults(data.totalResults);
+      setApiLimitReached(false);
     } catch (error) {
       console.error("Error fetching recipes:", error);
     }
@@ -196,6 +206,12 @@ const RecipeBlog = () => {
             </Button>
           </div>
         </form>
+
+        {apiLimitReached && (
+          <div className="text-center text-red-500 font-bold mb-4">
+            API limit reached! Please try again later.
+          </div>
+        )}
 
         <AnimatePresence>
           <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

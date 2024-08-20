@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux"; 
 
 const RecipeCard = ({ recipe, isUserCreated }) => (
   <div className="border rounded-lg overflow-hidden m-2 w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.33%-1rem)] xl:w-[calc(25%-1rem)]">
@@ -34,6 +34,8 @@ const RecipeList = ({ recipes, isUserCreated = false }) => (
   </div>
 );
 
+
+// Pagination
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const pageNumbers = [];
   let startPage = Math.max(1, currentPage - 2);
@@ -156,7 +158,7 @@ const Recipes = () => {
           <h1 className="text-3xl font-bold">Our Recipes</h1>
           <p className="text-zinc-500 mt-2">Discover delicious recipes from around the world</p>
         </div>
-        <Link to="/create-recipe" className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+        <Link to="/create-recipe" className="bg-[#EE4130] text-white font-bold py-3 px-5 rounded-3xl">
           Create New Recipe
         </Link>
       </div>

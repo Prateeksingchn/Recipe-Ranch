@@ -18,6 +18,7 @@ import LunchRecipes from "./components/RecipesPages/LunchRecipes";
 import DinnerRecipes from "./components/RecipesPages/DinnerRecipes";
 
 import RecipeBlogDetail from './components/RecipeBlogDetail';
+import CreatedRecipeDetail from './components/CreatedRecipeDetail';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ const App = () => {
         <Route path="/lunch-recipes" element={<LunchRecipes />} />
         <Route path="/dinner-recipes" element={<DinnerRecipes />} />
         <Route path="/recipeblogdetail/:id" element={<RecipeBlogDetail />} />
+        <Route path="/created-recipes/:id" element={<CreatedRecipeDetail />} />
       </Routes>
 
       <Footer />
