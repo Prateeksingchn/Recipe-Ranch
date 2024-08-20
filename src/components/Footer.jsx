@@ -41,7 +41,7 @@ const Footer = () => {
         >
           <div className="w-full md:w-1/4 mb-8 md:mb-0">
             <h4 className="text-2xl font-bold mb-4">Tasty Bites</h4>
-            <p className="text-sm opacity-80 mb-4">Bringing delicious recipes to your kitchen since 2020.</p>
+            <p className="text-sm opacity-80 mb-4 w-[170px] ">Bringing delicious recipes to your kitchen since 2020.</p>
             <div className="flex space-x-4">
               {[Instagram, Twitter, Facebook].map((Icon, index) => (
                 <MotionLink
@@ -85,11 +85,11 @@ const Footer = () => {
               <input 
                 type="email" 
                 placeholder="Your email address" 
-                className="p-2 rounded bg-white bg-opacity-20 text-white placeholder-white placeholder-opacity-70 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+                className="p-2 rounded-[26px] px-4 bg-white bg-opacity-20 text-white placeholder-white placeholder-opacity-70 focus:outline-none focus:ring-2 focus:ring-yellow-300"
               />
               <motion.button
                 type="submit"
-                className="bg-yellow-300 text-[#EE4130] py-2 px-4 rounded flex items-center justify-center font-semibold"
+                className="bg-yellow-300 text-[#EE4130] py-2 px-4 rounded-[26px] flex items-center justify-center font-semibold"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >

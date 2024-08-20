@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Clock, Users, ChefHat, Bookmark } from 'lucide-react';
+import { Clock, Users, ChefHat, Bookmark, ArrowLeft } from 'lucide-react';
 
-const Details = () => {
+const RecipeBlog = () => {
   const [recipe, setRecipe] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
@@ -31,103 +31,108 @@ const Details = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-green-500"></div>
       </div>
     );
   }
 
   if (!recipe) {
     return (
-      <div className="container mx-auto px-4 py-8 text-center">
-        <h1 className="text-3xl font-bold mb-4">Recipe not found</h1>
-        <Link to="/" className="text-blue-500 hover:underline">
-          &larr; Back to Recipes
+      <div className="container mx-auto px-4 py-16 text-center">
+        <h1 className="text-4xl font-bold mb-6 text-gray-800">Recipe not found</h1>
+        <Link to="/" className="text-green-600 hover:text-green-700 transition duration-300">
+          <ArrowLeft className="inline mr-2" />
+          Back to Recipes
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <Link to="/Recipes" className="text-blue-500 hover:underline mb-4 inline-block">
-        &larr; Back to Recipes
+    <div className="max-w-4xl mx-auto px-4 py-12">
+      <Link to="/Recipes" className="text-green-600 hover:text-green-700 transition duration-300 mb-8 inline-block">
+        <ArrowLeft className="inline mr-2" />
+        Back to Recipes
       </Link>
-      <div className="bg-white shadow-xl rounded-lg overflow-hidden">
+      <article className="bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="relative h-96">
           <img src={recipe.image} alt={recipe.label} className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-end">
-            <div className="p-6 text-white">
-              <h1 className="text-4xl font-bold mb-2">{recipe.label}</h1>
-              <p className="text-lg">Source: {recipe.source}</p>
-            </div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
+            <h1 className="text-4xl font-bold mb-2 leading-tight">{recipe.label}</h1>
+            <p className="text-lg opacity-75">by {recipe.source}</p>
           </div>
         </div>
-        <div className="p-6">
-          <div className="flex flex-wrap justify-between mb-6">
+        <div className="p-8">
+          <div className="flex flex-wrap justify-between mb-8 text-sm text-gray-600">
             <div className="flex items-center mr-4 mb-2">
-              <Clock className="w-5 h-5 mr-2 text-gray-600" />
+              <Clock className="w-5 h-5 mr-2" />
               <span>{recipe.totalTime} min</span>
             </div>
             <div className="flex items-center mr-4 mb-2">
-              <Users className="w-5 h-5 mr-2 text-gray-600" />
+              <Users className="w-5 h-5 mr-2" />
               <span>{recipe.yield} servings</span>
             </div>
             <div className="flex items-center mr-4 mb-2">
-              <ChefHat className="w-5 h-5 mr-2 text-gray-600" />
+              <ChefHat className="w-5 h-5 mr-2" />
               <span>{recipe.cuisineType.join(', ')}</span>
             </div>
-            <button className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+            <button className="flex items-center bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full transition duration-300">
               <Bookmark className="w-5 h-5 mr-2" />
               Save Recipe
             </button>
           </div>
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-12">
             <div>
-              <h2 className="text-2xl font-semibold mb-4">Ingredients</h2>
-              <ul className="list-disc list-inside space-y-2">
+              <h2 className="text-2xl font-semibold mb-4 text-gray-800">Ingredients</h2>
+              <ul className="space-y-2">
                 {recipe.ingredientLines.map((ingredient, index) => (
-                  <li key={index} className="text-gray-700">{ingredient}</li>
+                  <li key={index} className="flex items-start">
+                    <span className="inline-block w-2 h-2 bg-green-500 rounded-full mt-2 mr-3" />
+                    <span className="text-gray-700">{ingredient}</span>
+                  </li>
                 ))}
               </ul>
             </div>
             <div>
-              <h2 className="text-2xl font-semibold mb-4">Nutrition</h2>
-              <div className="bg-gray-100 p-4 rounded-lg">
-                <h3 className="font-semibold mb-2">Per serving:</h3>
-                <ul className="grid grid-cols-2 gap-2">
+              <h2 className="text-2xl font-semibold mb-4 text-gray-800">Nutrition</h2>
+              <div className="bg-gray-50 p-6 rounded-lg">
+                <h3 className="font-semibold mb-3 text-gray-700">Per serving:</h3>
+                <ul className="grid grid-cols-2 gap-y-2">
                   {Object.entries(recipe.totalNutrients).slice(0, 8).map(([key, nutrient]) => (
-                    <li key={key} className="text-sm">
-                      <span className="font-semibold">{nutrient.label}:</span> {Math.round(nutrient.quantity)} {nutrient.unit}
+                    <li key={key} className="text-sm flex justify-between">
+                      <span className="font-medium text-gray-600">{nutrient.label}:</span>
+                      <span className="text-gray-800">{Math.round(nutrient.quantity)} {nutrient.unit}</span>
                     </li>
                   ))}
                 </ul>
               </div>
             </div>
           </div>
-          <div className="mt-8">
-            <h2 className="text-2xl font-semibold mb-4">Health Labels</h2>
+          <div className="mt-12">
+            <h2 className="text-2xl font-semibold mb-4 text-gray-800">Health Labels</h2>
             <div className="flex flex-wrap">
               {recipe.healthLabels.map((label, index) => (
-                <span key={index} className="bg-green-100 text-green-800 text-sm font-medium mr-2 mb-2 px-2.5 py-0.5 rounded">
+                <span key={index} className="bg-green-100 text-green-800 text-xs font-medium mr-2 mb-2 px-2.5 py-1 rounded-full">
                   {label}
                 </span>
               ))}
             </div>
           </div>
-          <div className="mt-8 text-center">
+          <div className="mt-12 text-center">
             <a
               href={recipe.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full inline-block transition duration-300"
+              className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full inline-block transition duration-300 transform hover:scale-105"
             >
               View Full Recipe Instructions
             </a>
           </div>
         </div>
-      </div>
+      </article>
     </div>
   );
 };
 
-export default Details;
+export default RecipeBlog;

@@ -40,7 +40,7 @@ const HeroSection = ({ searchQuery, setSearchQuery }) => {
               Get Started
             </button>
             <button className="bg-transparent text-white px-6 py-2 rounded-full border border-white hover:bg-white hover:text-red-500 transition-colors font-semibold">
-              Explore Menu
+              Explore Recipes
             </button>
           </motion.div>
         </div>

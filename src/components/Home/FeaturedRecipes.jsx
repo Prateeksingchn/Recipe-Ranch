@@ -106,7 +106,7 @@ const FeaturedRecipes = () => {
 
   return (
     <motion.section
-      className="py-20 px-6 bg-gradient-to-br from-green-500 to-blue-400 rounded-3xl my-4"
+      className="py-10 px-6 bg-gradient-to-br from-green-500 to-blue-400 rounded-3xl my-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}

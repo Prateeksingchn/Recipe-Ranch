@@ -12,7 +12,7 @@ const Nav = () => {
   const navItems = [
     { name: "Home", path: "/" },
     { name: "Recipes", path: "/recipes" },
-    { name: "Contact", path: "/contact" },
+    { name: "Blog", path: "/blog" },
     { name: "About", path: "/about" },
   ];
 
@@ -22,9 +22,9 @@ const Nav = () => {
     <nav className={`bg-[#EE4130] text-white ${isHomePage ? 'rounded-t-3xl' : 'rounded-3xl'}`}>
       <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-14 py-4">
         <div className="flex justify-between items-center">
-          <div className="flex-shrink-0 flex items-center">
+          <div className="flex-shrink-0 flex items-center ">
             <img
-              className="h-[45px] w-auto rounded-3xl"
+              className="h-[47px] w-[75px] rounded-xl"
               src="https://static.vecteezy.com/system/resources/thumbnails/008/212/813/small/cooking-logo-design-vector.jpg"
               alt="Logo"
             />
@@ -45,9 +45,6 @@ const Nav = () => {
               </motion.div>
             ))}
           </div>
-          <button className="hidden sm:block bg-white text-red-500 px-4 py-2 rounded-full font-semibold">
-            Enter
-          </button>
           <div className="flex items-center sm:hidden">
             <motion.button
               whileTap={{ scale: 0.95 }}
@@ -82,9 +79,6 @@ const Nav = () => {
               {item.name}
             </Link>
           ))}
-          <button className="w-full text-center bg-white text-red-500 px-4 py-2 rounded-full font-semibold mt-2">
-            Enter
-          </button>
         </div>
       </motion.div>
     </nav>

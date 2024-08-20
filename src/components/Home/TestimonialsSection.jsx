@@ -37,8 +37,8 @@ const TestimonialsSection = () => {
   );
 
   return (
-    <section className="py-20 px-6 bg-gradient-to-br from-green-100 to-blue-50 my-4 rounded-3xl">
-      <div className="container mx-auto">
+    <section className="py-10 px-6 bg-gradient-to-br from-green-200 to-blue-50 my-4 rounded-3xl">
+      <div className="w-[95%] mx-auto">
         <motion.div
           className="text-center mb-8"
           initial={{ opacity: 0, y: 20 }}
@@ -52,7 +52,7 @@ const TestimonialsSection = () => {
             Discover the impact of our recipes through the words of our passionate community.
           </p>
         </motion.div>
-        <div className="space-y-8 overflow-hidden">
+        <div className="space-y-6 overflow-hidden">
           <MarqueeRow direction="left" />
           <MarqueeRow direction="right" />
         </div>

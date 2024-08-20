@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,21 +11,40 @@ const Update = () => {
     const { recipes } = useSelector((state) => state.recipeReducer);
     const recipe = recipes && recipes.find((r) => r.id == params.id);
 
-    const [image, setimage] = useState(recipe.image);
-    const [title, settitle] = useState(recipe.title);
-    const [description, setdescription] = useState(recipe.description);
-    const [ingredients, setingredients] = useState(recipe.ingredients);
-    const [instructions, setinstructions] = useState(recipe.instructions);
+    const [recipeData, setRecipeData] = useState({
+        image: "",
+        title: "",
+        description: "",
+        ingredients: "",
+        instructions: "",
+        category: "",
+    });
 
-    const UpdateHandler = (e) => {
+    useEffect(() => {
+        if (recipe) {
+            setRecipeData({
+                image: recipe.image,
+                title: recipe.title,
+                description: recipe.description,
+                ingredients: Array.isArray(recipe.ingredients) ? recipe.ingredients.join(", ") : recipe.ingredients,
+                instructions: Array.isArray(recipe.instructions) ? recipe.instructions.join(", ") : recipe.instructions,
+                category: recipe.category || "",
+            });
+        }
+    }, [recipe]);
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setRecipeData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleSubmit = (e) => {
         e.preventDefault();
         const updatedRecipe = {
             id: recipe.id,
-            title,
-            image,
-            description,
-            ingredients,
-            instructions,
+            ...recipeData,
+            ingredients: recipeData.ingredients.split(',').map(item => item.trim()),
+            instructions: recipeData.instructions.split(',').map(item => item.trim()),
         };
         const copyRecipe = [...recipes];
         const recipeIndex = recipes.findIndex((r) => r.id == params.id);
@@ -38,53 +57,87 @@ const Update = () => {
         navigate("/recipes");
     };
 
-    return recipe ? (
-        <form onSubmit={UpdateHandler} className="w-[70%] m-auto  ">
-            <h1 className="text-7xl mt-5 font-extrabold text-green-600 mb-[5%]">
-                Update <br /> Existing Recipe
+    if (!recipe) {
+        return (
+            <h1 className="w-full text-center text-4xl text-green-600 mt-10">
+                Loading Recipe...
             </h1>
+        );
+    }
+
+    return (
+        <form onSubmit={handleSubmit} className="max-w-2xl mx-auto py-8 px-4">
+            <h1 className="text-4xl md:text-5xl font-bold text-green-600 mb-8">
+                Update Existing Recipe
+            </h1>
+            <div className="mb-4">
+                <input
+                    type="url"
+                    name="image"
+                    value={recipeData.image}
+                    onChange={handleInputChange}
+                    placeholder="Recipe Image URL"
+                    required
+                    className="w-full border rounded-md px-4 py-2 mb-2"
+                />
+                {recipeData.image && (
+                    <img
+                        src={recipeData.image}
+                        alt="Recipe preview"
+                        className="w-full h-48 object-cover rounded-md"
+                    />
+                )}
+            </div>
             <input
-                onChange={(e) => setimage(e.target.value)}
-                value={image}
-                type="url"
-                className="w-full border rounded-md px-6 py-3 text-lg mb-5"
-                placeholder="Recipe Image URL"
-            />
-            <input
-                onChange={(e) => settitle(e.target.value)}
-                value={title}
                 type="text"
-                className="w-full border rounded-md px-6 py-3 text-lg mb-5"
+                name="title"
+                value={recipeData.title}
+                onChange={handleInputChange}
                 placeholder="Recipe Name"
+                required
+                className="w-full border rounded-md px-4 py-2 mb-4"
+            />
+            <input
+                type="text"
+                name="category"
+                value={recipeData.category}
+                onChange={handleInputChange}
+                placeholder="Recipe Category"
+                className="w-full border rounded-md px-4 py-2 mb-4"
             />
             <textarea
-                onChange={(e) => setdescription(e.target.value)}
-                value={description}
-                className="w-full border rounded-md px-6 py-3 text-lg mb-5"
-                placeholder="recipe description..."
-            ></textarea>
+                name="description"
+                value={recipeData.description}
+                onChange={handleInputChange}
+                placeholder="Recipe description..."
+                required
+                className="w-full border rounded-md px-4 py-2 mb-4"
+            />
             <textarea
-                onChange={(e) => setingredients(e.target.value)}
-                value={ingredients}
-                className="w-full border rounded-md px-6 py-3 text-lg mb-5"
-                placeholder="recipe ingredients -> 'use comma to seperate ingredients'..."
-            ></textarea>
+                name="ingredients"
+                value={recipeData.ingredients}
+                onChange={handleInputChange}
+                placeholder="Recipe ingredients (comma-separated)"
+                required
+                className="w-full border rounded-md px-4 py-2 mb-4"
+            />
             <textarea
-                onChange={(e) => setinstructions(e.target.value)}
-                value={instructions}
-                className="w-full border rounded-md px-6 py-3 text-lg mb-5"
-                placeholder="recipe instructions -> 'use comma to seperate instructions'..."
-            ></textarea>
-            <div className="w-full text-right">
-                <button className="rounded-md text-xl bg-green-600 text-white py-2 px-5 hover:bg-green-700 duration-200">
-                    Re-Publish Recipe &nbsp; &#8594;
+                name="instructions"
+                value={recipeData.instructions}
+                onChange={handleInputChange}
+                placeholder="Recipe instructions (comma-separated)"
+                required
+                className="w-full border rounded-md px-4 py-2 mb-6"
+            />
+            <div className="text-right">
+                <button
+                    type="submit"
+                    className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                >
+                    Re-Publish Recipe →
                 </button>
             </div>
         </form>
-    ) : (
-        <h1 className="w-full text-center text-4xl text-green-600 mt-10">
-            Loading Recipe...
-        </h1>
     );
 };
 
