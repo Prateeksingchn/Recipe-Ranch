@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Link, Routes, Route } from "react-router-dom";
-import Details from "./Details";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const RecipeCard = ({ recipe }) => (
+const RecipeCard = ({ recipe, isUserCreated }) => (
   <div className="border rounded-lg overflow-hidden m-2 w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.33%-1rem)] xl:w-[calc(25%-1rem)]">
-    <img src={recipe.image} alt={recipe.label} className="w-full h-48 object-cover" />
+    <img src={recipe.image} alt={recipe.label || recipe.title} className="w-full h-48 object-cover" />
     <div className="p-4">
-      <h3 className="text-xl font-bold">{recipe.label}</h3>
-      <p className="text-gray-600 mt-2">{recipe.source}</p>
-      {recipe.cuisineType && recipe.cuisineType[0] && (
+      <h3 className="text-xl font-bold">{recipe.label || recipe.title}</h3>
+      <p className="text-gray-600 mt-2">{recipe.source || (isUserCreated ? "User Created" : "")}</p>
+      {(recipe.cuisineType?.[0] || recipe.category) && (
         <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mt-2">
-          {recipe.cuisineType[0]}
+          {recipe.cuisineType?.[0] || recipe.category}
         </span>
       )}
       <div className="mt-4 flex justify-between">
-        <Link to={`/recipes/${encodeURIComponent(recipe.uri.split('#')[1])}`}>
+        <Link to={`/recipe/${encodeURIComponent(recipe.uri?.split('#')[1] || recipe.id)}`}>
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             View Recipe
           </button>
@@ -24,10 +24,10 @@ const RecipeCard = ({ recipe }) => (
   </div>
 );
 
-const RecipeList = ({ recipes }) => (
+const RecipeList = ({ recipes, isUserCreated = false }) => (
   <div className="flex flex-wrap -mx-2">
     {recipes.length > 0 ? (
-      recipes.map((recipe) => recipe && <RecipeCard key={recipe.uri} recipe={recipe} />)
+      recipes.map((recipe) => recipe && <RecipeCard key={recipe.uri || recipe.id} recipe={recipe} isUserCreated={isUserCreated} />)
     ) : (
       <p className="w-full text-center text-xl text-gray-500 mt-10">No recipes found</p>
     )}
@@ -92,6 +92,8 @@ const Recipes = () => {
   const [recipesPerPage] = useState(20);
   const [totalResults, setTotalResults] = useState(0);
   const [categories, setCategories] = useState([]);
+  
+  const userCreatedRecipes = useSelector((state) => state.recipeReducer.recipes);
 
   useEffect(() => {
     fetchEdamamRecipes(currentPage, searchTerm, selectedCategory);
@@ -149,59 +151,58 @@ const Recipes = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 mb-16">
-      <Routes>
-        <Route path="/" element={
-          <>
-            <div className="flex justify-between items-center mb-8">
-              <div>
-                <h1 className="text-3xl font-bold">Our Recipes</h1>
-                <p className="text-zinc-500 mt-2">Discover delicious recipes from around the world</p>
-              </div>
-            </div>
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h1 className="text-3xl font-bold">Our Recipes</h1>
+          <p className="text-zinc-500 mt-2">Discover delicious recipes from around the world</p>
+        </div>
+        <Link to="/create-recipe" className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+          Create New Recipe
+        </Link>
+      </div>
 
-            <div className="mb-8 flex space-x-4">
-              <div className="relative flex-grow">
-                <input
-                  type="text"
-                  placeholder="Search recipes..."
-                  className="w-full p-2 pl-10 border rounded-md"
-                  value={searchTerm}
-                  onChange={handleSearch}
-                />
-                <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-              </div>
-              <select
-                className="p-2 border rounded-md"
-                value={selectedCategory}
-                onChange={handleCategoryChange}
-              >
-                <option value="">All Categories</option>
-                {categories.map((category, index) => (
-                  <option key={index} value={category}>{category}</option>
-                ))}
-              </select>
-            </div>
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold mb-4">Your Created Recipes</h2>
+        <RecipeList recipes={userCreatedRecipes} isUserCreated={true} />
+      </div>
 
-            {isLoading ? (
-              <p className="text-center text-xl">Loading recipes...</p>
-            ) : (
-              <>
-                <RecipeList recipes={allRecipes} />
-                {allRecipes.length > 0 && totalPages > 1 && (
-                  <Pagination 
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    onPageChange={handlePageChange}
-                  />
-                )}
-              </>
-            )}
-          </>
-        } />
-        <Route path=":id" element={<Details />} />
-      </Routes> 
+      <div className="mb-8 flex space-x-4">
+        <div className="relative flex-grow">
+          <input
+            type="text"
+            placeholder="Search recipes..."
+            className="w-full p-2 pl-10 border rounded-md"
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+          <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+        <select
+          className="p-2 border rounded-md"
+          value={selectedCategory}
+          onChange={handleCategoryChange}
+        >
+          <option value="">All Categories</option>
+          {categories.map((category, index) => (
+            <option key={index} value={category}>{category}</option>
+          ))}
+        </select>
+      </div>
+
+      <h2 className="text-2xl font-bold mb-4">All Recipes</h2>
+      {isLoading ? (
+        <p className="text-center text-xl">Loading recipes...</p>
+      ) : (
+        <RecipeList recipes={allRecipes} />
+      )}
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 };

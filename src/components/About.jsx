@@ -50,7 +50,7 @@ const StatisticCard = ({ value, label, Icon }) => (
 
 const About = () => {
   return (
-    <div className="bg-gradient-to-br from-green-100 to-green-300 min-h-screen py-16 mt-4 mb-12 rounded-3xl">
+    <div className="bg-gradient-to-br from-green-100 to-green-300 min-h-screen py-16 mt-4 mb-4 rounded-3xl">
       <div className="max-w-6xl mx-auto px-4">
         <motion.h1
           initial={{ opacity: 0, y: -50 }}

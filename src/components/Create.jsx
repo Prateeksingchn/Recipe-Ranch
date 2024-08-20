@@ -1,132 +1,80 @@
-import React, { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { asyncgetrecipies } from "../store/actions/recipeActions";
-import localRecipes from "../data/recipes";
 
 const Create = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const reduxRecipes = useSelector((state) => state.recipeReducer.recipes);
+    const { recipes } = useSelector((state) => state.recipeReducer);
 
-    const [recipeData, setRecipeData] = useState({
-        image: "",
-        title: "",
-        description: "",
-        ingredients: "",
-        instructions: "",
-        category: "",
-    });
-    const [categories, setCategories] = useState([]);
+    const [image, setimage] = useState("");
+    const [title, settitle] = useState("");
+    const [description, setdescription] = useState("");
+    const [ingredients, setingredients] = useState("");
+    const [instructions, setinstructions] = useState("");
 
-    useEffect(() => {
-        const allRecipes = [...localRecipes, ...(reduxRecipes || [])].filter(Boolean);
-        const uniqueCategories = [...new Set(allRecipes.map(recipe => recipe.category))];
-        setCategories(uniqueCategories);
-
-        if (uniqueCategories.length > 0 && !recipeData.category) {
-            setRecipeData(prev => ({ ...prev, category: uniqueCategories[0] }));
-        }
-    }, [reduxRecipes, recipeData.category]);
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setRecipeData(prev => ({ ...prev, [name]: value }));
-    };
-
-    const handleSubmit = (e) => {
+    const SubmitHandler = (e) => {
         e.preventDefault();
         const newRecipe = {
             id: nanoid(),
-            ...recipeData,
-            name: recipeData.title,
-            ingredients: recipeData.ingredients.split(',').map(item => item.trim()),
-            instructions: recipeData.instructions.split(',').map(item => item.trim()),
+            image,
+            title,
+            description,
+            ingredients,
+            instructions,
         };
 
-        const updatedRecipes = [...localRecipes, ...(reduxRecipes || []), newRecipe].filter(Boolean);
-        localStorage.setItem("recipes", JSON.stringify(updatedRecipes));
+        localStorage.setItem(
+            "recipes",
+            JSON.stringify([...recipes, newRecipe])
+        );
         dispatch(asyncgetrecipies());
         toast.success("Recipe Created Successfully!");
         navigate("/recipes");
     };
-
     return (
-        <form onSubmit={handleSubmit} className="max-w-2xl mx-auto py-8 px-4">
-            <h1 className="text-4xl md:text-5xl font-bold text-green-600 mb-8">
-                Create New Recipe
+        <form onSubmit={SubmitHandler} className="w-[70%] m-auto  pb-5">
+            <h1 className="text-7xl mt-5 font-extrabold text-green-600 mb-[5%]">
+                Create <br /> New Recipe
             </h1>
-            <div className="mb-4">
-                <input
-                    type="url"
-                    name="image"
-                    value={recipeData.image}
-                    onChange={handleInputChange}
-                    placeholder="Recipe Image URL"
-                    required
-                    className="w-full border rounded-md px-4 py-2 mb-2"
-                />
-                {recipeData.image && (
-                    <img
-                        src={recipeData.image}
-                        alt="Recipe preview"
-                        className="w-full h-48 object-cover rounded-md"
-                    />
-                )}
-            </div>
             <input
+                onChange={(e) => setimage(e.target.value)}
+                value={image}
+                type="url"
+                className="w-full border rounded-md px-6 py-3 text-lg mb-5"
+                placeholder="Recipe Image URL"
+            />
+            <input
+                onChange={(e) => settitle(e.target.value)}
+                value={title}
                 type="text"
-                name="title"
-                value={recipeData.title}
-                onChange={handleInputChange}
+                className="w-full border rounded-md px-6 py-3 text-lg mb-5"
                 placeholder="Recipe Name"
-                required
-                className="w-full border rounded-md px-4 py-2 mb-4"
-            />
-            <select
-                name="category"
-                value={recipeData.category}
-                onChange={handleInputChange}
-                required
-                className="w-full border rounded-md px-4 py-2 mb-4"
-            >
-                <option value="">Select a category</option>
-                {categories.map((cat, index) => (
-                    <option key={index} value={cat}>{cat}</option>
-                ))}
-            </select>
-            <textarea
-                name="description"
-                value={recipeData.description}
-                onChange={handleInputChange}
-                placeholder="Recipe description..."
-                required
-                className="w-full border rounded-md px-4 py-2 mb-4"
             />
             <textarea
-                name="ingredients"
-                value={recipeData.ingredients}
-                onChange={handleInputChange}
-                placeholder="Recipe ingredients (comma-separated)"
-                required
-                className="w-full border rounded-md px-4 py-2 mb-4"
-            />
+                onChange={(e) => setdescription(e.target.value)}
+                value={description}
+                className="w-full border rounded-md px-6 py-3 text-lg mb-5"
+                placeholder="recipe description..."
+            ></textarea>
             <textarea
-                name="instructions"
-                value={recipeData.instructions}
-                onChange={handleInputChange}
-                placeholder="Recipe instructions (comma-separated)"
-                required
-                className="w-full border rounded-md px-4 py-2 mb-6"
-            />
-            <div className="text-right">
-                <button
-                    type="submit"
-                    className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                >
-                    Publish Recipe →
+                onChange={(e) => setingredients(e.target.value)}
+                value={ingredients}
+                className="w-full border rounded-md px-6 py-3 text-lg mb-5"
+                placeholder="recipe ingredients -> 'use comma to seperate ingredients'..."
+            ></textarea>
+            <textarea
+                onChange={(e) => setinstructions(e.target.value)}
+                value={instructions}
+                className="w-full border rounded-md px-6 py-3 text-lg mb-5"
+                placeholder="recipe instructions -> 'use comma to seperate instructions'..."
+            ></textarea>
+            <div className="w-full text-right">
+                <button className="rounded-md text-xl bg-green-600 text-white py-2 px-5 hover:bg-green-700 duration-200">
+                    Publish Recipe &nbsp; &#8594;
                 </button>
             </div>
         </form>

@@ -50,7 +50,7 @@ const BreakfastRecipes = () => {
 
   return (
     <motion.section
-      className="py-20 px-6 bg-gradient-to-br from-[#C2E1F8] to-[#E6F4FF] rounded-3xl my-3"
+      className="py-20 px-6 bg-gradient-to-br from-[#C2E1F8] to-[#E6F4FF] rounded-3xl my-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const CreateRecipesCTA = () => {
   return (
-    <section className="pt-20 pb-24 px-6 bg-gradient-to-r from-[#D3EAFB] via-[#9991e1] to-orange-100 rounded-3xl -z-30 my-4">
+    <section className="pt-20 pb-24 px-6 bg-gradient-to-r from-[#D3EAFB] via-blue-200 to-orange-50 rounded-3xl -z-30 my-4">
       <div className="container mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

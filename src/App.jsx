@@ -13,9 +13,9 @@ import { useDispatch } from "react-redux";
 import { asyncgetrecipies } from "./store/actions/recipeActions";
 import Footer from "./components/Footer";
 
-import BreakfastRecipes from "./components/BreakfastRecipes";
-import LunchRecipes from "./components/LunchRecipes";
-import DinnerRecipes from "./components/DinnerRecipes";
+import BreakfastRecipes from "./components/RecipesPages/BreakfastRecipes";
+import LunchRecipes from "./components/RecipesPages/LunchRecipes";
+import DinnerRecipes from "./components/RecipesPages/DinnerRecipes";
 
 import RecipeBlogDetail from './components/RecipeBlogDetail';
 

@@ -106,14 +106,14 @@ const FeaturedRecipes = () => {
 
   return (
     <motion.section
-      className="py-10 px-6 bg-gradient-to-br from-green-500 to-blue-400 rounded-3xl my-4"
+      className="py-10 px-6 bg-gradient-to-br from-green-200 to-blue-200 rounded-3xl my-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
       <div className="container mx-auto">
         <h2
-          className="text-5xl font-bold text-white mb-12 text-center"
+          className="text-5xl font-bold text-[#5a6167] mb-8 text-center"
           style={{ fontFamily: "Lobster, cursive" }}
         >
           Featured Recipes
@@ -125,10 +125,10 @@ const FeaturedRecipes = () => {
               placeholder="Search recipes..."
               value={searchTerm}
               onChange={handleSearch}
-              className="pl-10 pr-4 py-2 w-full rounded-full border-2 border-white bg-white bg-opacity-20 text-white placeholder-white"
+              className="pl-10 pr-4 py-2 w-full rounded-full border-2 border-[#5a6167] bg-white bg-opacity-20 text-[#5a6167] placeholder-[#5a6167] focus:outline-none"
             />
             <Search
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white"
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#5a6167]"
               size={20}
             />
           </div>

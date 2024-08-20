@@ -6,7 +6,7 @@ const TestimonialsSection = () => {
   const MarqueeRow = ({ direction }) => (
     <div className="flex overflow-hidden py-4">
       <motion.div
-        className="flex space-x-8 whitespace-nowrap"
+        className="flex space-x-6 whitespace-nowrap"
         animate={{
           x: direction === "left" ? [0, -2880] : [-2880, 0],
         }}
@@ -20,7 +20,7 @@ const TestimonialsSection = () => {
         }}
       >
         {[...testimonials, ...testimonials].map((testimonial, index) => (
-          <div key={index} className="bg-white rounded-lg shadow-lg p-6 w-80 h-44 flex-shrink-0">
+          <div key={index} className="bg-white rounded-lg shadow-lg p-6 w-80 h-40 flex-shrink-0">
             <div className="flex items-center mb-4">
               <img
                 src={testimonial.avatar}
@@ -52,7 +52,7 @@ const TestimonialsSection = () => {
             Discover the impact of our recipes through the words of our passionate community.
           </p>
         </motion.div>
-        <div className="space-y-6 overflow-hidden">
+        <div className="space-y-3 overflow-hidden">
           <MarqueeRow direction="left" />
           <MarqueeRow direction="right" />
         </div>
