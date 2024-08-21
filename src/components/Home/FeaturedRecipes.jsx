@@ -32,22 +32,29 @@ const RecipeCard = ({ recipe, index }) => {
         </span>
       </div>
       <div className="px-5 pt-2 pb-4">
-        <h3 className="text-xl font-semibold mb-1">{recipe.title}</h3>
-        <p className="text-gray-600 mb-2 capitalize">{recipe.subcategory}</p>
-        <div className="flex justify-between items-center text-sm text-gray-500 mb-4">
-          <span className="flex items-center">
-            <Clock size={16} className="mr-1" /> {recipe.time} min
-          </span>
-          <span className="flex items-center">
-            <Award size={16} className="mr-1" /> {recipe.difficulty}
-          </span>
+        <div className="flex items-start justify-between mt-1 mb-3 ">
+          <div className="flex flex-col">
+            <h3 className="text-[18px] font-semibold ">{recipe.title}</h3>
+            <p className="text-gray-600 text-[15px] capitalize">
+              {recipe.subcategory}
+            </p>
+          </div>
+          <div className="flex flex-col justify-between items-start gap-1 text-sm text-gray-500 ">
+            <span className="flex items-center">
+              <Clock size={15} className="mr-1" /> {recipe.time} min
+            </span>
+            <span className="flex items-center">
+              <Award size={16} className="mr-1" /> {recipe.difficulty}
+            </span>
+          </div>
         </div>
-        <div className="flex justify-between items-center text-sm mb-4">
-          <span className="flex items-center text-red-500">
-            <Heart size={16} className="mr-1" fill="currentColor" /> {likes}
-          </span>
+
+        <div className="flex justify-between items-center text-sm mb-2">
           <span className="flex items-center text-gray-600">
             <ChefHat size={16} className="mr-1" /> {recipe.chefName}
+          </span>
+          <span className="flex items-center text-red-500">
+            <Heart size={16} className="mr-1" fill="currentColor" /> {likes}
           </span>
         </div>
         <Link to={`/created-recipes/${recipe.id}`}>

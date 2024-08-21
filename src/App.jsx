@@ -4,7 +4,7 @@ import Nav from "./components/Nav";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import Recipes from "./components/Recipes";
-import Details from "./components/Details";
+import Details from "./components/Details/Details";
 import Create from "./components/Create";
 import About from "./components/About";
 import Blog from "./components/Blog";
@@ -18,8 +18,12 @@ import LunchRecipes from "./components/RecipesPages/LunchRecipes";
 import DinnerRecipes from "./components/RecipesPages/DinnerRecipes";
 import LatestRecipes from "./components/RecipesPages/LatestRecipes";
 
-import RecipeBlogDetail from './components/RecipeBlogDetail';
-import CreatedRecipeDetail from './components/CreatedRecipeDetail';
+import RecipeBlogDetail from './components/Details/RecipeBlogDetail';
+import CreatedRecipeDetail from './components/Details/CreatedRecipeDetail';
+// import RecipeDetails from './components/Details/RecipeDetails';
+import BreakfastRecipeDetails from "./components/Details/BreakfastRecipeDetails";
+import LunchRecipeDetails from "./components/Details/LunchRecipeDetails";
+import DinnerRecipeDetails from "./components/Details/DinnerRecipeDetails";
 
 
 
@@ -42,9 +46,17 @@ const App = () => {
         <Route path="/recipe/:id" element={<Details />} />
         <Route path="/about" element={<About />} />
         <Route path="/blog" element={<Blog />} />
+
+        {/* Recipe Pages start */}
         <Route path="/breakfast-recipes" element={<BreakfastRecipes />} />
         <Route path="/lunch-recipes" element={<LunchRecipes />} />
         <Route path="/dinner-recipes" element={<DinnerRecipes />} />
+        <Route path="/breakfast-recipes/:recipeSlug" element={<BreakfastRecipeDetails />} />
+        <Route path="/lunch-recipes/:recipeSlug" element={<LunchRecipeDetails />} />
+        <Route path="/dinner-recipes/:recipeSlug" element={<DinnerRecipeDetails />} />
+        {/* <Route path="/:recipeType/:recipeSlug" element={<RecipeDetails />} /> */}
+        {/* Recipe Pages end */}
+
         <Route path="/recipeblogdetail/:id" element={<RecipeBlogDetail />} />
         <Route path="/created-recipes/:id" element={<CreatedRecipeDetail />} />
         <Route path="latest" element={<LatestRecipes />} />

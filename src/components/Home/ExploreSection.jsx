@@ -50,7 +50,7 @@ const ExploreSection = () => {
               whileHover={{ y: -5, scale: 1.02 }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 * index, duration: 0.5 }}
+              transition={{ delay: 0.1 * index, duration: 0.1 }}
             >
               <img
                 src={mealType.image}

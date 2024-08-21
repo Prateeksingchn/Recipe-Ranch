@@ -1,125 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-
-const RecipeCard = ({ recipe, isUserCreated }) => {
-  const recipeId = isUserCreated
-    ? recipe.id
-    : encodeURIComponent(recipe.uri?.split("#")[1]);
-  const viewRecipeLink = isUserCreated
-    ? `/created-recipes/${recipeId}`
-    : `/recipe/${recipeId}`;
-
-  return (
-    <div className="border rounded-lg overflow-hidden m-2 w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.33%-1rem)] xl:w-[calc(25%-1rem)]">
-      <img
-        src={recipe.image}
-        alt={recipe.label || recipe.title}
-        className="w-full h-48 object-cover"
-      />
-      <div className="p-4">
-        <h3 className="text-xl font-bold">{recipe.label || recipe.title}</h3>
-        <p className="text-gray-600 mt-2">
-          {recipe.source || (isUserCreated ? "" : "")}
-        </p>
-        <div className="mt-2 space-y-1">
-          {(recipe.cuisineType?.[0] || recipe.category) && (
-            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-              {recipe.cuisineType?.[0] || recipe.category}
-            </span>
-          )}
-          {recipe.subcategory && (
-            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">
-              {recipe.subcategory}
-            </span>
-          )}
-        </div>
-        <div className="mt-4 flex justify-between">
-          <Link to={viewRecipeLink}>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              View Recipe
-            </button>
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const RecipeList = ({ recipes, isUserCreated = false }) => (
-  <div className="flex flex-wrap -mx-2">
-    {recipes.length > 0 ? (
-      recipes.map(
-        (recipe) =>
-          recipe && (
-            <RecipeCard
-              key={recipe.uri || recipe.id}
-              recipe={recipe}
-              isUserCreated={isUserCreated}
-            />
-          )
-      )
-    ) : (
-      <p className="w-full text-center text-xl text-gray-500 mt-10">
-        No recipes found
-      </p>
-    )}
-  </div>
-);
-
-// Pagination
-const Pagination = ({ currentPage, totalPages, onPageChange }) => {
-  const pageNumbers = [];
-  let startPage = Math.max(1, currentPage - 2);
-  let endPage = Math.min(totalPages, startPage + 4);
-
-  if (endPage - startPage < 4) {
-    startPage = Math.max(1, endPage - 4);
-  }
-
-  for (let i = startPage; i <= endPage; i++) {
-    pageNumbers.push(i);
-  }
-
-  return (
-    <nav className="flex justify-center mt-8">
-      <ul className="flex items-center">
-        <li className="mx-1">
-          <button
-            onClick={() => onPageChange(Math.max(1, currentPage - 1))}
-            disabled={currentPage === 1}
-            className="px-4 py-2 border rounded bg-white text-blue-500 disabled:text-gray-300"
-          >
-            Previous
-          </button>
-        </li>
-        {pageNumbers.map((number) => (
-          <li key={number} className="mx-1">
-            <button
-              onClick={() => onPageChange(number)}
-              className={`px-4 py-2 border rounded ${
-                currentPage === number
-                  ? "bg-blue-500 text-white"
-                  : "bg-white text-blue-500"
-              }`}
-            >
-              {number}
-            </button>
-          </li>
-        ))}
-        <li className="mx-1">
-          <button
-            onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
-            disabled={currentPage === totalPages}
-            className="px-4 py-2 border rounded bg-white text-blue-500 disabled:text-gray-300"
-          >
-            Next
-          </button>
-        </li>
-      </ul>
-    </nav>
-  );
-};
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import RecipeCard from "./Recipe/RecipeCard";
+import RecipePageHeader from "./Recipe/RecipePageHeader";
+import SearchBar from "./Recipe/SearchBar";
+import UserCreatedRecipes from "./Recipe/UserCreatedRecipes";
+import AllRecipes from "./Recipe/AllRecipes";
+import Pagination from "./Recipe/Pagination";
 
 const Recipes = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -127,7 +15,7 @@ const Recipes = () => {
   const [allRecipes, setAllRecipes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [recipesPerPage] = useState(20);
+  const [recipesPerPage] = useState(16);
   const [totalResults, setTotalResults] = useState(0);
   const [categories, setCategories] = useState([]);
 
@@ -178,97 +66,31 @@ const Recipes = () => {
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
-    window.scrollTo(0, 0); // Scroll to top when page changes
+    window.scrollTo(0, 0);
   };
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
-    setCurrentPage(1); // Reset to first page when searching
+    setCurrentPage(1);
   };
 
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
-    setCurrentPage(1); // Reset to first page when changing category
+    setCurrentPage(1);
   };
 
   return (
-    <div className="w-full mx-auto px-32 py-8 rounded-3xl my-4  ">
-      <div className="flex justify-between items-center mb-8">
-        <div>
-          <h1 className="text-3xl font-bold">Our Recipes</h1>
-          <p className="text-zinc-500 mt-2">
-            Discover delicious recipes from around the world
-          </p>
-        </div>
-        <Link
-          to="/create-recipe"
-          className="bg-[#EE4130] text-white font-bold py-3 px-5 rounded-3xl"
-        >
-          Create New Recipe
-        </Link>
-      </div>
-
-
-    {/* User Created Recipes */}
-      <div className="mb-8">
-        <div className="mb-4 flex gap-14">
-          <h2 className="text-2xl font-bold mb-4">Latest Recipes</h2>
-          <Link to="/latest">
-            <button className="bg-[#ff0000] text-white font-bold py-2 px-4 rounded-full">View All Latest Recipes</button>
-          </Link>
-        </div>
-        <RecipeList recipes={userCreatedRecipes} isUserCreated={true} />
-      </div>
-
-
-    {/* Search */}
-      <div className="mb-8 flex space-x-4">
-        <div className="relative flex-grow">
-          <input
-            type="text"
-            placeholder="Search recipes..."
-            className="w-full p-2 pl-10 border rounded-md"
-            value={searchTerm}
-            onChange={handleSearch}
-          />
-          <svg
-            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
-        </div>
-        <select
-          className="p-2 border rounded-md"
-          value={selectedCategory}
-          onChange={handleCategoryChange}
-        >
-          <option value="">All Categories</option>
-          {categories.map((category, index) => (
-            <option key={index} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
-      </div>
-      
-
-      {/* All Recipes */}
-      <h2 className="text-2xl font-bold mb-4">All Recipes</h2>
-      {isLoading ? (
-        <p className="text-center text-xl">Loading recipes...</p>
-      ) : (
-        <RecipeList recipes={allRecipes} />
-      )}
-
+    <div className="w-full mx-auto px-4 sm:px-8 md:px-16 py-8 rounded-3xl my-4">
+      <RecipePageHeader />
+      <SearchBar
+        searchTerm={searchTerm}
+        handleSearch={handleSearch}
+        selectedCategory={selectedCategory}
+        handleCategoryChange={handleCategoryChange}
+        categories={categories}
+      />
+      <UserCreatedRecipes userCreatedRecipes={userCreatedRecipes} />
+      <AllRecipes allRecipes={allRecipes} isLoading={isLoading} />
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

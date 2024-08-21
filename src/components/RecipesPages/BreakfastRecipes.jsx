@@ -1,65 +1,27 @@
 import React from "react";
+import { useEffect } from 'react';
 import { motion } from "framer-motion";
-import {  ArrowLeft, ChevronRight, Clock, Users, Star } from "lucide-react";
+import { ArrowLeft, ChevronRight, Clock, Users, Star } from "lucide-react";
 import { Link } from "react-router-dom";
+import breakfastRecipes from "../../data/breakfastRecipes";
+import { useParams } from "react-router-dom";
 
 const BreakfastRecipes = () => {
-  const breakfastRecipes = [
-    {
-      name: "Avocado Toast with Poached Egg",
-      image: "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZvY2FkbyUyMHRvYXN0fGVufDB8MHwwfHx8MA%3D%3D",
-      time: "15 min",
-      servings: 2,
-      rating: 4.8,
-    },
-    {
-      name: "Blueberry Pancakes",
-      image: "https://images.unsplash.com/photo-1528207776546-365bb710ee93?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Ymx1ZWJlcnJ5JTIwcGFuY2FrZXN8ZW58MHwwfDB8fHww",
-      time: "20 min",
-      servings: 4,
-      rating: 4.5,
-    },
-    {
-      name: "Greek Yogurt Parfait",
-      image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8eW9ndXJ0JTIwcGFyZmFpdHxlbnwwfDB8MHx8fDA%3D",
-      time: "10 min",
-      servings: 1,
-      rating: 4.2,
-    },
-    {
-      name: "Spinach and Mushroom Omelette",
-      image: "https://images.unsplash.com/photo-1510693206972-df098062cb71?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8b21lbGV0dGV8ZW58MHwwfDB8fHww",
-      time: "15 min",
-      servings: 2,
-      rating: 4.6,
-    },
-    {
-      name: "Breakfast Burrito",
-      image: "https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YnJlYWtmYXN0JTIwYnVycml0b3xlbnwwfDB8MHx8fDA%3D",
-      time: "25 min",
-      servings: 2,
-      rating: 4.7,
-    },
-    {
-      name: "Acai Bowl",
-      image: "https://images.pexels.com/photos/4099236/pexels-photo-4099236.jpeg?auto=compress&cs=tinysrgb&w=600",
-      time: "15 min",
-      servings: 1,
-      rating: 4.4,
-    },
-  ];
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const { recipeType } = useParams();
 
   return (
     <motion.section
-      className="py-20 px-6 bg-gradient-to-br from-[#C2E1F8] to-[#E6F4FF] rounded-3xl my-4"
+      className="pt-5 pb-10 px-6 my-4  bg-gradient-to-br from-[#C2E1F8] to-[#E6F4FF] rounded-3xl "
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
       <Link to="/">
-        <button
-          className="mt-8 mb-8 inline-flex items-center rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-        >
+        <button className="mt-8 ml-[6%] mb-6 inline-flex items-center rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
           <ArrowLeft className="mr-2 h-5 w-5" />
           Back to Explore
         </button>
@@ -76,12 +38,14 @@ const BreakfastRecipes = () => {
           Breakfast Recipes
         </motion.h1>
         <motion.p
-          className="text-xl text-gray-700 mb-12 text-center max-w-3xl mx-auto"
+          className="text-xl text-gray-700 mb-12 text-center max-w-[650px] mx-auto"
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          Start your day right with these delicious and easy-to-make breakfast recipes. From quick and healthy options to indulgent weekend treats, we've got something for everyone!
+          Start your day right with these delicious and easy-to-make breakfast
+          recipes. From quick and healthy options to indulgent weekend treats,
+          we've got something for everyone!
         </motion.p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {breakfastRecipes.map((recipe, index) => (
@@ -105,15 +69,21 @@ const BreakfastRecipes = () => {
                     <Clock size={16} className="mr-1" /> {recipe.time}
                   </span>
                   <span className="flex items-center">
-                    <Users size={16} className="mr-1" /> {recipe.servings} servings
+                    <Users size={16} className="mr-1" /> {recipe.servings}{" "}
+                    servings
                   </span>
                   <span className="flex items-center text-yellow-500">
-                    <Star size={16} className="mr-1" fill="currentColor" /> {recipe.rating}
+                    <Star size={16} className="mr-1" fill="currentColor" />{" "}
+                    {recipe.rating}
                   </span>
                 </div>
-                <button className="inline-flex items-center text-green-600 font-semibold hover:text-green-700 transition-colors duration-200">
-                  View Recipe <ChevronRight className="ml-2" size={20} />
-                </button>
+                <Link
+                  to={`/breakfast-recipes/${recipe.name
+                    .toLowerCase()
+                    .replace(/\s/g, "-")}`}
+                >
+                  <button>View Recipe</button>
+                </Link>
               </div>
             </motion.div>
           ))}
