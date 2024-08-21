@@ -27,7 +27,7 @@ const ExploreSection = () => {
 
   return (
     <motion.section
-      className="py-20 px-6 bg-gradient-to-br from-[#C2E1F8] to-[#E6F4FF] rounded-3xl my-3"
+      className="py-14 px-6 bg-gradient-to-br from-[#C2E1F8] to-[#E6F4FF] rounded-3xl my-3"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
@@ -74,6 +74,13 @@ const ExploreSection = () => {
               </div>
             </motion.div>
           ))}
+        </div>
+        <div className="mt-12 text-center">
+          <Link to="/recipes">
+            <button className="bg-white text-green-500 hover:bg-green-100 transition-colors duration-300 px-6 py-2 rounded-full font-semibold">
+              View All Recipes
+            </button>
+          </Link>
         </div>
       </div>
     </motion.section>

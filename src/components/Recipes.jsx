@@ -1,39 +1,71 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux"; 
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const RecipeCard = ({ recipe, isUserCreated }) => (
-  <div className="border rounded-lg overflow-hidden m-2 w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.33%-1rem)] xl:w-[calc(25%-1rem)]">
-    <img src={recipe.image} alt={recipe.label || recipe.title} className="w-full h-48 object-cover" />
-    <div className="p-4">
-      <h3 className="text-xl font-bold">{recipe.label || recipe.title}</h3>
-      <p className="text-gray-600 mt-2">{recipe.source || (isUserCreated ? "User Created" : "")}</p>
-      {(recipe.cuisineType?.[0] || recipe.category) && (
-        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mt-2">
-          {recipe.cuisineType?.[0] || recipe.category}
-        </span>
-      )}
-      <div className="mt-4 flex justify-between">
-        <Link to={`/recipe/${encodeURIComponent(recipe.uri?.split('#')[1] || recipe.id)}`}>
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            View Recipe
-          </button>
-        </Link>
+const RecipeCard = ({ recipe, isUserCreated }) => {
+  const recipeId = isUserCreated
+    ? recipe.id
+    : encodeURIComponent(recipe.uri?.split("#")[1]);
+  const viewRecipeLink = isUserCreated
+    ? `/created-recipes/${recipeId}`
+    : `/recipe/${recipeId}`;
+
+  return (
+    <div className="border rounded-lg overflow-hidden m-2 w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.33%-1rem)] xl:w-[calc(25%-1rem)]">
+      <img
+        src={recipe.image}
+        alt={recipe.label || recipe.title}
+        className="w-full h-48 object-cover"
+      />
+      <div className="p-4">
+        <h3 className="text-xl font-bold">{recipe.label || recipe.title}</h3>
+        <p className="text-gray-600 mt-2">
+          {recipe.source || (isUserCreated ? "" : "")}
+        </p>
+        <div className="mt-2 space-y-1">
+          {(recipe.cuisineType?.[0] || recipe.category) && (
+            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
+              {recipe.cuisineType?.[0] || recipe.category}
+            </span>
+          )}
+          {recipe.subcategory && (
+            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">
+              {recipe.subcategory}
+            </span>
+          )}
+        </div>
+        <div className="mt-4 flex justify-between">
+          <Link to={viewRecipeLink}>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              View Recipe
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const RecipeList = ({ recipes, isUserCreated = false }) => (
   <div className="flex flex-wrap -mx-2">
     {recipes.length > 0 ? (
-      recipes.map((recipe) => recipe && <RecipeCard key={recipe.uri || recipe.id} recipe={recipe} isUserCreated={isUserCreated} />)
+      recipes.map(
+        (recipe) =>
+          recipe && (
+            <RecipeCard
+              key={recipe.uri || recipe.id}
+              recipe={recipe}
+              isUserCreated={isUserCreated}
+            />
+          )
+      )
     ) : (
-      <p className="w-full text-center text-xl text-gray-500 mt-10">No recipes found</p>
+      <p className="w-full text-center text-xl text-gray-500 mt-10">
+        No recipes found
+      </p>
     )}
   </div>
 );
-
 
 // Pagination
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
@@ -61,11 +93,15 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
             Previous
           </button>
         </li>
-        {pageNumbers.map(number => (
+        {pageNumbers.map((number) => (
           <li key={number} className="mx-1">
             <button
               onClick={() => onPageChange(number)}
-              className={`px-4 py-2 border rounded ${currentPage === number ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'}`}
+              className={`px-4 py-2 border rounded ${
+                currentPage === number
+                  ? "bg-blue-500 text-white"
+                  : "bg-white text-blue-500"
+              }`}
             >
               {number}
             </button>
@@ -86,32 +122,34 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 };
 
 const Recipes = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [allRecipes, setAllRecipes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [recipesPerPage] = useState(20);
   const [totalResults, setTotalResults] = useState(0);
   const [categories, setCategories] = useState([]);
-  
-  const userCreatedRecipes = useSelector((state) => state.recipeReducer.recipes);
+
+  const userCreatedRecipes = useSelector(
+    (state) => state.recipeReducer.recipes
+  );
 
   useEffect(() => {
     fetchEdamamRecipes(currentPage, searchTerm, selectedCategory);
   }, [currentPage, searchTerm, selectedCategory]);
 
   const fetchEdamamRecipes = async (page, query, category) => {
-    const APP_ID = '7b948bd8';
-    const APP_KEY = 'c1f4f91b2d5ffb2918347647551d908f';
+    const APP_ID = "7b948bd8";
+    const APP_KEY = "c1f4f91b2d5ffb2918347647551d908f";
     const from = (page - 1) * recipesPerPage;
     const to = from + recipesPerPage;
     let url = `https://api.edamam.com/search?app_id=${APP_ID}&app_key=${APP_KEY}&from=${from}&to=${to}`;
-    
+
     if (query) {
       url += `&q=${encodeURIComponent(query)}`;
     } else {
-      url += '&q=chicken'; // Default search term if none provided
+      url += "&q=chicken"; // Default search term if none provided
     }
     if (category) {
       url += `&cuisineType=${encodeURIComponent(category)}`;
@@ -121,14 +159,16 @@ const Recipes = () => {
       setIsLoading(true);
       const response = await fetch(url);
       const data = await response.json();
-      setAllRecipes(data.hits.map(hit => hit.recipe));
+      setAllRecipes(data.hits.map((hit) => hit.recipe));
       setTotalResults(data.count);
-      
+
       // Extract unique categories
-      const uniqueCategories = [...new Set(data.hits.flatMap(hit => hit.recipe.cuisineType || []))];
+      const uniqueCategories = [
+        ...new Set(data.hits.flatMap((hit) => hit.recipe.cuisineType || [])),
+      ];
       setCategories(uniqueCategories);
     } catch (error) {
-      console.error('Error fetching recipes from Edamam:', error);
+      console.error("Error fetching recipes from Edamam:", error);
     } finally {
       setIsLoading(false);
     }
@@ -152,22 +192,36 @@ const Recipes = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 mb-16">
+    <div className="w-full mx-auto px-32 py-8 rounded-3xl my-4  ">
       <div className="flex justify-between items-center mb-8">
         <div>
           <h1 className="text-3xl font-bold">Our Recipes</h1>
-          <p className="text-zinc-500 mt-2">Discover delicious recipes from around the world</p>
+          <p className="text-zinc-500 mt-2">
+            Discover delicious recipes from around the world
+          </p>
         </div>
-        <Link to="/create-recipe" className="bg-[#EE4130] text-white font-bold py-3 px-5 rounded-3xl">
+        <Link
+          to="/create-recipe"
+          className="bg-[#EE4130] text-white font-bold py-3 px-5 rounded-3xl"
+        >
           Create New Recipe
         </Link>
       </div>
 
+
+    {/* User Created Recipes */}
       <div className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Your Created Recipes</h2>
+        <div className="mb-4 flex gap-14">
+          <h2 className="text-2xl font-bold mb-4">Latest Recipes</h2>
+          <Link to="/latest">
+            <button className="bg-[#ff0000] text-white font-bold py-2 px-4 rounded-full">View All Latest Recipes</button>
+          </Link>
+        </div>
         <RecipeList recipes={userCreatedRecipes} isUserCreated={true} />
       </div>
 
+
+    {/* Search */}
       <div className="mb-8 flex space-x-4">
         <div className="relative flex-grow">
           <input
@@ -177,8 +231,19 @@ const Recipes = () => {
             value={searchTerm}
             onChange={handleSearch}
           />
-          <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          <svg
+            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
           </svg>
         </div>
         <select
@@ -188,11 +253,15 @@ const Recipes = () => {
         >
           <option value="">All Categories</option>
           {categories.map((category, index) => (
-            <option key={index} value={category}>{category}</option>
+            <option key={index} value={category}>
+              {category}
+            </option>
           ))}
         </select>
       </div>
+      
 
+      {/* All Recipes */}
       <h2 className="text-2xl font-bold mb-4">All Recipes</h2>
       {isLoading ? (
         <p className="text-center text-xl">Loading recipes...</p>

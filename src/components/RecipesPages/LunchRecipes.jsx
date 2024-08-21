@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { ChevronRight, Clock, Users, Star } from "lucide-react";
+import {  ArrowLeft, ChevronRight, Clock, Users, Star } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const LunchRecipes = () => {
   const lunchRecipes = [
@@ -50,11 +51,20 @@ const LunchRecipes = () => {
 
   return (
     <motion.section
-      className="py-20 px-6 bg-gradient-to-br from-[#C2E1F8] to-[#E6F4FF] rounded-3xl my-4"
+      className="py-5 px-6 bg-gradient-to-br from-[#C2E1F8] to-[#E6F4FF] rounded-3xl my-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
+      <Link to="/">
+        <button
+          className="mt-8 ml-[90px] mb-8 inline-flex items-center rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back to Explore
+        </button>
+      </Link>
+
       <div className="container mx-auto">
         <motion.h1
           className="text-6xl font-bold text-[#04039B] mb-8 text-center"
@@ -66,7 +76,7 @@ const LunchRecipes = () => {
           Lunch Recipes
         </motion.h1>
         <motion.p
-          className="text-xl text-gray-700 mb-12 text-center max-w-3xl mx-auto"
+          className="text-xl text-gray-700 mb-12 text-center max-w-lg mx-auto"
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}

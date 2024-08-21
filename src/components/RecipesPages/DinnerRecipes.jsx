@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { ChevronRight, Clock, Users, Star } from "lucide-react";
+import {  ArrowLeft, ChevronRight, Clock, Users, Star } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const DinnerRecipes = () => {
   const dinnerRecipes = [
@@ -55,6 +56,15 @@ const DinnerRecipes = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
+      <Link to="/">
+        <button
+          className="mt-8 mb-8 inline-flex items-center rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back to Explore
+        </button>
+      </Link>
+
       <div className="container mx-auto">
         <motion.h1
           className="text-6xl font-bold text-[#04039B] mb-8 text-center"

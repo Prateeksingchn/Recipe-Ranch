@@ -16,9 +16,12 @@ import Footer from "./components/Footer";
 import BreakfastRecipes from "./components/RecipesPages/BreakfastRecipes";
 import LunchRecipes from "./components/RecipesPages/LunchRecipes";
 import DinnerRecipes from "./components/RecipesPages/DinnerRecipes";
+import LatestRecipes from "./components/RecipesPages/LatestRecipes";
 
 import RecipeBlogDetail from './components/RecipeBlogDetail';
 import CreatedRecipeDetail from './components/CreatedRecipeDetail';
+
+
 
 const App = () => {
   const dispatch = useDispatch();
@@ -44,6 +47,7 @@ const App = () => {
         <Route path="/dinner-recipes" element={<DinnerRecipes />} />
         <Route path="/recipeblogdetail/:id" element={<RecipeBlogDetail />} />
         <Route path="/created-recipes/:id" element={<CreatedRecipeDetail />} />
+        <Route path="latest" element={<LatestRecipes />} />
       </Routes>
 
       <Footer />

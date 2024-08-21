@@ -1,104 +1,76 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Clock, Award, ChefHat, Heart, Search } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
+const RecipeCard = ({ recipe, index }) => {
+  const [likes, setLikes] = useState(0);
 
-const featuredRecipes = [
-  {
-    id: 1,
-    name: "Avocado Toast",
-    category: "Breakfast",
-    time: "10 min",
-    difficulty: "Easy",
-    chef: "Jamie Oliver",
-    likes: 1200,
-    image: "https://images.pexels.com/photos/1351238/pexels-photo-1351238.jpeg?auto=compress&cs=tinysrgb&w=600",
-  },
-  {
-    id: 2,
-    name: "Chicken Stir Fry",
-    category: "Dinner",
-    time: "25 min",
-    difficulty: "Medium",
-    chef: "Gordon Ramsay",
-    likes: 1500,
-    image: "https://images.pexels.com/photos/6210959/pexels-photo-6210959.jpeg?auto=compress&cs=tinysrgb&w=600",
-  },
-  {
-    id: 3,
-    name: "Berry Smoothie Bowl",
-    category: "Breakfast",
-    time: "15 min",
-    difficulty: "Easy",
-    chef: "Nigella Lawson",
-    likes: 980,
-    image: "https://images.pexels.com/photos/1092730/pexels-photo-1092730.jpeg?auto=compress&cs=tinysrgb&w=600",
-  },
-  {
-    id: 4,
-    name: "Spinach and Feta Quiche",
-    category: "Lunch",
-    time: "45 min",
-    difficulty: "Medium",
-    chef: "Julia Child",
-    likes: 750,
-    image: "https://images.pexels.com/photos/22856238/pexels-photo-22856238/free-photo-of-delicious-pancakes-with-spinach-tomatoes-and-mozzarella.jpeg?auto=compress&cs=tinysrgb&w=600",
-  },
-];
+  useEffect(() => {
+    // Generate a random number of likes between 0 and 1000
+    setLikes(Math.floor(Math.random() * 1001));
+  }, []);
 
-const RecipeCard = ({ recipe, index }) => (
-  <motion.div
-    key={recipe.id}
-    className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-    whileHover={{ y: -5 }}
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ delay: 0.1 * index, duration: 0.5 }}
-  >
-    <div className="relative">
-      <img
-        src={recipe.image}
-        alt={recipe.name}
-        className="w-full h-48 object-cover"
-      />
-      <span className="absolute top-2 right-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-        {recipe.category}
-      </span>
-    </div>
-    <div className="p-6">
-      <h3 className="text-xl font-semibold mb-2">{recipe.name}</h3>
-      <div className="flex justify-between items-center text-sm text-gray-500 mb-4">
-        <span className="flex items-center">
-          <Clock size={16} className="mr-1" /> {recipe.time}
-        </span>
-        <span className="flex items-center">
-          <Award size={16} className="mr-1" /> {recipe.difficulty}
+  return (
+    <motion.div
+      key={recipe.id}
+      className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+      whileHover={{ y: -5 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.1 * index, duration: 0.5 }}
+    >
+      <div className="relative">
+        <img
+          src={recipe.image}
+          alt={recipe.title}
+          className="w-full h-48 object-cover"
+        />
+        <span className="absolute top-2 right-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+          {recipe.category}
         </span>
       </div>
-      <div className="flex justify-between items-center text-sm">
-        <span className="flex items-center text-gray-600">
-          <ChefHat size={16} className="mr-1" /> {recipe.chef}
-        </span>
-        <span className="flex items-center text-red-500">
-          <Heart size={16} className="mr-1" fill="currentColor" />{" "}
-          {recipe.likes}
-        </span>
+      <div className="px-5 pt-2 pb-4">
+        <h3 className="text-xl font-semibold mb-1">{recipe.title}</h3>
+        <p className="text-gray-600 mb-2 capitalize">{recipe.subcategory}</p>
+        <div className="flex justify-between items-center text-sm text-gray-500 mb-4">
+          <span className="flex items-center">
+            <Clock size={16} className="mr-1" /> {recipe.time} min
+          </span>
+          <span className="flex items-center">
+            <Award size={16} className="mr-1" /> {recipe.difficulty}
+          </span>
+        </div>
+        <div className="flex justify-between items-center text-sm mb-4">
+          <span className="flex items-center text-red-500">
+            <Heart size={16} className="mr-1" fill="currentColor" /> {likes}
+          </span>
+          <span className="flex items-center text-gray-600">
+            <ChefHat size={16} className="mr-1" /> {recipe.chefName}
+          </span>
+        </div>
+        <Link to={`/created-recipes/${recipe.id}`}>
+          <button className="w-full bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-600 transition-colors duration-300">
+            View Recipe
+          </button>
+        </Link>
       </div>
-    </div>
-  </motion.div>
-);
+    </motion.div>
+  );
+};
 
 const FeaturedRecipes = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredRecipes, setFilteredRecipes] = useState(featuredRecipes);
+  const createdRecipes = useSelector((state) => state.recipeReducer.recipes);
+  const [filteredRecipes, setFilteredRecipes] = useState(createdRecipes);
 
   const handleSearch = (e) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
-    const filtered = featuredRecipes.filter(
+    const filtered = createdRecipes.filter(
       (recipe) =>
-        recipe.name.toLowerCase().includes(term) ||
+        recipe.title.toLowerCase().includes(term) ||
         recipe.category.toLowerCase().includes(term)
     );
     setFilteredRecipes(filtered);
@@ -139,7 +111,7 @@ const FeaturedRecipes = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="text-center text-white text-xl mt-8"
+              className="text-center text-[#5a6167] text-xl mt-8"
             >
               No recipes found. Try a different search term.
             </motion.p>
@@ -155,9 +127,9 @@ const FeaturedRecipes = () => {
           )}
         </AnimatePresence>
         <div className="mt-12 text-center">
-          <Link to="/recipes">
+          <Link to="/latest">
             <button className="bg-white text-green-500 hover:bg-green-100 transition-colors duration-300 px-6 py-2 rounded-full font-semibold">
-              View All Recipes
+              View All Our Latest Recipes
             </button>
           </Link>
         </div>

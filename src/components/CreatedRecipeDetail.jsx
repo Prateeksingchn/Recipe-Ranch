@@ -1,3 +1,4 @@
+import React from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,7 +7,6 @@ import { asyncgetrecipies } from "../store/actions/recipeActions";
 const CreatedRecipeDetail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const params = useParams();
   const { recipes } = useSelector((state) => state.recipeReducer);
   const recipe = recipes.find((r) => r.id === params.id);
@@ -19,56 +19,120 @@ const CreatedRecipeDetail = () => {
     navigate("/recipes");
   };
 
-  return recipe ? (
-    <div className="w-[80%] m-auto p-5">
-      <Link to="/recipes" className="text-3xl ri-arrow-left-line"></Link>
-      <div className="details w-full flex h-[75vh] mt-3">
-        <div className="dets w-[50%] p-[3%] shadow">
-          <img className="" src={recipe.image} alt="" />
-          <h1 className="text-xl mb-5 mt-[10%] text-center">
-            {recipe.title}
-          </h1>
-          <p className="text-zinc-400">{recipe.description}</p>
-          <div className="flex justify-between py-10 px-5">
-            <Link
-              to={`/update-recipe/${params.id}`}
-              className="text-blue-400 border-blue-400 border py-2 px-5"
-            >
-              Update
-            </Link>
-            <button onClick={DeleteHandler} className="text-red-400 border-red-400 border py-2 px-5">
-              Delete
-            </button>
+  if (!recipe) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <h1 className="text-3xl text-gray-600">Loading Recipe...</h1>
+      </div>
+    );
+  }
+
+  return (
+    <div className="max-w-4xl mx-auto px-4 py-8">
+      <Link
+        to="/recipes"
+        className="inline-flex items-center text-blue-600 hover:text-blue-800 mb-6"
+      >
+        <svg
+          className="w-5 h-5 mr-2"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M10 19l-7-7m0 0l7-7m-7 7h18"
+          ></path>
+        </svg>
+        Back to Recipes
+      </Link>
+
+      <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+        <div className="md:flex">
+          <div className="md:flex-shrink-0">
+            <img
+              className="h-64 w-full object-cover md:w-48 lg:w-[400px] m-2"
+              src={recipe.image}
+              alt={recipe.title}
+            />
+          </div>
+          <div className="p-8">
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">
+              {recipe.title}
+            </h1>
+            <p className="text-gray-600 mb-4">{recipe.description}</p>
+            <div className="flex flex-wrap gap-2 mb-4">
+              {recipe.category && (
+                <span className="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">
+                  {recipe.category}
+                </span>
+              )}
+              {recipe.subcategory && (
+                <span className="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">
+                  {recipe.subcategory}
+                </span>
+              )}
+              {recipe.difficulty && (
+                <span className="bg-yellow-100 text-yellow-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">
+                  {recipe.difficulty}
+                </span>
+              )}
+            </div>
+            <div className="text-sm text-gray-600 mb-4">
+              <p>Time: {recipe.time} minutes</p>
+              <p>Servings: {recipe.servings}</p>
+              <p>Chef: {recipe.chefName}</p>
+            </div>
+            <div className="flex space-x-4 mb-4">
+              <Link
+                to={`/update-recipe/${params.id}`}
+                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300"
+              >
+                Update Recipe
+              </Link>
+              <button
+                onClick={DeleteHandler}
+                className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300"
+              >
+                Delete Recipe
+              </button>
+            </div>
           </div>
         </div>
-        <div className="desc w-[50%] px-[5%] py-[3%] overflow-auto">
-          <h1 className="text-3xl border-b border-green-600 text-green-600">
+
+        <div className="p-8 border-t border-gray-200">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">
             Ingredients
-          </h1>
-          <ul className="text-zinc-600 list-disc p-3 ">
-            {recipe.ingredients.split(",").map((d, i) => (
-              <li className="list-item text-sm mb-2" key={i}>
-                {d}
+          </h2>
+          <ul className="list-disc pl-5 space-y-2">
+            {recipe.ingredients.split(",").map((ingredient, index) => (
+              <li key={index} className="text-gray-700">
+                {ingredient.trim()}
               </li>
             ))}
           </ul>
-          <h1 className="text-3xl border-b border-green-600 text-green-600">
+        </div>
+
+        <div className="p-8 border-t border-gray-200">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">
             Instructions
-          </h1>
-          <ul className="text-zinc-600 list-decimal p-3 ">
-            {recipe.instructions.split(".").map((d, i) => (
-              <li className="list-item text-sm mb-2" key={i}>
-                {d}
-              </li>
-            ))}
-          </ul>
+          </h2>
+          <ol className="list-decimal pl-5 space-y-2">
+            {recipe.instructions
+              .split(".")
+              .filter(Boolean)
+              .map((instruction, index) => (
+                <li key={index} className="text-gray-700">
+                  {instruction.trim()}.
+                </li>
+              ))}
+          </ol>
         </div>
       </div>
     </div>
-  ) : (
-    <h1 className="w-full text-center text-4xl text-green-600 mt-10">
-      Loading Recipe...
-    </h1>
   );
 };
 

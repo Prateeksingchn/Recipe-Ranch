@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-
+import { Link } from "react-router-dom";
 
 const HeroSection = ({ searchQuery, setSearchQuery }) => {
   return (
@@ -18,7 +18,10 @@ const HeroSection = ({ searchQuery, setSearchQuery }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
           >
-            Discover <br />Delicious<br />Recipes
+            Discover <br />
+            Delicious
+            <br />
+            Recipes
           </motion.h1>
           <motion.div
             className="flex items-center justify-start ml-2 "
@@ -31,17 +34,21 @@ const HeroSection = ({ searchQuery, setSearchQuery }) => {
             <div className="w-28 h-1 bg-yellow-400 ml-2"></div>
           </motion.div>
           <motion.div
-            className="flex justify-start space-x-4 ml-4 mt-5"
+            className="flex justify-start space-x-4 ml-4 mt-5 font-[Candal] "
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8 }}
           >
-            <button className="bg-white text-red-500 px-6 py-2 rounded-full hover:bg-yellow-400 transition-colors font-semibold">
-              Get Started
-            </button>
-            <button className="bg-transparent text-white px-6 py-2 rounded-full border border-white hover:bg-white hover:text-red-500 transition-colors font-semibold">
-              Explore Recipes
-            </button>
+            <Link to="/signup">
+              <button className="bg-white text-red-500 px-6 py-2 pb-3 rounded-full hover:bg-yellow-400 transition-colors">
+                Get Started
+              </button>
+            </Link>
+            <Link to="/recipes">
+              <button className="bg-transparent text-white px-6 py-2 pb-3 rounded-full border border-white hover:bg-white hover:text-red-500 transition-colors">
+                Explore Recipes
+              </button>
+            </Link>
           </motion.div>
         </div>
       </motion.div>
