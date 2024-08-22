@@ -8,6 +8,10 @@ const RecipeBlog = () => {
   const { id } = useParams();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const fetchRecipeDetails = async () => {
       setIsLoading(true);
       try {

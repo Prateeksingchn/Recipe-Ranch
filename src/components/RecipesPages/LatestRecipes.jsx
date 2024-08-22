@@ -32,7 +32,7 @@ const RecipeCard = ({ recipe }) => {
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.3 }}
         />
-        <span className="absolute top-4 right-4 bg-green-500 text-white text-xs font-semibold py-1 px-3 rounded-full">
+        <span className="absolute top-4 right-4 bg-green-500 text-white text-xs capitalize font-semibold py-1 px-3 rounded-full">
           {recipe.category}
         </span>
       </div>
@@ -67,8 +67,8 @@ const RecipeCard = ({ recipe }) => {
         <div className="mt-4">
           <Link to={`/created-recipes/${recipe.id}`}>
             <motion.button
-              className="bg-[#04039B] text-white font-bold py-2 px-4 rounded-full"
-              whileHover={{ scale: 1.05 }}
+              className="bg-[#04039B] w-full text-white font-bold py-2 px-4 rounded-full  "
+              whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.95 }}
             >
               View Recipe

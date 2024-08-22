@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { asyncgetrecipies } from "../../store/actions/recipeActions";
@@ -11,6 +12,10 @@ const CreatedRecipeDetail = () => {
   const params = useParams();
   const { recipes } = useSelector((state) => state.recipeReducer);
   const recipe = recipes.find((r) => r.id === params.id);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const DeleteHandler = () => {
     const updatedRecipes = recipes.filter((r) => r.id !== params.id);
@@ -27,6 +32,7 @@ const CreatedRecipeDetail = () => {
       </div>
     );
   }
+  
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">

@@ -20,11 +20,13 @@ import LatestRecipes from "./components/RecipesPages/LatestRecipes";
 
 import RecipeBlogDetail from './components/Details/RecipeBlogDetail';
 import CreatedRecipeDetail from './components/Details/CreatedRecipeDetail';
+
+// Recipe Details
 // import RecipeDetails from './components/Details/RecipeDetails';
 import BreakfastRecipeDetails from "./components/Details/BreakfastRecipeDetails";
 import LunchRecipeDetails from "./components/Details/LunchRecipeDetails";
 import DinnerRecipeDetails from "./components/Details/DinnerRecipeDetails";
-
+import TopRecipeDetail from "./components/Details/TopRecipeDetail";
 
 
 const App = () => {
@@ -60,6 +62,8 @@ const App = () => {
         <Route path="/recipeblogdetail/:id" element={<RecipeBlogDetail />} />
         <Route path="/created-recipes/:id" element={<CreatedRecipeDetail />} />
         <Route path="latest" element={<LatestRecipes />} />
+
+        <Route path="/top-recipe/:id" element={<TopRecipeDetail />} />
       </Routes>
 
       <Footer />

@@ -8,7 +8,6 @@ const RecipeCard = ({ recipe, index }) => {
   const [likes, setLikes] = useState(0);
 
   useEffect(() => {
-    // Generate a random number of likes between 0 and 1000
     setLikes(Math.floor(Math.random() * 1001));
   }, []);
 
@@ -39,22 +38,22 @@ const RecipeCard = ({ recipe, index }) => {
               {recipe.subcategory}
             </p>
           </div>
-          <div className="flex flex-col justify-between items-start gap-1 text-sm text-gray-500 ">
-            <span className="flex items-center">
-              <Clock size={15} className="mr-1" /> {recipe.time} min
+          <div className="flex flex-col justify-between items-start gap-[6px] text-sm text-gray-500 mt-1">
+            <span className="flex items-center ">
+              <Clock size={13} className="mr-1" /> {recipe.time} min
             </span>
             <span className="flex items-center">
               <Award size={16} className="mr-1" /> {recipe.difficulty}
-            </span>
+            </span>     
           </div>
         </div>
 
-        <div className="flex justify-between items-center text-sm mb-2">
+        <div className="flex justify-between items-center text-sm mb-4">
           <span className="flex items-center text-gray-600">
             <ChefHat size={16} className="mr-1" /> {recipe.chefName}
           </span>
-          <span className="flex items-center text-red-500">
-            <Heart size={16} className="mr-1" fill="currentColor" /> {likes}
+          <span className="flex items-center text-red-500 ">
+            <Heart size={15} className="mr-1" fill="currentColor" /> {likes}
           </span>
         </div>
         <Link to={`/created-recipes/${recipe.id}`}>
@@ -63,34 +62,45 @@ const RecipeCard = ({ recipe, index }) => {
           </button>
         </Link>
       </div>
-    </motion.div>
+      </motion.div>
   );
 };
 
 const FeaturedRecipes = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const createdRecipes = useSelector((state) => state.recipeReducer.recipes);
-  const [filteredRecipes, setFilteredRecipes] = useState(createdRecipes);
+  const [filteredRecipes, setFilteredRecipes] = useState([]);
+
+  useEffect(() => {
+    // Sort recipes by creation date (newest first) and take the last 4
+    const sortedRecipes = [...createdRecipes].sort((a, b) => 
+      new Date(b.createdAt) - new Date(a.createdAt)
+    ).slice(0, 4);
+    setFilteredRecipes(sortedRecipes);
+  }, [createdRecipes]);
 
   const handleSearch = (e) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
-    const filtered = createdRecipes.filter(
-      (recipe) =>
-        recipe.title.toLowerCase().includes(term) ||
-        recipe.category.toLowerCase().includes(term)
-    );
+    const filtered = createdRecipes
+      .filter(
+        (recipe) =>
+          recipe.title.toLowerCase().includes(term) ||
+          recipe.category.toLowerCase().includes(term)
+      )
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      .slice(0, 4);
     setFilteredRecipes(filtered);
   };
 
   return (
     <motion.section
-      className="py-10 px-6 bg-gradient-to-br from-green-200 to-blue-200 rounded-3xl my-4"
+      className="py-10 px-6 bg-gradient-to-b from-green-200 to-blue-100 rounded-3xl my-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
-      <div className="container mx-auto">
+      <div className="container mx-auto ">
         <h2
           className="text-5xl font-bold text-[#5a6167] mb-8 text-center"
           style={{ fontFamily: "Lobster, cursive" }}

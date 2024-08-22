@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, Clock, Users, Star } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
@@ -9,6 +10,10 @@ const LunchRecipeDetails = () => {
   const recipe = lunchRecipes.find(
     (r) => r.name.toLowerCase().replace(/\s/g, "-") === recipeSlug
   );
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   if (!recipe) {
     return (

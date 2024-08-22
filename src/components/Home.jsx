@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import HeroSection from "./Home/HeroSection";
 import ExploreSection from "./Home/ExploreSection";
 import FeaturedRecipes from "./Home/FeaturedRecipes";
-import FeaturesSection from "./Home/FeaturesSection";
+import TopRecipes from "./Home/TopRecipes";
 import TestimonialsSection from "./Home/TestimonialsSection";
 import CTASection from "./Home/CTASection";
 
@@ -19,6 +19,7 @@ const Home = () => {
         <HeroSection searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
         <ExploreSection />
         <FeaturedRecipes />
+        <TopRecipes />
         <TestimonialsSection />
         <CTASection />
       </main>
