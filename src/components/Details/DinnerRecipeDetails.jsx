@@ -37,45 +37,53 @@ const DinnerRecipeDetails = () => {
         </button>
       </Link>
 
-      <div className="container mx-auto">
+      <div className="max-w-4xl mx-auto ">
         <motion.div
-          className="bg-white rounded-xl shadow-lg overflow-hidden"
+          className="bg-white rounded-xl shadow-xl shadow-neutral-300 overflow-hidden p-10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <img
-            src={recipe.image}
-            alt={recipe.name}
-            className="w-full h-72 object-cover"
-          />
-          <div className="p-8">
-            <h1 className="text-3xl font-bold mb-4">{recipe.name}</h1>
-            <div className="flex justify-between items-center text-sm text-gray-500 mb-6">
+          <div className="w-full">
+            <img
+              src={recipe.image}
+              alt={recipe.name}
+              className="w-[600px] h-[400px] object-cover mx-auto rounded-lg"
+            />
+          </div>
+          <div className="w-[600px] mx-auto px-5 mt-5 flex flex-col items-center justify-center">
+            <h1 className="text-3xl font-semibold mb-6">{recipe.name}</h1>
+            <div className="flex justify-start items-center gap-20 text-sm text-gray-500 mb-6">
               <span className="flex items-center">
-                <Clock size={16} className="mr-1" /> {recipe.time}
+                <Clock size={20} className="mr-1" /> {recipe.time}
               </span>
               <span className="flex items-center">
-                <Users size={16} className="mr-1" /> {recipe.servings} servings
+                <Users size={20} className="mr-1" /> {recipe.servings} servings
               </span>
               <span className="flex items-center text-yellow-500">
                 <Star size={16} className="mr-1" fill="currentColor" />{" "}
                 {recipe.rating}
               </span>
             </div>
-            <p className="text-gray-700 mb-6">{recipe.description}</p>
-            <h2 className="text-2xl font-bold mb-4">Ingredients</h2>
-            <ul className="list-disc pl-6 text-gray-700 mb-6">
-              {recipe.ingredients.map((ingredient, index) => (
-                <li key={index}>{ingredient}</li>
-              ))}
-            </ul>
-            <h2 className="text-2xl font-bold mb-4">Instructions</h2>
-            <ol className="list-decimal pl-6 text-gray-700">
-              {recipe.instructions.map((step, index) => (
-                <li key={index}>{step}</li>
-              ))}
-            </ol>
+            <p className="text-gray-700 mb-6 text-center">{recipe.description}</p>
+          </div>
+          <div className="p-8 grid grid-cols-2 px-1o ">
+            <div>
+              <h2 className="text-2xl font-bold mb-4">Ingredients</h2>
+              <ul className="list-disc pl-6 mr-6 text-gray-700 mb-6">
+                {recipe.ingredients.map((ingredient, index) => (
+                  <li key={index}>{ingredient}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold mb-4">Instructions</h2>
+              <ol className="list-decimal pl-6 text-gray-700">
+                {recipe.instructions.map((step, index) => (
+                  <li key={index}>{step}</li>
+                ))}
+              </ol>
+            </div>
           </div>
         </motion.div>
       </div>

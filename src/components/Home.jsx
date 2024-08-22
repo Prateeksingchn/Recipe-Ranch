@@ -5,6 +5,7 @@ import FeaturedRecipes from "./Home/FeaturedRecipes";
 import TopRecipes from "./Home/TopRecipes";
 import TestimonialsSection from "./Home/TestimonialsSection";
 import CTASection from "./Home/CTASection";
+import NutritionRecipes from "./Home/NutritionRecipes";
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -20,6 +21,7 @@ const Home = () => {
         <ExploreSection />
         <FeaturedRecipes />
         <TopRecipes />
+        <NutritionRecipes />
         <TestimonialsSection />
         <CTASection />
       </main>

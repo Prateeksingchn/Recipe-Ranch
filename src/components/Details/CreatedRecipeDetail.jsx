@@ -61,7 +61,7 @@ const CreatedRecipeDetail = () => {
         <div className="md:flex">
           <div className="md:flex-shrink-0 mt-8 ml-12 ">
             <img
-              className="h-[320px] w-full object-cover md:w-48 lg:w-[450px] m-2"
+              className="h-[400px] w-full object-cover md:w-48 lg:w-[450px] m-2 rounded-xl"
               src={recipe.image}
               alt={recipe.title}
             />
@@ -121,8 +121,8 @@ const CreatedRecipeDetail = () => {
           </div>
         </div>
 
-        <div className="w-full flex gap-2 px-10">
-          <div className="w-[40%] p-8 border-t border-gray-200">
+        <div className="w-[90%] flex gap-2 px-4 mt-4 border-t border-gray-200 mx-auto">
+          <div className="w-[40%] p-8 ">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">
               Ingredients
             </h2>
@@ -138,7 +138,7 @@ const CreatedRecipeDetail = () => {
             </ul>
           </div>
 
-          <div className="w-[60%] p-8 border-t border-gray-200">
+          <div className="w-[60%] p-8 ">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">
               Instructions
             </h2>

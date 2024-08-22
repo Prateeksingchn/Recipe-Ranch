@@ -6,6 +6,8 @@ import {
   X,
   ChevronLeft,
   ChevronRight as ChevronRightIcon,
+  Clock,
+  User,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -14,14 +16,14 @@ const API_KEY = "52355b06aa4549bfa510d9b4f808b77a";
 
 // Styled Components
 const Card = ({ children, className }) => (
-  <div className={`bg-white rounded-xl shadow-lg overflow-hidden ${className}`}>
+  <div className={`bg-white rounded-lg shadow-lg overflow-hidden ${className}`}>
     {children}
   </div>
 );
 
 const Button = ({ children, className, ...props }) => (
   <button
-    className={`bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 transition duration-300 ease-in-out ${className}`}
+    className={`bg-amber-600 text-white py-2 px-4 rounded-full hover:bg-amber-700 transition duration-300 ease-in-out ${className}`}
     {...props}
   >
     {children}
@@ -30,38 +32,47 @@ const Button = ({ children, className, ...props }) => (
 
 const Input = ({ className, ...props }) => (
   <input
-    className={`w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 ${className}`}
+    className={`w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 ${className}`}
     {...props}
   />
 );
 
 // RecipeCard Component
-const RecipeCard = ({ recipe }) => (
+const RecipeCard = ({ recipe, onClick }) => (
   <motion.div
     layout
     initial={{ opacity: 0, y: 50 }}
     animate={{ opacity: 1, y: 0 }}
     exit={{ opacity: 0, y: 50 }}
     transition={{ duration: 0.5 }}
+    className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300"
   >
-    <Card
-      className="h-full flex flex-col cursor-pointer transform hover:scale-105 transition duration-300"
-      onClick={() => onClick(recipe)}
-    >
-      <img
-        src={recipe.image}
-        alt={recipe.title}
-        className="w-full h-48 object-cover"
-      />
-      <div className="p-4 flex-grow">
-        <h3 className="text-xl font-bold mb-2 text-gray-800">{recipe.title}</h3>
-        <p className="text-sm text-gray-600 mb-4">
-          Ready in {recipe.readyInMinutes} minutes
-        </p>
-        <p className="text-sm text-gray-600">
-          {recipe.summary.split(" ").slice(0, 15).join(" ")}...
-        </p>
+    <div className="relative">
+      <div className="p-4">
+        <img
+          src={recipe.image}
+          alt={recipe.title}
+          className="w-full h-[350px] object-cover rounded-2xl"
+        />
+        <div className="absolute top-6 left-6 bg-amber-500 text-white px-3 py-[4px] rounded-2xl text-sm font-semibold">
+          {recipe.dishTypes[0] || "Recipe"}
+        </div>
       </div>
+    </div>
+    <div className="p-5">
+      <div className="flex items-center text-gray-600 text-sm mb-3">
+        <Clock className="w-4 h-4 mr-1" />
+        <span className="mr-3">{recipe.readyInMinutes} min</span>
+        <User className="w-4 h-4 mr-1" />
+        <span>{recipe.servings} servings</span>
+      </div>
+      <h3 className="text-xl font-bold text-gray-800 mb-2 line-clamp-2">
+        {recipe.title}
+      </h3>
+
+      <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+        {recipe.summary.replace(/<[^>]*>/g, "")}
+      </p>
       <div className="p-4 bg-green-50">
         <Link to={`/recipeblogdetail/${recipe.id}`}>
           <Button className="w-full flex items-center justify-center text-sm">
@@ -69,7 +80,7 @@ const RecipeCard = ({ recipe }) => (
           </Button>
         </Link>
       </div>
-    </Card>
+    </div>
   </motion.div>
 );
 
@@ -88,7 +99,9 @@ const RecipeModal = ({ recipe, onClose }) => (
       className="bg-white rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
     >
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold text-gray-800">{recipe.title}</h2>
+        <h2 className="text-3xl font-serif font-bold text-gray-800">
+          {recipe.title}
+        </h2>
         <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
           <X size={24} />
         </button>
@@ -98,14 +111,19 @@ const RecipeModal = ({ recipe, onClose }) => (
         alt={recipe.title}
         className="w-full h-64 object-cover rounded-lg mb-4"
       />
-      <p className="text-gray-600 mb-4">
-        Ready in {recipe.readyInMinutes} minutes
-      </p>
+      <div className="flex items-center text-gray-600 text-sm mb-4">
+        <Clock className="w-4 h-4 mr-1" />
+        <span>{recipe.readyInMinutes} min</span>
+        <User className="w-4 h-4 ml-4 mr-1" />
+        <span>{recipe.servings} servings</span>
+      </div>
       <div
-        className="prose max-w-none"
+        className="prose max-w-none mb-6"
         dangerouslySetInnerHTML={{ __html: recipe.summary }}
       />
-      <h3 className="text-xl font-semibold mt-6 mb-2">Ingredients:</h3>
+      <h3 className="text-xl font-serif font-semibold mt-6 mb-2">
+        Ingredients:
+      </h3>
       <ul className="list-disc pl-5 mb-4">
         {recipe.extendedIngredients.map((ingredient, index) => (
           <li key={index} className="text-gray-700">
@@ -113,7 +131,7 @@ const RecipeModal = ({ recipe, onClose }) => (
           </li>
         ))}
       </ul>
-      <h3 className="text-xl font-semibold mb-2">Instructions:</h3>
+      <h3 className="text-xl font-serif font-semibold mb-2">Instructions:</h3>
       <ol className="list-decimal pl-5">
         {recipe.analyzedInstructions[0]?.steps.map((step, index) => (
           <li key={index} className="text-gray-700 mb-2">
@@ -133,21 +151,26 @@ const RecipeBlog = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
   const [apiLimitReached, setApiLimitReached] = useState(false);
-  const resultsPerPage = 9;
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const resultsPerPage = 8;
 
   const fetchRecipes = async () => {
+    setIsLoading(true);
+    setError(null);
     try {
       const response = await fetch(
-        `https://api.spoonacular.com/recipes/complexSearch?apiKey=<span class="math-inline">\{API\_KEY\}&number\=</span>{resultsPerPage}&offset=<span class="math-inline">\{
-\(currentPage \- 1\) \* resultsPerPage
-\}&addRecipeInformation\=true&query\=</span>{searchTerm}`
+        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=${resultsPerPage}&offset=${
+          (currentPage - 1) * resultsPerPage
+        }&addRecipeInformation=true&query=${searchTerm}`
       );
 
       if (!response.ok) {
-        // Handle API limit error here
-        console.error("API limit reached or other error:", response.statusText);
-        setApiLimitReached(true);
-        return; // Exit the function without setting recipes or totalResults
+        if (response.status === 402) {
+          setApiLimitReached(true);
+          throw new Error("API limit reached. Please try again later.");
+        }
+        throw new Error("Failed to fetch recipes");
       }
 
       const data = await response.json();
@@ -156,6 +179,9 @@ const RecipeBlog = () => {
       setApiLimitReached(false);
     } catch (error) {
       console.error("Error fetching recipes:", error);
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -172,24 +198,26 @@ const RecipeBlog = () => {
   const totalPages = Math.ceil(totalResults / resultsPerPage);
 
   return (
-    <div className="bg-gradient-to-br from-green-50 to-green-100 min-h-screen py-10 my-4 rounded-3xl">
+    <div className="bg-amber-50 min-h-screen py-10 my-4 rounded-3xl">
       <div className="max-w-6xl mx-auto px-4">
         <motion.h1
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-5xl md:text-7xl font-extrabold text-green-600 mb-4 text-center"
+          className="text-5xl md:text-7xl font-serif font-extrabold text-amber-800 mb-4 text-center"
+          style={{ fontFamily: "Lobster, cursive" }}
         >
-          Culinary Delights
+          The Recipe Chronicle
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-xl text-gray-700 mb-12 text-center max-w-3xl mx-auto"
+          className="text-xl text-gray-700 mb-12 text-center max-w-3xl mx-auto font-serif"
+          style={{ fontFamily: "Lobster, cursive" }}
         >
-          Explore a world of flavors and discover your next favorite dish.
+          Discover culinary treasures from around the world
         </motion.p>
 
         <form onSubmit={handleSearch} className="mb-12 flex justify-center">
@@ -207,6 +235,16 @@ const RecipeBlog = () => {
           </div>
         </form>
 
+        {isLoading && (
+          <div className="text-center text-gray-600 font-bold mb-4">
+            Loading recipes...
+          </div>
+        )}
+
+        {error && (
+          <div className="text-center text-red-500 font-bold mb-4">{error}</div>
+        )}
+
         {apiLimitReached && (
           <div className="text-center text-red-500 font-bold mb-4">
             API limit reached! Please try again later.
@@ -214,15 +252,26 @@ const RecipeBlog = () => {
         )}
 
         <AnimatePresence>
-          <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {recipes.map((recipe) => (
-              <RecipeCard
-                key={recipe.id}
-                recipe={recipe}
-                onClick={(selectedRecipe) => setSelectedRecipe(selectedRecipe)}
-              />
-            ))}
-          </motion.div>
+          {recipes.length > 0 ? (
+            <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+              {recipes.map((recipe) => (
+                <RecipeCard
+                  key={recipe.id}
+                  recipe={recipe}
+                  onClick={(selectedRecipe) =>
+                    setSelectedRecipe(selectedRecipe)
+                  }
+                />
+              ))}
+            </motion.div>
+          ) : (
+            !isLoading &&
+            !error && (
+              <div className="text-center text-gray-600 font-bold mb-4">
+                No recipes found. Try a different search term.
+              </div>
+            )
+          )}
         </AnimatePresence>
 
         {totalPages > 1 && (
