@@ -14,7 +14,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   }
 
   return (
-    <nav className="w-full flex justify-center mt-8 rounded-3xl ">
+    <nav className="w-full flex justify-center mt-8 rounded-3xl">
       <ul className="flex items-center">
         <li className="mx-1">
           <button
@@ -25,6 +25,19 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
             Previous
           </button>
         </li>
+        {startPage > 1 && (
+          <>
+            <li className="mx-1">
+              <button
+                onClick={() => onPageChange(1)}
+                className="px-4 py-2 border rounded bg-white text-blue-500"
+              >
+                1
+              </button>
+            </li>
+            {startPage > 2 && <li className="mx-1">...</li>}
+          </>
+        )}
         {pageNumbers.map((number) => (
           <li key={number} className="mx-1">
             <button
@@ -39,6 +52,19 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
             </button>
           </li>
         ))}
+        {endPage < totalPages && (
+          <>
+            {endPage < totalPages - 1 && <li className="mx-1">...</li>}
+            <li className="mx-1">
+              <button
+                onClick={() => onPageChange(totalPages)}
+                className="px-4 py-2 border rounded bg-white text-blue-500"
+              >
+                {totalPages}
+              </button>
+            </li>
+          </>
+        )}
         <li className="mx-1">
           <button
             onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}

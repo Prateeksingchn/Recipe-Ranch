@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const RecipePageHeader = () => {
   return (
-    <div className="flex justify-between items-center mb-8">
+    <div className="flex justify-between items-center mb-8 pl-4">
       <div>
         <h1
           className="text-6xl font-bold text-[#EE4130] "
