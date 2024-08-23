@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { motion } from "framer-motion";
 import { Eye, Clock, ChefHat } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -44,9 +44,9 @@ const RecipeCard = ({ recipe, index }) => (
   </Link>
 );
 
-const TopRecipes = () => {
+const TopRecipes = forwardRef((props, ref) => {
   return (
-    <section className="py-16 bg-gray-100 rounded-3xl">
+    <section ref={ref} className="py-16 bg-gray-100 rounded-3xl">
       <div className="container mx-auto px-4">
         <h2 className="text-6xl font-bold text-center mb-12 text-[#333] relative inline-block left-1/2 transform -translate-x-1/2">
           <span
@@ -65,6 +65,6 @@ const TopRecipes = () => {
       </div>
     </section>
   );
-};
+});
 
 export default TopRecipes;

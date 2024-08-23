@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Eye, Clock, ChefHat } from "lucide-react";
+import { Eye, Clock, ChefHat, ArrowLeft } from "lucide-react";
 import topRecipes from "../../data/topRecipes";
 import { Link } from "react-router-dom";
 
@@ -24,23 +24,10 @@ const TopRecipeDetail = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <Link
-        to="/"
+        to="/#top"
         className="inline-flex items-center text-blue-600 hover:text-blue-800 mb-4"
       >
-        <svg
-          className="w-5 h-5 mr-2"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M10 19l-7-7m0 0l7-7m-7 7h18"
-          ></path>
-        </svg>
+        <ArrowLeft className="w-5 h-5 mr-2" />
         Back to Top Rated Recipes
       </Link>
       <div className="bg-white rounded-3xl shadow-lg shadow-stone-400 overflow-hidden px-20 py-10 my-5">

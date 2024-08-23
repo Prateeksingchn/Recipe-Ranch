@@ -1,32 +1,33 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const ExploreSection = () => {
-  const mealTypes = [
-    {
-      name: "Breakfast",
-      image:
-        "https://images.unsplash.com/photo-1493770348161-369560ae357d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YnJlYWtmYXN0fGVufDB8MHwwfHx8MA%3D%3D",
-      route: "/breakfast-recipes",
-    },
-    {
-      name: "Lunch",
-      image:
-        "https://plus.unsplash.com/premium_photo-1673108852141-e8c3c22a4a22?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bHVuY2gnfGVufDB8fDB8fHww",
-      route: "/lunch-recipes",
-    },
-    {
-      name: "Dinner",
-      image:
-        "https://plus.unsplash.com/premium_photo-1694506374740-24176e5222e7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZGlubmVyJTIwaW5kaWFufGVufDB8MHwwfHx8MA%3D%3D",
-      route: "/dinner-recipes",
-    },
-  ];
+const mealTypes = [
+  {
+    name: "Breakfast",
+    image:
+      "https://images.unsplash.com/photo-1493770348161-369560ae357d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YnJlYWtmYXN0fGVufDB8MHwwfHx8MA%3D%3D",
+    route: "/breakfast-recipes",
+  },
+  {
+    name: "Lunch",
+    image:
+      "https://plus.unsplash.com/premium_photo-1673108852141-e8c3c22a4a22?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bHVuY2gnfGVufDB8fDB8fHww",
+    route: "/lunch-recipes",
+  },
+  {
+    name: "Dinner",
+    image:
+      "https://plus.unsplash.com/premium_photo-1694506374740-24176e5222e7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZGlubmVyJTIwaW5kaWFufGVufDB8MHwwfHx8MA%3D%3D",
+    route: "/dinner-recipes",
+  },
+];
 
+const ExploreSection = forwardRef((props, ref) => {
   return (
     <motion.section
+      ref={ref}
       className="py-14 px-6 bg-gradient-to-br from-[#C2E1F8] to-[#E6F4FF] rounded-3xl my-3"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -85,6 +86,6 @@ const ExploreSection = () => {
       </div>
     </motion.section>
   );
-};
+});
 
 export default ExploreSection;

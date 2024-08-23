@@ -39,7 +39,7 @@ const HeroSection = ({ searchQuery, setSearchQuery }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8 }}
           >
-            <Link to="/signup">
+            <Link to="/create-recipe">
               <button className="bg-white text-red-500 px-6 py-2 pb-3 rounded-full hover:bg-yellow-400 transition-colors">
                 Get Started
               </button>

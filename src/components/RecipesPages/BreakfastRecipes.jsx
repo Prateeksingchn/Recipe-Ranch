@@ -1,7 +1,6 @@
-import React from "react";
-import { useEffect } from 'react';
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, ChevronRight, Clock, Users, Star } from "lucide-react";
+import { ArrowLeft, Clock, Users, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import breakfastRecipes from "../../data/breakfastRecipes";
 import { useParams } from "react-router-dom";
@@ -15,12 +14,12 @@ const BreakfastRecipes = () => {
 
   return (
     <motion.section
-      className="pt-5 pb-10 px-6 my-4  bg-gradient-to-br from-[#C2E1F8] to-[#E6F4FF] rounded-3xl "
+      className="pt-5 pb-10 px-6 my-4 bg-gradient-to-br from-[#C2E1F8] to-[#E6F4FF] rounded-3xl"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
-      <Link to="/">
+      <Link to="/#explore">
         <button className="mt-8 ml-[6%] mb-6 inline-flex items-center rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
           <ArrowLeft className="mr-2 h-5 w-5" />
           Back to Explore
