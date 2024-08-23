@@ -14,6 +14,7 @@ const Home = () => {
   const location = useLocation();
   const exploreSectionRef = useRef(null);
   const topRecipesSectionRef = useRef(null);
+  const nutritionRecipesSectionRef = useRef(null);
 
   useEffect(() => {
     document.title = "Culinary Delights | Home";
@@ -24,6 +25,11 @@ const Home = () => {
       exploreSectionRef.current.scrollIntoView({ behavior: "smooth" });
     } else if (location.hash === "#top" && topRecipesSectionRef.current) {
       topRecipesSectionRef.current.scrollIntoView({ behavior: "smooth" });
+    } else if (
+      location.hash === "#nutrition" &&
+      nutritionRecipesSectionRef.current
+    ) {
+      nutritionRecipesSectionRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [location]);
 
@@ -31,7 +37,10 @@ const Home = () => {
     <div className="w-full min-h-screen bg-white">
       <main>
         <section id="hero">
-          <HeroSection searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+          <HeroSection
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
         </section>
         <section id="explore">
           <ExploreSection ref={exploreSectionRef} />
@@ -42,7 +51,7 @@ const Home = () => {
         <section id="top" ref={topRecipesSectionRef}>
           <TopRecipes />
         </section>
-        <section id="nutrition">
+        <section id="nutrition" ref={nutritionRecipesSectionRef}>
           <NutritionRecipes />
         </section>
         <section id="testimonials">

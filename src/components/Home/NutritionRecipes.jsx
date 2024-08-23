@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, forwardRef } from "react";
 import { motion } from "framer-motion";
 import { Leaf, Clock, ChefHat, Award, Search } from "lucide-react";
 import { Link } from "react-router-dom";
+import nutritionRecipes from "../../data/nutritionRecipes";
 
 // Updated recipe template
 const recipeTemplate = {
@@ -25,142 +26,59 @@ const recipeTemplate = {
   rating: 0, // New field
 };
 
-// Updated example nutrition recipes
-const nutritionRecipes = [
-  {
-    id: "1",
-    title: "Quinoa Veggie Bowl",
-    chef: "Jamie Oliver",
-    image: "veggieBowl.png",
-    calories: 350,
-    time: 25,
-    dietType: "Vegan",
-    mealCategory: "Lunch",
-    difficulty: "Easy",
-    ingredients: [
-      "1 cup quinoa",
-      "2 cups mixed vegetables (broccoli, carrots, bell peppers)",
-      "1 tbsp olive oil",
-      "1 tsp cumin",
-      "Salt and pepper to taste",
-    ],
-    instructions: [
-      "Cook quinoa according to package instructions.",
-      "Steam the mixed vegetables until tender-crisp.",
-      "In a large bowl, combine cooked quinoa and vegetables.",
-      "Drizzle with olive oil and sprinkle with cumin, salt, and pepper.",
-      "Toss everything together and serve warm.",
-    ],
-    nutritionFacts: {
-      protein: 12,
-      carbs: 45,
-      fat: 9,
-      fiber: 8,
-    },
-    rating: 4.5,
-  },
-  {
-    id: "2",
-    title: "Greek Yogurt Parfait",
-    chef: "Giada De Laurentiis",
-    image: "greekyogurt.webp",
-    calories: 280,
-    time: 10,
-    dietType: "Low-Carb",
-    mealCategory: "Breakfast",
-    difficulty: "Easy",
-    ingredients: [
-      "1 cup Greek yogurt",
-      "1/4 cup mixed berries",
-      "1 tbsp honey",
-      "2 tbsp granola",
-    ],
-    instructions: [
-      "In a glass or bowl, layer half of the Greek yogurt.",
-      "Add a layer of mixed berries.",
-      "Drizzle with half of the honey.",
-      "Repeat the layers with the remaining yogurt and berries.",
-      "Top with granola and drizzle with the remaining honey.",
-    ],
-    nutritionFacts: {
-      protein: 20,
-      carbs: 30,
-      fat: 8,
-      fiber: 3,
-    },
-    rating: 4.8,
-  },
-  {
-    id: "3",
-    title: "Grilled Chicken Salad",
-    chef: "Gordon Ramsay",
-    image: "grilled-chicken-salad.jpg",
-    calories: 400,
-    time: 30,
-    dietType: "High-Protein",
-    mealCategory: "Lunch",
-    difficulty: "Medium",
-    ingredients: [
-      "200g grilled chicken breast",
-      "4 cups mixed salad greens",
-      "1/4 cup cherry tomatoes",
-      "1/4 cup cucumber, sliced",
-      "2 tbsp balsamic vinaigrette",
-      "1 oz feta cheese, crumbled",
-    ],
-    instructions: [
-      "Grill the chicken breast and slice it into strips.",
-      "In a large bowl, combine mixed salad greens, cherry tomatoes, and cucumber.",
-      "Add the grilled chicken strips on top of the salad.",
-      "Drizzle with balsamic vinaigrette and sprinkle crumbled feta cheese.",
-      "Toss gently and serve immediately.",
-    ],
-    nutritionFacts: {
-      protein: 35,
-      carbs: 15,
-      fat: 22,
-      fiber: 5,
-    },
-    rating: 4.7,
-  },
-  {
-    id: "4",
-    title: "Protein-Packed Smoothie Bowl",
-    chef: "Kayla Itsines",
-    image: "smoothie-bowl.jpg",
-    calories: 320,
-    time: 15,
-    dietType: "High-Protein",
-    mealCategory: "Post-Workout",
-    difficulty: "Easy",
-    ingredients: [
-      "1 scoop vanilla protein powder",
-      "1 frozen banana",
-      "1/2 cup frozen mixed berries",
-      "1/4 cup Greek yogurt",
-      "1/4 cup almond milk",
-      "1 tbsp chia seeds",
-      "1 tbsp almond butter",
-    ],
-    instructions: [
-      "Blend protein powder, frozen banana, mixed berries, Greek yogurt, and almond milk until smooth.",
-      "Pour the smoothie into a bowl.",
-      "Top with chia seeds and a drizzle of almond butter.",
-      "Add additional toppings like granola or fresh fruit if desired.",
-    ],
-    nutritionFacts: {
-      protein: 25,
-      carbs: 35,
-      fat: 12,
-      fiber: 7,
-    },
-    rating: 4.9,
-  },
-];
 
-// ... (NutritionRecipeCard component remains the same)
 
-const NutritionRecipes = () => {
+const NutritionRecipeCard = ({ recipe, index }) => (
+  <Link to={`/nutrition-recipe/${recipe.id}`} className="block">
+    <motion.div
+      className="relative overflow-hidden rounded-[30px] shadow-lg w-full h-[400px] group"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.1 * index }}
+    >
+      <img
+        src={`/${recipe.image}`}
+        alt={recipe.title}
+        className="w-full h-full object-cover object-left-top transition-transform duration-300 group-hover:scale-110"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-300" />
+      <div className="absolute inset-x-0 bottom-0 p-6 text-white">
+        <h3 className="text-[22px] font-bold mb-2 group-hover:text-green-300 transition-colors duration-300">
+          {recipe.title}
+        </h3>
+        <p className="text-sm mb-3 flex items-center">
+          <ChefHat size={16} className="mr-2" />
+          {recipe.chef}
+        </p>
+        <div className="flex items-center justify-between mb-2">
+          <span className="flex items-center text-sm">
+            <Leaf size={16} className="mr-2" />
+            {recipe.calories} cal
+          </span>
+          <span className="flex items-center text-sm">
+            <Clock size={16} className="mr-2" />
+            {recipe.time} mins
+          </span>
+        </div>
+        <div className="flex items-center justify-between">
+          <span className="text-sm">{recipe.mealCategory}</span>
+          <span className="flex items-center text-sm">
+            <Award size={16} className="mr-2" />
+            {recipe.rating.toFixed(1)}
+          </span>
+        </div>
+      </div>
+      <div className="absolute top-4 right-4 bg-green-400 text-black px-3 py-1 rounded-full text-sm font-semibold">
+        {recipe.dietType}
+      </div>
+      <div className="absolute top-4 left-4 bg-orange-400 text-black px-3 py-1 rounded-full text-sm font-semibold">
+        {recipe.difficulty}
+      </div>
+    </motion.div>
+  </Link>
+);
+
+const NutritionRecipes = forwardRef((props, ref) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
 
@@ -171,12 +89,15 @@ const NutritionRecipes = () => {
     return matchesSearch && matchesCategory;
   });
 
+  // Only take the first 4 recipes
+  const displayedRecipes = filteredRecipes.slice(0, 4);
+
   const categories = ["All", ...new Set(nutritionRecipes.map(recipe => recipe.mealCategory))];
 
   return (
-    <section className="py-16 bg-zinc-300 rounded-3xl my-5">
+    <section ref={ref} className="py-16 bg-gradient-to-b from-[#c6c3c3] to-[#f8f4f4] rounded-3xl my-5">
       <div className="container mx-auto px-4">
-        <h2 className="text-6xl font-bold text-center mb-12 text-[#333] relative inline-block left-1/2 transform -translate-x-1/2">
+        <h2 className="text-6xl font-bold text-center mb-20 text-[#e64545] relative inline-block left-1/2 transform -translate-x-1/2">
           <span
             className="relative z-10"
             style={{ fontFamily: "Lobster, cursive" }}
@@ -185,6 +106,8 @@ const NutritionRecipes = () => {
           </span>
           <span className="absolute bottom-0 left-0 w-full h-4 bg-orange-400 transform -skew-x-12"></span>
         </h2>
+
+        {/* Search and category filters */}
         <div className="mb-8 flex flex-col md:flex-row items-center justify-between">
           <div className="relative w-full md:w-1/3 mb-4 md:mb-0">
             <input
@@ -212,12 +135,18 @@ const NutritionRecipes = () => {
             ))}
           </div>
         </div>
+
+        {/* Nutrition Recipes Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {filteredRecipes.map((recipe, index) => (
+          {displayedRecipes.map((recipe, index) => (
             <NutritionRecipeCard key={recipe.id} recipe={recipe} index={index} />
           ))}
         </div>
+        
         <div className="text-center mt-12">
+          {/* <p className="text-gray-600 mb-4">
+            Showing {displayedRecipes.length} out of {filteredRecipes.length} recipes
+          </p> */}
           <Link
             to="/nutrition"
             className="bg-green-500 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-green-600 transition-colors duration-300"
@@ -228,6 +157,6 @@ const NutritionRecipes = () => {
       </div>
     </section>
   );
-};
+});
 
 export default NutritionRecipes;

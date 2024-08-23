@@ -28,6 +28,10 @@ import LunchRecipeDetails from "./components/Details/LunchRecipeDetails";
 import DinnerRecipeDetails from "./components/Details/DinnerRecipeDetails";
 import TopRecipeDetail from "./components/Details/TopRecipeDetail";
 import NutritionRecipes from "./components/Home/NutritionRecipes";
+// Import new components
+import Nutrition from "./components/RecipesPages/Nutrition";
+import NutritionRecipeDetail from "./components/Details/NutritionRecipeDetail";
+
 
 
 const App = () => {
@@ -65,7 +69,12 @@ const App = () => {
         <Route path="latest" element={<LatestRecipes />} />
 
         <Route path="/top-recipe/:id" element={<TopRecipeDetail />} />
+
+        
         <Route path="/nutrition-recipes" element={<NutritionRecipes />} />
+        <Route path="/nutrition" element={<Nutrition />} />
+        <Route path="/nutrition-recipe/:id" element={<NutritionRecipeDetail />} />
+
       </Routes>
 
       <Footer />
