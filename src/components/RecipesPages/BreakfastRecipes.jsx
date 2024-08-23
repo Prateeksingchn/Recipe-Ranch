@@ -20,7 +20,7 @@ const BreakfastRecipes = () => {
       transition={{ duration: 0.8 }}
     >
       <Link to="/#explore">
-        <button className="mt-8 ml-[6%] mb-6 inline-flex items-center rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+        <button className="mt-8 ml-[6%] mb-6 inline-flex items-center rounded-3xl bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
           <ArrowLeft className="mr-2 h-5 w-5" />
           Back to Explore
         </button>
@@ -56,34 +56,33 @@ const BreakfastRecipes = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 * index, duration: 0.5 }}
             >
-              <img
-                src={recipe.image}
-                alt={recipe.name}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2">{recipe.name}</h3>
-                <div className="flex justify-between items-center text-sm text-gray-500 mb-4">
-                  <span className="flex items-center">
-                    <Clock size={16} className="mr-1" /> {recipe.time}
-                  </span>
-                  <span className="flex items-center">
-                    <Users size={16} className="mr-1" /> {recipe.servings}{" "}
-                    servings
-                  </span>
-                  <span className="flex items-center text-yellow-500">
-                    <Star size={16} className="mr-1" fill="currentColor" />{" "}
-                    {recipe.rating}
-                  </span>
+              <Link
+                to={`/breakfast-recipes/${recipe.name
+                  .toLowerCase()
+                  .replace(/\s/g, "-")}`}
+              >
+                <img
+                  src={recipe.image}
+                  alt={recipe.name}
+                  className="w-full h-56 object-cover "
+                />
+                <div className="px-6 py-3">
+                  <h3 className="text-xl font-semibold mb-2">{recipe.name}</h3>
+                  <div className="flex justify-between items-center text-sm text-gray-500 mb-2">
+                    <span className="flex items-center">
+                      <Clock size={16} className="mr-1" /> {recipe.time}
+                    </span>
+                    <span className="flex items-center">
+                      <Users size={16} className="mr-1" /> {recipe.servings}{" "}
+                      servings
+                    </span>
+                    <span className="flex items-center text-yellow-500">
+                      <Star size={16} className="mr-1" fill="currentColor" />{" "}
+                      {recipe.rating}
+                    </span>
+                  </div>
                 </div>
-                <Link
-                  to={`/breakfast-recipes/${recipe.name
-                    .toLowerCase()
-                    .replace(/\s/g, "-")}`}
-                >
-                  <button>View Recipe</button>
-                </Link>
-              </div>
+              </Link>
             </motion.div>
           ))}
         </div>

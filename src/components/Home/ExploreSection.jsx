@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 import { motion } from "framer-motion";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Coffee, Utensils, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const mealTypes = [
@@ -28,14 +28,14 @@ const ExploreSection = forwardRef((props, ref) => {
   return (
     <motion.section
       ref={ref}
-      className="py-14 px-6 bg-gradient-to-br from-[#C2E1F8] to-[#E6F4FF] rounded-3xl my-3"
+      className="py-10 px-6 bg-gradient-to-br from-[#C2E1F8] to-[#E6F4FF] rounded-3xl my-3"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
       <div className="container mx-auto">
         <motion.h2
-          className="text-5xl font-bold text-[#04039B] mb-12 text-center"
+          className="text-5xl font-bold text-[#04039B] mb-6 text-center"
           style={{ fontFamily: "Lobster, cursive" }}
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -43,6 +43,36 @@ const ExploreSection = forwardRef((props, ref) => {
         >
           Explore Our Culinary World
         </motion.h2>
+        
+        <motion.p
+          className="text-lg text-gray-700 mb-8 text-center max-w-2xl mx-auto"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+        >
+          Discover a world of flavors with our diverse recipe collection. From quick breakfasts to gourmet dinners, find inspiration for every meal and skill level.
+        </motion.p>
+        
+        {/* <motion.div
+          className="flex justify-between space-x-8 mb-5 px-32"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+        >
+          <div className="flex items-center">
+            <Coffee className="text-green-500 mr-2" />
+            <span>100+ Recipes</span>
+          </div>
+          <div className="flex items-center">
+            <Utensils className="text-green-500 mr-2" />
+            <span>All Skill Levels</span>
+          </div>
+          <div className="flex items-center">
+            <Clock className="text-green-500 mr-2" />
+            <span>Quick & Easy Options</span>
+          </div>
+        </motion.div> */}
+        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {mealTypes.map((mealType, index) => (
             <motion.div
@@ -56,13 +86,13 @@ const ExploreSection = forwardRef((props, ref) => {
               <img
                 src={mealType.image}
                 alt={mealType.name}
-                className="w-full h-48 object-cover"
+                className="w-full h-60 object-cover"
               />
-              <div className="p-6">
+              <div className="px-6 pt-2 pb-4">
                 <h3 className="text-2xl font-semibold mb-2">
                   {mealType.name} Recipes
                 </h3>
-                <p className="text-gray-600 mb-4">
+                <p className="text-gray-600 text-sm mb-4 ">
                   Discover mouthwatering {mealType.name.toLowerCase()} ideas for
                   every day.
                 </p>

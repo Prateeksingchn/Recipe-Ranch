@@ -89,6 +89,10 @@ const LatestRecipes = () => {
     setFilteredRecipes(recipes);
   }, [recipes]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleSearch = (e) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
@@ -103,14 +107,14 @@ const LatestRecipes = () => {
 
   return (
     <motion.div
-      className="w-full mx-auto px-24 py-12  bg-gradient-to-br from-green-200 to-blue-200 my-4 rounded-3xl"
+      className="w-full mx-auto px-24 pt-6 pb-12  bg-gradient-to-b from-green-200 to-blue-200 my-4 rounded-3xl"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
       <Link to="/recipes">
         <button
-          className="mt-8 mb-8 inline-flex items-center rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+          className="mt-4 mb-4 inline-flex items-center rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
         >
           <ArrowLeft className="mr-2 h-5 w-5" />
           Back to Recipes

@@ -31,7 +31,7 @@ const DinnerRecipeDetails = () => {
       transition={{ duration: 0.8 }}
     >
       <Link to="/dinner-recipes">
-        <button className="mt-8 ml-[6%] mb-6 inline-flex items-center rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+        <button className="mt-2 ml-[4px] mb-6 inline-flex items-center rounded-3xl bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
           <ArrowLeft className="mr-2 h-5 w-5" />
           Back to Dinner Recipes
         </button>
