@@ -18,7 +18,10 @@ const NutritionHeader = ({ onAddRecipe }) => {
         >
           <ArrowLeft size={24} className="text-gray-600" />
         </Link>
-        <h1 className="text-4xl sm:text-5xl font-bold text-gray-800">
+        <h1
+          className="text-4xl sm:text-5xl font-bold text-gray-800"
+          style={{ fontFamily: "Lobster, cursive" }}
+        >
           Nutrition & Diet Recipes
         </h1>
       </div>

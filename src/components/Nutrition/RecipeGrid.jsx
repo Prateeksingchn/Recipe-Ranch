@@ -1,12 +1,13 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import NutritionRecipeCard from "./NutritionRecipeCard";
+import UserCreatedNutritionRecipeCard from "./UserCreatedNutritionRecipeCard";
 
-const RecipeGrid = ({ recipes, userCreatedRecipes }) => {
-  const renderRecipes = (recipeList, title) => (
+const RecipeGrid = ({ recipes, userCreatedRecipes, onDeleteUserRecipe }) => {
+  const renderRecipes = (recipeList, title, isUserCreated = false) => (
     <>
       {recipeList.length > 0 && (
-        <h2 className="text-2xl font-bold mb-4 mt-8">{title}</h2>
+        <h2 className="text-3xl text-[#cc0000] font-bold mb-4 mt-8 ml-2 border-b-4 border-yellow-200 w-[max-content] ">{title}</h2>
       )}
       <motion.div
         layout
@@ -21,7 +22,14 @@ const RecipeGrid = ({ recipes, userCreatedRecipes }) => {
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.3 }}
             >
-              <NutritionRecipeCard recipe={recipe} />
+              {isUserCreated ? (
+                <UserCreatedNutritionRecipeCard
+                  recipe={recipe}
+                  onDelete={onDeleteUserRecipe}
+                />
+              ) : (
+                <NutritionRecipeCard recipe={recipe} />
+              )}
             </motion.div>
           ))}
         </AnimatePresence>
@@ -33,8 +41,8 @@ const RecipeGrid = ({ recipes, userCreatedRecipes }) => {
 
   return (
     <div>
-      {renderRecipes(userCreatedRecipes, "Your Created Recipes")}
       {renderRecipes(recipes, "All Recipes")}
+      {renderRecipes(userCreatedRecipes, "Your Created Recipes", true)}
       {allRecipesEmpty && (
         <motion.p
           className="text-center text-gray-600 text-xl mt-12"

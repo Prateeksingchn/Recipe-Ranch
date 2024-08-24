@@ -6,6 +6,7 @@ import SearchBar from "./Recipe/SearchBar";
 import UserCreatedRecipes from "./Recipe/UserCreatedRecipes";
 import AllRecipes from "./Recipe/AllRecipes";
 import Pagination from "./Recipe/Pagination";
+import NutritionRecipes from "./Recipe/NutritionRecipesSection"; // Import the new component
 
 const Recipes = () => {
   const [allRecipes, setAllRecipes] = useState([]);
@@ -20,6 +21,10 @@ const Recipes = () => {
     (state) => state.recipeReducer.recipes
   );
 
+  const nutritionRecipes = JSON.parse(
+    localStorage.getItem("userCreatedRecipes") || "[]"
+  );
+
   useEffect(() => {
     fetchRecipes(currentPage, currentSearchTerm);
   }, [currentPage, currentSearchTerm]);
@@ -30,14 +35,26 @@ const Recipes = () => {
     const from = (page - 1) * recipesPerPage;
     const to = from + recipesPerPage;
     const defaultSearchTerms = [
-      "vegetarian", "chicken", "pasta", "salad", 
-      "soup", "dessert", "breakfast", "lunch", "dinner", "snack"
+      "vegetarian",
+      "chicken",
+      "pasta",
+      "salad",
+      "soup",
+      "dessert",
+      "breakfast",
+      "lunch",
+      "dinner",
+      "snack",
     ];
-    
+
     // Use a default search term if no search term is provided
-    const query = searchTerm || defaultSearchTerms[Math.floor(Math.random() * defaultSearchTerms.length)];
-    
-    const url = `https://api.edamam.com/search?app_id=${APP_ID}&app_key=${APP_KEY}&from=${from}&to=${to}&q=${encodeURIComponent(query)}`;
+    const query =
+      searchTerm ||
+      defaultSearchTerms[Math.floor(Math.random() * defaultSearchTerms.length)];
+
+    const url = `https://api.edamam.com/search?app_id=${APP_ID}&app_key=${APP_KEY}&from=${from}&to=${to}&q=${encodeURIComponent(
+      query
+    )}`;
 
     try {
       setIsLoading(true);
@@ -69,9 +86,14 @@ const Recipes = () => {
   const totalPages = Math.min(Math.ceil(totalResults / recipesPerPage), 100);
 
   return (
-    <div className="w-full mx-auto px-4 sm:px-8 md:px-16 py-8 rounded-3xl my-4">
-      <RecipePageHeader />    
-      <UserCreatedRecipes userCreatedRecipes={userCreatedRecipes} />
+    <div className="w-full mx-auto px-4 sm:px-8 md:px-16 lg:px-4 py-8 rounded-3xl my-4">
+      <RecipePageHeader />
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 w-full h-auto ">
+        <UserCreatedRecipes userCreatedRecipes={userCreatedRecipes} />
+        <NutritionRecipes nutritionRecipes={nutritionRecipes} />
+      </div>
+
       <SearchBar
         categories={categories}
         setAllRecipes={setAllRecipes}

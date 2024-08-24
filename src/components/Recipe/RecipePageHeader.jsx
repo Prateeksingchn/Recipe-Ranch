@@ -1,26 +1,23 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
 
 const RecipePageHeader = () => {
   return (
-    <div className="flex justify-between items-center mb-8 pl-4">
-      <div>
-        <h1
-          className="text-6xl font-bold text-[#EE4130] "
-          style={{ fontFamily: "Lobster, cursive" }}
-        >
-          Our Recipes
-        </h1>
-        <h4 className="text-zinc-500 text-lg mt-4 font-['Roboto', sans-serif] ">
-          Discover delicious recipes from around the world
-        </h4>
+    <div className="flex flex-col sm:flex-row justify-between items-center mb-8">
+      <h1 className="text-4xl font-bold text-gray-800 mb-4 sm:mb-0">Recipe Collection</h1>
+      <div className="flex space-x-4">
+        <button className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg flex items-center transition-colors duration-300">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+          </svg>
+          Create Recipe
+        </button>
+        <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg flex items-center transition-colors duration-300">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+          </svg>
+          Create Nutrition Recipe
+        </button>
       </div>
-      <Link
-        to="/create-recipe"
-        className="bg-[#EE4130] text-white font-bold py-3 px-5 rounded-3xl hover:bg-[#c73524] transition-colors duration-300"
-      >
-        Create New Recipe
-      </Link>
     </div>
   );
 };

@@ -60,7 +60,7 @@ const UpdateNutritionRecipe = ({ recipe, onUpdate, onClose }) => {
           <input
             type="text"
             name="title"
-            value={recipe.title}
+            value={updatedRecipe.title}
             onChange={handleChange}
             placeholder="Recipe Title"
             className="w-full p-2 border rounded"
@@ -69,7 +69,7 @@ const UpdateNutritionRecipe = ({ recipe, onUpdate, onClose }) => {
           <input
             type="text"
             name="chef"
-            value={recipe.chef}
+            value={updatedRecipe.chef}
             onChange={handleChange}
             placeholder="Chef Name"
             className="w-full p-2 border rounded"
@@ -78,7 +78,7 @@ const UpdateNutritionRecipe = ({ recipe, onUpdate, onClose }) => {
           <input
             type="text"
             name="image"
-            value={recipe.image}
+            value={updatedRecipe.image}
             onChange={handleChange}
             placeholder="Image URL"
             className="w-full p-2 border rounded"
@@ -88,7 +88,7 @@ const UpdateNutritionRecipe = ({ recipe, onUpdate, onClose }) => {
             <input
               type="number"
               name="calories"
-              value={recipe.calories}
+              value={updatedRecipe.calories}
               onChange={handleChange}
               placeholder="Calories"
               className="w-full p-2 border rounded"
@@ -97,7 +97,7 @@ const UpdateNutritionRecipe = ({ recipe, onUpdate, onClose }) => {
             <input
               type="number"
               name="time"
-              value={recipe.time}
+              value={updatedRecipe.time}
               onChange={handleChange}
               placeholder="Time (minutes)"
               className="w-full p-2 border rounded"
@@ -106,7 +106,7 @@ const UpdateNutritionRecipe = ({ recipe, onUpdate, onClose }) => {
           </div>
           <select
             name="dietType"
-            value={recipe.dietType}
+            value={updatedRecipe.dietType}
             onChange={handleChange}
             className="w-full p-2 border rounded"
             required
@@ -121,7 +121,7 @@ const UpdateNutritionRecipe = ({ recipe, onUpdate, onClose }) => {
           </select>
           <select
             name="mealCategory"
-            value={recipe.mealCategory}
+            value={updatedRecipe.mealCategory}
             onChange={handleChange}
             className="w-full p-2 border rounded"
             required
@@ -134,7 +134,7 @@ const UpdateNutritionRecipe = ({ recipe, onUpdate, onClose }) => {
           </select>
           <select
             name="difficulty"
-            value={recipe.difficulty}
+            value={updatedRecipe.difficulty}
             onChange={handleChange}
             className="w-full p-2 border rounded"
             required
@@ -146,7 +146,7 @@ const UpdateNutritionRecipe = ({ recipe, onUpdate, onClose }) => {
           </select>
           <div>
             <h3 className="font-semibold mb-2">Ingredients</h3>
-            {recipe.ingredients.map((ingredient, index) => (
+            {updatedRecipe.ingredients.map((ingredient, index) => (
               <div key={index} className="flex mb-2">
                 <input
                   type="text"
@@ -175,7 +175,7 @@ const UpdateNutritionRecipe = ({ recipe, onUpdate, onClose }) => {
           </div>
           <div>
             <h3 className="font-semibold mb-2">Instructions</h3>
-            {recipe.instructions.map((instruction, index) => (
+            {updatedRecipe.instructions.map((instruction, index) => (
               <div key={index} className="flex mb-2">
                 <input
                   type="text"
@@ -208,7 +208,7 @@ const UpdateNutritionRecipe = ({ recipe, onUpdate, onClose }) => {
               <input
                 type="number"
                 name="protein"
-                value={recipe.nutritionFacts.protein}
+                value={updatedRecipe.nutritionFacts.protein}
                 onChange={handleNutritionChange}
                 placeholder="Protein"
                 className="w-full p-2 border rounded"
@@ -217,7 +217,7 @@ const UpdateNutritionRecipe = ({ recipe, onUpdate, onClose }) => {
               <input
                 type="number"
                 name="carbs"
-                value={recipe.nutritionFacts.carbs}
+                value={updatedRecipe.nutritionFacts.carbs}
                 onChange={handleNutritionChange}
                 placeholder="Carbs"
                 className="w-full p-2 border rounded"
@@ -226,7 +226,7 @@ const UpdateNutritionRecipe = ({ recipe, onUpdate, onClose }) => {
               <input
                 type="number"
                 name="fat"
-                value={recipe.nutritionFacts.fat}
+                value={updatedRecipe.nutritionFacts.fat}
                 onChange={handleNutritionChange}
                 placeholder="Fat"
                 className="w-full p-2 border rounded"
@@ -235,7 +235,7 @@ const UpdateNutritionRecipe = ({ recipe, onUpdate, onClose }) => {
               <input
                 type="number"
                 name="fiber"
-                value={recipe.nutritionFacts.fiber}
+                value={updatedRecipe.nutritionFacts.fiber}
                 onChange={handleNutritionChange}
                 placeholder="Fiber"
                 className="w-full p-2 border rounded"

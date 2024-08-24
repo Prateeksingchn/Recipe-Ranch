@@ -7,6 +7,7 @@ import FilterPanel from "../Nutrition/FilterPanel";
 import RecipeGrid from "../Nutrition/RecipeGrid";
 import NutritionTip from "../Nutrition/NutritionTip";
 import CreateNutritionRecipe from "../Nutrition/CreateNutritionRecipe";
+import QuickAccessSection from "../Nutrition/QuickAccessSection";
 
 const Nutrition = () => {
   const [recipes, setRecipes] = useState(nutritionRecipes);
@@ -23,17 +24,37 @@ const Nutrition = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     // Load user-created recipes from local storage
-    const storedRecipes = localStorage.getItem('userCreatedRecipes');
-    if (storedRecipes) {
-      setUserCreatedRecipes(JSON.parse(storedRecipes));
+    try {
+      const storedRecipes = JSON.parse(localStorage.getItem('userCreatedRecipes') || '[]');
+      setUserCreatedRecipes(storedRecipes);
+    } catch (error) {
+      console.error('Error loading user-created recipes:', error);
+      setUserCreatedRecipes([]);
     }
   }, []);
 
   const handleAddRecipe = (newRecipe) => {
-    const updatedRecipes = [...userCreatedRecipes, newRecipe];
+    const updatedRecipes = [...userCreatedRecipes, { ...newRecipe, id: Date.now().toString() }];
     setUserCreatedRecipes(updatedRecipes);
     // Save to local storage
-    localStorage.setItem('userCreatedRecipes', JSON.stringify(updatedRecipes));
+    try {
+      localStorage.setItem('userCreatedRecipes', JSON.stringify(updatedRecipes));
+    } catch (error) {
+      console.error('Error saving user-created recipes:', error);
+    }
+  };
+
+  const handleDeleteUserRecipe = (id) => {
+    if (window.confirm("Are you sure you want to delete this recipe?")) {
+      const updatedRecipes = userCreatedRecipes.filter(recipe => recipe.id !== id);
+      setUserCreatedRecipes(updatedRecipes);
+      // Save to local storage
+      try {
+        localStorage.setItem('userCreatedRecipes', JSON.stringify(updatedRecipes));
+      } catch (error) {
+        console.error('Error saving user-created recipes:', error);
+      }
+    }
   };
 
   const filterRecipes = (recipeList) => {
@@ -60,7 +81,7 @@ const Nutrition = () => {
   const filteredUserCreatedRecipes = filterRecipes(userCreatedRecipes);
 
   return (
-    <div className="bg-gradient-to-b from-green-50 to-white min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+    <div className="bg-gradient-to-b from-green-50 to-[#e0dbdb] min-h-screen py-12 px-4 sm:px-6 lg:px-8 my-4 rounded-3xl">
       <div className="max-w-7xl mx-auto">
         <NutritionHeader onAddRecipe={() => setShowCreateForm(true)} />
 
@@ -83,10 +104,21 @@ const Nutrition = () => {
           setSelectedDietType={setSelectedDietType}
         />
 
-        <RecipeGrid 
-          recipes={filteredRecipes}
-          userCreatedRecipes={filteredUserCreatedRecipes}
-        />
+        <section id="all-recipes" className="mb-4">
+          <RecipeGrid 
+            recipes={filteredRecipes}
+            userCreatedRecipes={[]}
+            onDeleteUserRecipe={handleDeleteUserRecipe}
+          />
+        </section>
+
+        <section id="created-recipes" className="mb-12">
+          <RecipeGrid 
+            recipes={[]}
+            userCreatedRecipes={filteredUserCreatedRecipes}
+            onDeleteUserRecipe={handleDeleteUserRecipe}
+          />
+        </section>
 
         <NutritionTip showTipAlert={showTipAlert} setShowTipAlert={setShowTipAlert} />
 
@@ -96,6 +128,8 @@ const Nutrition = () => {
             onClose={() => setShowCreateForm(false)}
           />
         )}
+
+        <QuickAccessSection />
       </div>
     </div>
   );

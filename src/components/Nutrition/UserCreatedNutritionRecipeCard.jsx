@@ -64,14 +64,6 @@ const UserCreatedNutritionRecipeCard = ({ recipe, onDelete }) => {
               View Recipe
             </button>
           </Link>
-          <Link to={`/update-user-recipe/${recipe.id}`} className="flex-shrink-0">
-            <button className="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-300">
-              <Edit className="w-5 h-5" />
-            </button>
-          </Link>
-          <button onClick={() => onDelete(recipe.id)} className="flex-shrink-0 ml-2 py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-300">
-            <Trash className="w-5 h-5" />
-          </button>
         </div>
       </div>
     </div>

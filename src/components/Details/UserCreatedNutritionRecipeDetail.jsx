@@ -1,35 +1,85 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { Clock, ChefHat, Flame, Award, Leaf, ArrowLeft, Edit, Trash } from "lucide-react";
+import {
+  Clock,
+  ChefHat,
+  Flame,
+  Leaf,
+  ArrowLeft,
+  Edit,
+  Trash,
+} from "lucide-react";
+import UpdateNutritionRecipe from "../Nutrition/UpdateNutritionRecipe";
 
 const UserCreatedNutritionRecipeDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [recipe, setRecipe] = useState(null);
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
   useEffect(() => {
     console.log("UserCreatedNutritionRecipeDetail rendering. ID:", id);
     window.scrollTo(0, 0);
-    const storedRecipes = JSON.parse(localStorage.getItem('userCreatedRecipes') || '[]');
-    console.log("Stored recipes:", storedRecipes);
-    const foundRecipe = storedRecipes.find(r => r.id === id || r.id === parseInt(id));
-    console.log("Found recipe:", foundRecipe);
-    if (foundRecipe) {
-      setRecipe(foundRecipe);
-    } else {
-      setError("Recipe not found");
+    try {
+      const storedRecipes = JSON.parse(
+        localStorage.getItem("userCreatedRecipes") || "[]"
+      );
+      console.log("Stored recipes:", storedRecipes);
+      console.log("Looking for recipe with ID:", id);
+      const foundRecipe = storedRecipes.find(
+        (r) => r.id === id || r.id === parseInt(id)
+      );
+      console.log("Found recipe:", foundRecipe);
+      if (foundRecipe) {
+        setRecipe(foundRecipe);
+      } else {
+        console.log("Recipe not found in stored recipes");
+        setError("Recipe not found");
+      }
+    } catch (e) {
+      console.error("Error parsing stored recipes:", e);
+      setError("Error loading recipe data");
     }
+    setIsLoading(false);
   }, [id]);
 
   const handleDelete = () => {
     if (window.confirm("Are you sure you want to delete this recipe?")) {
-      const storedRecipes = JSON.parse(localStorage.getItem('userCreatedRecipes') || '[]');
-      const updatedRecipes = storedRecipes.filter(r => r.id !== id && r.id !== parseInt(id));
-      localStorage.setItem('userCreatedRecipes', JSON.stringify(updatedRecipes));
-      navigate('/nutrition');
+      const storedRecipes = JSON.parse(
+        localStorage.getItem("userCreatedRecipes") || "[]"
+      );
+      const updatedRecipes = storedRecipes.filter(
+        (r) => r.id !== id && r.id !== parseInt(id)
+      );
+      localStorage.setItem(
+        "userCreatedRecipes",
+        JSON.stringify(updatedRecipes)
+      );
+      navigate("/nutrition");
     }
   };
+
+  const handleUpdate = (updatedRecipe) => {
+    const storedRecipes = JSON.parse(
+      localStorage.getItem("userCreatedRecipes") || "[]"
+    );
+    const updatedRecipes = storedRecipes.map((r) =>
+      r.id === updatedRecipe.id ? updatedRecipe : r
+    );
+    localStorage.setItem("userCreatedRecipes", JSON.stringify(updatedRecipes));
+    setRecipe(updatedRecipe);
+    setIsUpdateModalOpen(false);
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        Loading...
+      </div>
+    );
+  }
 
   if (error) {
     return (
@@ -47,13 +97,18 @@ const UserCreatedNutritionRecipeDetail = () => {
   if (!recipe) {
     return (
       <div className="flex items-center justify-center h-screen">
-        Loading...
+        <div className="text-center">
+          <p className="text-xl font-semibold mb-4">Recipe not found</p>
+          <Link to="/nutrition" className="text-blue-500 hover:underline">
+            Return to Nutrition Page
+          </Link>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center rounded-3xl">
+    <div className="min-h-screen flex items-center justify-center rounded-3xl -mt-5">
       <Link
         to="/nutrition"
         className="mr-4 p-2 absolute top-[130px] left-8 rounded-full bg-white shadow-md hover:bg-gray-100 transition-colors duration-300"
@@ -83,7 +138,28 @@ const UserCreatedNutritionRecipeDetail = () => {
         {/* Right side - Scrollable content */}
         <div className="w-[65%] overflow-y-auto px-8 py-2">
           {/* Recipe quick info */}
-          <h1 className="text-2xl font-semibold mb-4">{recipe.title}</h1>
+
+          <div className="flex items-center justify-between mb-2">
+            <h1 className="text-[40px] font-bold mb-4">{recipe.title}</h1>
+            {/* Update and Delete buttons */}
+            <div className="flex space-x-4 -mt-5">
+              <button
+                onClick={() => setIsUpdateModalOpen(true)}
+                className="bg-blue-500 text-white text-sm px-5 py-3 rounded-3xl shadow-lg hover:bg-blue-600 transition-colors duration-300 flex items-center"
+              >
+                <Edit size={20} className="mr-2" />
+                Update Recipe
+              </button>
+              <button
+                onClick={handleDelete}
+                className="bg-red-500 text-white text-sm px-5 py-3 rounded-3xl shadow-lg hover:bg-red-600 transition-colors duration-300 flex items-center"
+              >
+                <Trash size={20} className="mr-2" />
+                Delete Recipe
+              </button>
+            </div>
+          </div>
+
           <div className="flex flex-wrap justify-between items-center mb-8 bg-gray-50 p-4 rounded-lg shadow">
             <div className="flex items-center mb-2 mr-4">
               <Clock size={24} className="text-green-500 mr-2" />
@@ -152,19 +228,15 @@ const UserCreatedNutritionRecipeDetail = () => {
             </ol>
           </div>
 
-          {/* Update and Delete buttons */}
-          <div className="mt-8 flex justify-end space-x-4">
-            <Link to={`/update-user-recipe/${recipe.id}`} className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-300 flex items-center">
-              <Edit size={20} className="mr-2" />
-              Update Recipe
-            </Link>
-            <button onClick={handleDelete} className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors duration-300 flex items-center">
-              <Trash size={20} className="mr-2" />
-              Delete Recipe
-            </button>
-          </div>
         </div>
       </div>
+      {isUpdateModalOpen && (
+        <UpdateNutritionRecipe
+          recipe={recipe}
+          onUpdate={handleUpdate}
+          onClose={() => setIsUpdateModalOpen(false)}
+        />
+      )}
     </div>
   );
 };
