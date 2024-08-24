@@ -1,24 +1,57 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { Clock, ChefHat, Flame, Award, Leaf, ArrowLeft } from "lucide-react";
-import nutritionRecipes from "@/data/nutritionRecipes";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import { Clock, ChefHat, Flame, Award, Leaf, ArrowLeft, Edit, Trash } from "lucide-react";
 
-const NutritionRecipeDetail = () => {
+const UserCreatedNutritionRecipeDetail = () => {
   const { id } = useParams();
-  const recipe = nutritionRecipes.find((r) => r.id === id);
+  const navigate = useNavigate();
+  const [recipe, setRecipe] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+    console.log("UserCreatedNutritionRecipeDetail rendering. ID:", id);
     window.scrollTo(0, 0);
-  }, []);
+    const storedRecipes = JSON.parse(localStorage.getItem('userCreatedRecipes') || '[]');
+    console.log("Stored recipes:", storedRecipes);
+    const foundRecipe = storedRecipes.find(r => r.id === id || r.id === parseInt(id));
+    console.log("Found recipe:", foundRecipe);
+    if (foundRecipe) {
+      setRecipe(foundRecipe);
+    } else {
+      setError("Recipe not found");
+    }
+  }, [id]);
+
+  const handleDelete = () => {
+    if (window.confirm("Are you sure you want to delete this recipe?")) {
+      const storedRecipes = JSON.parse(localStorage.getItem('userCreatedRecipes') || '[]');
+      const updatedRecipes = storedRecipes.filter(r => r.id !== id && r.id !== parseInt(id));
+      localStorage.setItem('userCreatedRecipes', JSON.stringify(updatedRecipes));
+      navigate('/nutrition');
+    }
+  };
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-center">
+          <p className="text-xl font-semibold mb-4">{error}</p>
+          <Link to="/nutrition" className="text-blue-500 hover:underline">
+            Return to Nutrition Page
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   if (!recipe) {
     return (
       <div className="flex items-center justify-center h-screen">
-        Recipe not found
+        Loading...
       </div>
     );
   }
+
   return (
     <div className="min-h-screen flex items-center justify-center rounded-3xl">
       <Link
@@ -31,7 +64,7 @@ const NutritionRecipeDetail = () => {
         {/* Left side - Image */}
         <div className="w-[35%] h-auto relative rounded-2xl overflow-hidden ">
           <img
-            src={`/${recipe.image}`}
+            src={recipe.image}
             alt={recipe.title}
             className="w-full h-full object-cover"
           />
@@ -42,10 +75,6 @@ const NutritionRecipeDetail = () => {
               <span className="flex items-center">
                 <ChefHat size={20} className="mr-2" />
                 {recipe.chef}
-              </span>
-              <span className="flex items-center">
-                <Award size={20} className="mr-2" />
-                {recipe.rating.toFixed(1)}
               </span>
             </div>
           </div>
@@ -122,10 +151,22 @@ const NutritionRecipeDetail = () => {
               ))}
             </ol>
           </div>
+
+          {/* Update and Delete buttons */}
+          <div className="mt-8 flex justify-end space-x-4">
+            <Link to={`/update-user-recipe/${recipe.id}`} className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-300 flex items-center">
+              <Edit size={20} className="mr-2" />
+              Update Recipe
+            </Link>
+            <button onClick={handleDelete} className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors duration-300 flex items-center">
+              <Trash size={20} className="mr-2" />
+              Delete Recipe
+            </button>
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default NutritionRecipeDetail;
+export default UserCreatedNutritionRecipeDetail;

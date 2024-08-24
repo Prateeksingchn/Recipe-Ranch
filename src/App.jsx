@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
-import Nav from "./components/Nav";
-
 import { Route, Routes } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { asyncgetrecipies } from "./store/actions/recipeActions";
+
+import Nav from "./components/Nav";
 import Layout from "./components/Layout";
 import Recipes from "./components/Recipes";
 import Details from "./components/Details/Details";
@@ -9,8 +11,6 @@ import Create from "./components/Create";
 import About from "./components/About";
 import Blog from "./components/Blog";
 import Update from "./components/Update";
-import { useDispatch } from "react-redux";
-import { asyncgetrecipies } from "./store/actions/recipeActions";
 import Footer from "./components/Footer";
 
 import BreakfastRecipes from "./components/RecipesPages/BreakfastRecipes";
@@ -21,18 +21,17 @@ import LatestRecipes from "./components/RecipesPages/LatestRecipes";
 import RecipeBlogDetail from './components/Details/RecipeBlogDetail';
 import CreatedRecipeDetail from './components/Details/CreatedRecipeDetail';
 
-// Recipe Details
-// import RecipeDetails from './components/Details/RecipeDetails';
 import BreakfastRecipeDetails from "./components/Details/BreakfastRecipeDetails";
 import LunchRecipeDetails from "./components/Details/LunchRecipeDetails";
 import DinnerRecipeDetails from "./components/Details/DinnerRecipeDetails";
 import TopRecipeDetail from "./components/Details/TopRecipeDetail";
 import NutritionRecipes from "./components/Home/NutritionRecipes";
+
 // Import new components
 import Nutrition from "./components/RecipesPages/Nutrition";
 import NutritionRecipeDetail from "./components/Details/NutritionRecipeDetail";
-
-
+import UserCreatedNutritionRecipeDetail from "./components/Details/UserCreatedNutritionRecipeDetail";
+import UpdateUserRecipe from "./components/Nutrition/UpdateNutritionRecipe";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -61,7 +60,6 @@ const App = () => {
         <Route path="/breakfast-recipes/:recipeSlug" element={<BreakfastRecipeDetails />} />
         <Route path="/lunch-recipes/:recipeSlug" element={<LunchRecipeDetails />} />
         <Route path="/dinner-recipes/:recipeSlug" element={<DinnerRecipeDetails />} />
-        {/* <Route path="/:recipeType/:recipeSlug" element={<RecipeDetails />} /> */}
         {/* Recipe Pages end */}
 
         <Route path="/recipeblogdetail/:id" element={<RecipeBlogDetail />} />
@@ -70,11 +68,13 @@ const App = () => {
 
         <Route path="/top-recipe/:id" element={<TopRecipeDetail />} />
 
-        
         <Route path="/nutrition-recipes" element={<NutritionRecipes />} />
         <Route path="/nutrition" element={<Nutrition />} />
         <Route path="/nutrition-recipe/:id" element={<NutritionRecipeDetail />} />
 
+        {/* New routes for user-created nutrition recipes */}
+        <Route path="/user-nutrition-recipe/:id" element={<UserCreatedNutritionRecipeDetail />} />
+        <Route path="/update-user-recipe/:id" element={<UpdateUserRecipe />} />
       </Routes>
 
       <Footer />

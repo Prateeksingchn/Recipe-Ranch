@@ -25,7 +25,7 @@ const QuickAccess = () => {
 
   return (
     <div 
-      className={`fixed right-6 top-1/2 transform -translate-y-1/2 bg-white/80 backdrop-blur-md shadow-lg rounded-3xl transition-all duration-300 ease-in-out ${
+      className={`fixed right-6 top-1/2 transform -translate-y-1/2 bg-white/80 backdrop-blur-md shadow-lg rounded-[30px] transition-all duration-300 ease-in-out ${
         isExpanded ? 'w-[140px] p-3' : 'w-14 p-2'
       }`}
       onMouseEnter={() => setIsExpanded(true)}
