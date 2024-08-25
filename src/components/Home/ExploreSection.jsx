@@ -28,7 +28,7 @@ const ExploreSection = forwardRef((props, ref) => {
   return (
     <motion.section
       ref={ref}
-      className="py-10 px-6 bg-gradient-to-br from-[#C2E1F8] to-[#E6F4FF] rounded-3xl my-3"
+      className="py-10 px-6 bg-gradient-to-br from-[#C2E1F8] to-[#E6F4FF] rounded-[30px] my-3"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
@@ -54,7 +54,7 @@ const ExploreSection = forwardRef((props, ref) => {
         </motion.p>
         
         {/* <motion.div
-          className="flex justify-between space-x-8 mb-5 px-32"
+          className="flex justify-center gap-10 mb-5 px-32"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.5 }}

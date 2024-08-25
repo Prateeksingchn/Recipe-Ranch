@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const HeroSection = ({ searchQuery, setSearchQuery }) => {
   return (
-    <section className="min-h-[calc(93.5vh-4rem)] flex items-center justify-center bg-[#EE4130] text-white rounded-b-3xl pb-5 mb-4">
+    <section className="min-h-[calc(93.5vh-4rem)] flex items-center justify-center bg-[#EE4130] text-white rounded-b-[30px] pb-5 mb-4">
       <motion.div
         className="container mx-auto px-4 lg:px-0"
         initial={{ opacity: 0, y: 50 }}

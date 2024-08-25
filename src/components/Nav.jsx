@@ -19,7 +19,7 @@ const Nav = () => {
   const isHomePage = location.pathname === "/";
 
   return (
-    <nav className={`bg-[#EE4130] text-white ${isHomePage ? 'rounded-t-3xl' : 'rounded-3xl'}`}>
+    <nav className={`bg-[#EE4130] text-white ${isHomePage ? 'rounded-t-[30px]' : 'rounded-[30px]'}`}>
       <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-14 py-4">
         <div className="flex justify-between items-center">
           <div className="flex-shrink-0 flex items-center ">

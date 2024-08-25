@@ -105,7 +105,7 @@ const NutritionRecipes = forwardRef((props, ref) => {
   };
 
   return (
-    <section ref={ref} className="py-10 bg-[#E6F4FF] my-4 rounded-3xl">
+    <section ref={ref} className="py-10 bg-[#E6F4FF] my-4 rounded-[30px] ">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: -50 }}

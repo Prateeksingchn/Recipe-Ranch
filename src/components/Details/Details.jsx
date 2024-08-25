@@ -49,7 +49,7 @@ const RecipeBlog = () => {
           Recipe not found
         </h1>
         <Link
-          to="/"
+          to="/recipes"
           className="text-green-600 hover:text-green-700 transition duration-300"
         >
           <ArrowLeft className="inline mr-2" />

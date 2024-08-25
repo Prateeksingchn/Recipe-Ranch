@@ -20,7 +20,7 @@ const NutritionRecipeDetail = () => {
     );
   }
   return (
-    <div className="min-h-screen flex items-center justify-center rounded-3xl">
+    <div className="min-h-screen flex items-center justify-center rounded-3xl -mt-5">
       <Link
         to="/nutrition"
         className="mr-4 p-2 absolute top-[130px] left-8 rounded-full bg-white shadow-md hover:bg-gray-100 transition-colors duration-300"

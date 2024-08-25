@@ -198,7 +198,7 @@ const RecipeBlog = () => {
   const totalPages = Math.ceil(totalResults / resultsPerPage);
 
   return (
-    <div className="bg-amber-50 min-h-screen py-10 my-4 rounded-3xl">
+    <div className="bg-cyan-200 min-h-screen py-10 my-4 rounded-[30px]">
       <div className="max-w-6xl mx-auto px-4">
         <motion.h1
           initial={{ opacity: 0, y: -50 }}

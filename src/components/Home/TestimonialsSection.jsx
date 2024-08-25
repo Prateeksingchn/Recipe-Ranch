@@ -37,7 +37,7 @@ const TestimonialsSection = () => {
   );
 
   return (
-    <section className="py-10 px-6 bg-gradient-to-br from-green-200 to-blue-50 my-4 rounded-3xl">
+    <section className="py-10 px-6 bg-gradient-to-br from-green-200 to-blue-50 my-4 rounded-[30px]">
       <div className="w-[95%] mx-auto">
         <motion.div
           className="text-center mb-8"

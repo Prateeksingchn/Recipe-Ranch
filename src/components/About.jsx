@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Utensils, Users, Coffee, Book, Star, Clock } from "lucide-react";
+import { ArrowRight, Utensils, Users, Book, Star, Clock } from "lucide-react";
 
 const FeatureCard = ({ Icon, title, description }) => (
   <motion.div
@@ -48,15 +48,29 @@ const StatisticCard = ({ value, label, Icon }) => (
   </motion.div>
 );
 
+const AboutCreatorCard = ({ name, bio, image }) => (
+  <motion.div
+    className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col items-center"
+    whileHover={{ y: -5 }}
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ type: "spring", stiffness: 300 }}
+  >
+    <img src={image} alt={name} className="w-24 h-24 rounded-full mb-4" />
+    <h3 className="text-2xl font-bold mb-2">{name}</h3>
+    <p className="text-gray-600 text-center">{bio}</p>
+  </motion.div>
+);
+
 const About = () => {
   return (
-    <div className="bg-gradient-to-br from-green-100 to-green-300 min-h-screen py-16 mt-4 mb-4 rounded-3xl">
+    <div className="bg-gradient-to-b from-blue-900 to-cyan-500 min-h-screen py-16 mt-4 mb-4 rounded-3xl">
       <div className="max-w-6xl mx-auto px-4">
         <motion.h1
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-5xl md:text-7xl font-extrabold text-green-600 mb-8 text-center"
+          className="text-5xl md:text-7xl font-extrabold text-pink-100 mb-8 text-center"
         >
           Discover Our Culinary World
         </motion.h1>
@@ -65,7 +79,7 @@ const About = () => {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-xl text-gray-700 mb-12 text-center max-w-3xl mx-auto"
+          className="text-xl text-gray-100 mb-12 text-center max-w-3xl mx-auto"
         >
           We're passionate about bringing delicious recipes and cooking tips right to your fingertips. Join our community of food lovers and culinary enthusiasts!
         </motion.p>
@@ -87,9 +101,9 @@ const About = () => {
             description="Connect with fellow food lovers and share your culinary experiences."
           />
           <FeatureCard
-            Icon={Coffee}
-            title="Tips & Tricks"
-            description="Learn professional cooking techniques to elevate your skills."
+            Icon={Book}
+            title="Recipe Collections"
+            description="Access curated collections of recipes for various occasions."
           />
         </motion.div>
 
@@ -97,7 +111,7 @@ const About = () => {
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-4xl font-bold text-green-700 mb-8 text-center"
+          className="text-4xl font-bold text-green-100 mb-8 text-center"
         >
           What Our Community Says
         </motion.h2>
@@ -129,7 +143,7 @@ const About = () => {
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-4xl font-bold text-green-700 mb-8 text-center"
+          className="text-4xl font-bold text-green-100 mb-8 text-center"
         >
           Our Impact
         </motion.h2>
@@ -143,6 +157,28 @@ const About = () => {
           <StatisticCard value="10,000+" label="Recipes" Icon={Book} />
           <StatisticCard value="1M+" label="Community Members" Icon={Users} />
           <StatisticCard value="5M+" label="Meals Cooked" Icon={Clock} />
+        </motion.div>
+
+        <motion.h2
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-4xl font-bold text-green-100 mb-8 text-center"
+        >
+          About the Creator
+        </motion.h2>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
+        >
+          <AboutCreatorCard
+            name="John Doe"
+            bio="John is a professional chef with over 20 years of experience in the culinary industry. His passion for food and cooking has inspired countless home cooks to elevate their skills in the kitchen."
+            image="/path-to-image.jpg"
+          />
         </motion.div>
         
         <motion.div

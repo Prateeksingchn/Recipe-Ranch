@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
   ArrowLeft,
+  ArrowRight,
   Clock,
   Users,
   ChefHat,
@@ -112,14 +113,20 @@ const LatestRecipes = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <Link to="/recipes">
-        <button
-          className="mt-4 mb-4 inline-flex items-center rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
-          Back to Recipes
-        </button>
-      </Link>
+      <div className="flex justify-between">
+        <Link to="/">
+          <button className="mt-4 mb-4 inline-flex items-center rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+            <ArrowLeft className="mr-2 h-5 w-5" />
+            Go to Feature Section
+          </button>
+        </Link>
+        <Link to="/recipes">
+          <button className="mt-4 mb-4 inline-flex items-center rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+            Go to Recipes
+            <ArrowRight className="ml-2 h-5 w-5" />
+          </button>
+        </Link>
+      </div>
 
       <h1
         className="text-5xl font-bold text-[#04039B] mb-12 text-center"

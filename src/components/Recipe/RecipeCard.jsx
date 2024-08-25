@@ -7,7 +7,7 @@ const RecipeCard = ({ recipe, isUserCreated }) => {
     ? recipe.id
     : encodeURIComponent(recipe.uri?.split("#")[1]);
   const viewRecipeLink = isUserCreated
-    ? `/created-recipes/${recipeId}`
+    ? `/created-recipes/${recipe.id}`
     : `/recipe/${recipeId}`;
 
   return (
@@ -26,7 +26,7 @@ const RecipeCard = ({ recipe, isUserCreated }) => {
           {recipe.label || recipe.title}
         </h3>
         <p className="text-gray-600 mt-2">
-          {recipe.source || (isUserCreated ? "" : "")}
+          {recipe.source || recipe.chefName}
         </p>
         <div className="mt-2 space-y-1">
           {(recipe.cuisineType?.[0] || recipe.category) && (

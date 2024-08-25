@@ -4,7 +4,7 @@ import { PlusCircle } from "lucide-react";
 
 const RecipePageHeader = () => {
   return (
-    <div className="flex flex-col sm:flex-row justify-between items-center mb-12 bg-white rounded-3xl shadow-lg p-6">
+    <div className="flex flex-col sm:flex-row justify-between items-center mb-12 bg-transparent rounded-3xl shadow-lg p-6">
       <div className="mb-6 sm:mb-0">
         <h1
           className="text-5xl font-bold text-[#EE4130] mb-2"
