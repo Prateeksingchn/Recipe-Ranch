@@ -6,7 +6,8 @@ import SearchBar from "./Recipe/SearchBar";
 import UserCreatedRecipes from "./Recipe/UserCreatedRecipes";
 import AllRecipes from "./Recipe/AllRecipes";
 import Pagination from "./Recipe/Pagination";
-import NutritionRecipes from "./Recipe/NutritionRecipesSection"; // Import the new component
+import NutritionRecipes from "./Recipe/NutritionRecipesSection";
+import { Book, Utensils } from 'lucide-react';
 
 const Recipes = () => {
   const [allRecipes, setAllRecipes] = useState([]);
@@ -16,6 +17,7 @@ const Recipes = () => {
   const [totalResults, setTotalResults] = useState(0);
   const [categories, setCategories] = useState([]);
   const [currentSearchTerm, setCurrentSearchTerm] = useState("");
+  const [activeTab, setActiveTab] = useState("latest");
 
   const userCreatedRecipes = useSelector(
     (state) => state.recipeReducer.recipes
@@ -86,28 +88,66 @@ const Recipes = () => {
   const totalPages = Math.min(Math.ceil(totalResults / recipesPerPage), 100);
 
   return (
-    <div className="w-full mx-auto px-4 sm:px-8 md:px-16 lg:px-4 py-8 rounded-3xl my-4">
+    <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-gray-50 min-h-screen">
       <RecipePageHeader />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 w-full h-auto ">
-        <UserCreatedRecipes userCreatedRecipes={userCreatedRecipes} />
-        <NutritionRecipes nutritionRecipes={nutritionRecipes} />
-      </div>
+      <div className="max-w-8xl mx-auto">
+        <div className="mb-8">
+          <div className="flex justify-center space-x-4 mb-6">
+            <button
+              className={`flex items-center px-6 py-3 text-lg font-semibold rounded-full transition-all duration-300 ${
+                activeTab === "latest"
+                  ? "bg-blue-600 text-white shadow-lg"
+                  : "bg-white text-gray-600 hover:bg-gray-100"
+              }`}
+              onClick={() => setActiveTab("latest")}
+            >
+              <Book className="mr-2 h-5 w-5" />
+              Latest Recipes
+            </button>
+            <button
+              className={`flex items-center px-6 py-3 text-lg font-semibold rounded-full transition-all duration-300 ${
+                activeTab === "nutrition"
+                  ? "bg-green-600 text-white shadow-lg"
+                  : "bg-white text-gray-600 hover:bg-gray-100"
+              }`}
+              onClick={() => setActiveTab("nutrition")}
+            >
+              <Utensils className="mr-2 h-5 w-5" />
+              Nutrition Recipes
+            </button>
+          </div>
+          <div className="bg-blue-100 rounded-3xl shadow-lg p-6 overflow-hidden transition-all duration-300">
+            {activeTab === "latest" ? (
+              <UserCreatedRecipes userCreatedRecipes={userCreatedRecipes} />
+            ) : (
+              <NutritionRecipes nutritionRecipes={nutritionRecipes} />
+            )}
+          </div>
+        </div>
 
-      <SearchBar
-        categories={categories}
-        setAllRecipes={setAllRecipes}
-        setTotalResults={setTotalResults}
-        onSearch={handleSearch}
-      />
-      <AllRecipes allRecipes={allRecipes} isLoading={isLoading} />
-      {totalPages > 1 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
-      )}
+
+          <SearchBar
+            categories={categories}
+            setAllRecipes={setAllRecipes}
+            setTotalResults={setTotalResults}
+            onSearch={handleSearch}
+          />
+
+
+          <AllRecipes allRecipes={allRecipes} isLoading={isLoading} />
+          {totalPages > 1 && (
+            <div className="mt-8">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            </div>
+          )}
+
+
+      </div>
     </div>
   );
 };

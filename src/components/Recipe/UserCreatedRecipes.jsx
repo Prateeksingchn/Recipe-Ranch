@@ -1,34 +1,36 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
-import RecipeList from "./RecipeList";
+import { ArrowRight, Plus } from "lucide-react";
+import RecipeCard from './RecipeCard';  // Adjust the path if necessary
 
 const UserCreatedRecipes = ({ userCreatedRecipes }) => {
-  // Slice the userCreatedRecipes array to get only the first 4 recipes
   const limitedRecipes = userCreatedRecipes.slice(0, 4);
 
-  return (
-    <div className="w-full mb-8 bg-blue-100 p-6 rounded-3xl px-6 mx-auto shadow-xl shadow-stone-300 ">
-      <div className="mb-4 flex justify-between items-center">
-        <h2 className="text-3xl font-[Righteous] font-extralight text-[#cc0000]">
-          Our Latest Recipes
-        </h2>
-        <Link to="/latest">
-          <button className="flex gap-[2px] underline text-[#cc0000] text-[15px] font-bold py-3 px-4 rounded-full hover:scale-105 duration-300">
-            View All Latest Recipes
-            <ArrowRight className=" h-7 w-6 pb-1" />
-          </button>
-        </Link>
+  return (       
+    <div className="">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-3xl font-bold text-[#cc0000] ">Latest Recipes</h2>
+        {userCreatedRecipes.length > 4 && (
+          <Link to="/latest" className="text-blue-500 hover:text-blue-700 flex items-center">
+            View All
+            <ArrowRight className="ml-1 h-4 w-4" />
+          </Link>
+        )}
       </div>
-      <RecipeList recipes={limitedRecipes} isUserCreated={true} />
-      {userCreatedRecipes.length > 4 && (
-        <div className="mt-4 text-center">
-          {/* <Link
-            to="/latest"
-            className="text-[#cc0000] underline hover:text-red-700"
-          >
-            See more latest recipes...
-          </Link> */}
+      
+      {userCreatedRecipes.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {limitedRecipes.map((recipe) => (
+            <RecipeCard key={recipe.id} recipe={recipe} />
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-8">
+          <p className="mb-4">No recipes yet. Create your first recipe!</p>
+          <Link to="/create-recipe" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 inline-flex items-center">
+            <Plus className="mr-2 h-4 w-4" />
+            Create Recipe
+          </Link>
         </div>
       )}
     </div>

@@ -32,6 +32,7 @@ import Nutrition from "./components/RecipesPages/Nutrition";
 import NutritionRecipeDetail from "./components/Details/NutritionRecipeDetail";
 import UserCreatedNutritionRecipeDetail from "./components/Details/UserCreatedNutritionRecipeDetail";
 import UpdateUserRecipe from "./components/Nutrition/UpdateNutritionRecipe";
+import CreateNutritionRecipe from "./components/Nutrition/CreateNutritionRecipe";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -75,6 +76,7 @@ const App = () => {
         {/* New routes for user-created nutrition recipes */}
         <Route path="/user-nutrition-recipe/:id" element={<UserCreatedNutritionRecipeDetail />} />
         <Route path="/update-user-recipe/:id" element={<UpdateUserRecipe />} />
+        <Route path="/create-nutrition-recipe" element={<CreateNutritionRecipe />} />
       </Routes>
 
       <Footer />

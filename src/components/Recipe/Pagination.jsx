@@ -14,7 +14,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   }
 
   return (
-    <nav className="w-full flex justify-center mt-8 rounded-3xl">
+    <nav className=" container mx-auto flex justify-center mt-8 rounded-3xl">
       <ul className="flex items-center">
         <li className="mx-1">
           <button
