@@ -5,7 +5,7 @@ import ExploreSection from "./Home/ExploreSection";
 import FeaturedRecipes from "./Home/FeaturedRecipes";
 import TopRecipes from "./Home/TopRecipes";
 import TestimonialsSection from "./Home/TestimonialsSection";
-import CTASection from "./Home/CTASection";
+import SeasonalSpecials from "./Home/SeasonalSpecials";
 import NutritionRecipes from "./Home/NutritionRecipes";
 import QuickAccess from "./Home/QuickAccess";
 
@@ -58,7 +58,7 @@ const Home = () => {
           <TestimonialsSection />
         </section>
         <section id="cta">
-          <CTASection />
+          <SeasonalSpecials />
         </section>
       </main>
       <QuickAccess />

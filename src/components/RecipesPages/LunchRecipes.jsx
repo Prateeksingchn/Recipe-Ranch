@@ -1,14 +1,25 @@
-import React from "react";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, ChevronRight, Clock, Users, Star } from "lucide-react";
+import { ArrowLeft, Clock, Users, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import lunchRecipes from "../../data/lunchRecipes";
+import { useSelector } from "react-redux";
 
 const LunchRecipes = () => {
+  const [allRecipes, setAllRecipes] = useState([]);
+  const { recipes: userRecipes } = useSelector((state) => state.recipeReducer);
+
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    
+    // Filter lunch recipes from user-created recipes
+    const userLunchRecipes = userRecipes.filter(
+      (recipe) => recipe.category.toLowerCase() === "lunch"
+    );
+    
+    // Combine user-created lunch recipes with static lunch recipes
+    setAllRecipes([...userLunchRecipes, ...lunchRecipes]);
+  }, [userRecipes]);
 
   return (
     <motion.section
@@ -44,9 +55,9 @@ const LunchRecipes = () => {
           perfect for a mid-day meal.
         </motion.p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {lunchRecipes.map((recipe, index) => (
+          {allRecipes.map((recipe, index) => (
             <motion.div
-              key={recipe.name}
+              key={recipe.id || recipe.name}
               className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 "
               whileHover={{ y: -5, scale: 1.02 }}
               initial={{ opacity: 0, y: 20 }}
@@ -54,28 +65,27 @@ const LunchRecipes = () => {
               transition={{ delay: 0.1 * index, duration: 0.5 }}
             >
               <Link
-                to={`/lunch-recipes/${recipe.name
+                to={`/lunch-recipes/${(recipe.title || recipe.name)
                   .toLowerCase()
                   .replace(/\s/g, "-")}`}
               >
                 <img
                   src={recipe.image}
-                  alt={recipe.name}
+                  alt={recipe.title || recipe.name}
                   className="w-full h-56 object-cover"
                 />
                 <div className="px-6 py-3">
-                  <h3 className="text-xl font-semibold mb-2">{recipe.name}</h3>
+                  <h3 className="text-xl font-semibold mb-2">{recipe.title || recipe.name}</h3>
                   <div className="flex justify-between items-center text-sm text-gray-500">
                     <span className="flex items-center">
-                      <Clock size={16} className="mr-1" /> {recipe.time}
+                      <Clock size={16} className="mr-1" /> {recipe.time} min
                     </span>
                     <span className="flex items-center">
-                      <Users size={16} className="mr-1" /> {recipe.servings}{" "}
-                      servings
+                      <Users size={16} className="mr-1" /> {recipe.servings} servings
                     </span>
                     <span className="flex items-center text-yellow-500">
                       <Star size={16} className="mr-1" fill="currentColor" />{" "}
-                      {recipe.rating}
+                      {recipe.rating || "N/A"}
                     </span>
                   </div>
                 </div>

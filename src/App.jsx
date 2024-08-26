@@ -34,6 +34,10 @@ import UserCreatedNutritionRecipeDetail from "./components/Details/UserCreatedNu
 import UpdateUserRecipe from "./components/Nutrition/UpdateNutritionRecipe";
 import CreateNutritionRecipe from "./components/Nutrition/CreateNutritionRecipe";
 
+// Import SeasonalSpecials component
+import SeasonalSpecials from "./components/Home/SeasonalSpecials";
+import SeasonalRecipeDetails from "./components/Details/SeasonalRecipeDetails";
+
 const App = () => {
   const dispatch = useDispatch();
 
@@ -77,6 +81,10 @@ const App = () => {
         <Route path="/user-nutrition-recipe/:id" element={<UserCreatedNutritionRecipeDetail />} />
         <Route path="/update-user-recipe/:id" element={<UpdateUserRecipe />} />
         <Route path="/create-nutrition-recipe" element={<CreateNutritionRecipe />} />
+
+        {/* New routes for seasonal specials */}
+        <Route path="/seasonal-specials" element={<SeasonalSpecials />} />
+        <Route path="/seasonal-recipe/:slug" element={<SeasonalRecipeDetails />} />
       </Routes>
 
       <Footer />

@@ -1,19 +1,33 @@
-import React from "react";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, Clock, Users, Star } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import lunchRecipes from "../../data/lunchRecipes";
+import { useSelector } from "react-redux";
 
 const LunchRecipeDetails = () => {
   const { recipeSlug } = useParams();
-  const recipe = lunchRecipes.find(
-    (r) => r.name.toLowerCase().replace(/\s/g, "-") === recipeSlug
-  );
+  const [recipe, setRecipe] = useState(null);
+  const { recipes: userRecipes } = useSelector((state) => state.recipeReducer);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+
+    // First, check if the recipe exists in user-created recipes
+    const userRecipe = userRecipes.find(
+      (r) => r.title.toLowerCase().replace(/\s/g, "-") === recipeSlug
+    );
+
+    if (userRecipe) {
+      setRecipe(userRecipe);
+    } else {
+      // If not found in user recipes, check static recipes
+      const staticRecipe = lunchRecipes.find(
+        (r) => r.name.toLowerCase().replace(/\s/g, "-") === recipeSlug
+      );
+      setRecipe(staticRecipe);
+    }
+  }, [recipeSlug, userRecipes]);
 
   if (!recipe) {
     return (
@@ -47,41 +61,49 @@ const LunchRecipeDetails = () => {
           <div className="w-full">
             <img
               src={recipe.image}
-              alt={recipe.name}
+              alt={recipe.title || recipe.name}
               className="w-[600px] h-[400px] object-cover mx-auto rounded-lg"
             />
           </div>
           <div className="w-[600px] mx-auto px-5 mt-5 flex flex-col items-center justify-center">
-            <h1 className="text-3xl font-semibold mb-6">{recipe.name}</h1>
+            <h1 className="text-3xl font-semibold mb-6">{recipe.title || recipe.name}</h1>
             <div className="flex justify-start items-center gap-20 text-sm text-gray-500 mb-6">
               <span className="flex items-center">
-                <Clock size={20} className="mr-1" /> {recipe.time}
+                <Clock size={20} className="mr-1" /> {recipe.time} min
               </span>
               <span className="flex items-center">
                 <Users size={20} className="mr-1" /> {recipe.servings} servings
               </span>
               <span className="flex items-center text-yellow-500">
                 <Star size={16} className="mr-1" fill="currentColor" />{" "}
-                {recipe.rating}
+                {recipe.rating || "N/A"}
               </span>
             </div>
             <p className="text-gray-700 mb-6 text-center">{recipe.description}</p>
           </div>
-          <div className="p-8 grid grid-cols-2 px-1o ">
+          <div className="p-8 grid grid-cols-2 px-10 ">
             <div>
               <h2 className="text-2xl font-bold mb-4">Ingredients</h2>
               <ul className="list-disc pl-6 mr-6 pr-12 text-gray-700 mb-6">
-                {recipe.ingredients.map((ingredient, index) => (
-                  <li key={index}>{ingredient}</li>
-                ))}
+                {Array.isArray(recipe.ingredients)
+                  ? recipe.ingredients.map((ingredient, index) => (
+                      <li key={index}>{ingredient}</li>
+                    ))
+                  : recipe.ingredients.split(',').map((ingredient, index) => (
+                      <li key={index}>{ingredient.trim()}</li>
+                    ))}
               </ul>
             </div>
             <div>
               <h2 className="text-2xl font-bold mb-4">Instructions</h2>
               <ol className="list-decimal pl-6 text-gray-700">
-                {recipe.instructions.map((step, index) => (
-                  <li key={index}>{step}</li>
-                ))}
+                {Array.isArray(recipe.instructions)
+                  ? recipe.instructions.map((step, index) => (
+                      <li key={index}>{step}</li>
+                    ))
+                  : recipe.instructions.split('.').filter(Boolean).map((step, index) => (
+                      <li key={index}>{step.trim()}</li>
+                    ))}
               </ol>
             </div>
           </div>

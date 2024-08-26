@@ -1,18 +1,29 @@
-import React from "react";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, ChevronRight, Clock, Users, Star } from "lucide-react";
+import { ArrowLeft, Clock, Users, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import dinnerRecipes from "../../data/dinnerRecipes";
+import { useSelector } from "react-redux";
 
 const DinnerRecipes = () => {
+  const [allRecipes, setAllRecipes] = useState([]);
+  const { recipes: userRecipes } = useSelector((state) => state.recipeReducer);
+
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    
+    // Filter dinner recipes from user-created recipes
+    const userDinnerRecipes = userRecipes.filter(
+      (recipe) => recipe.category.toLowerCase() === "dinner"
+    );
+    
+    // Combine user-created dinner recipes with static dinner recipes
+    setAllRecipes([...userDinnerRecipes, ...dinnerRecipes]);
+  }, [userRecipes]);
 
   return (
     <motion.section
-      className="pt-5 pb-10 px-6 bg-gradient-to-br from-[#C2E1F8] to-[#E6F4FF] rounded-3xl my-4"
+      className="py-5 px-6 bg-gradient-to-br from-[#C2E1F8] to-[#E6F4FF] rounded-3xl my-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
@@ -35,54 +46,45 @@ const DinnerRecipes = () => {
           Dinner Recipes
         </motion.h1>
         <motion.p
-          className="text-xl text-gray-700 mb-12 text-center max-w-3xl mx-auto"
+          className="text-xl text-gray-700 mb-12 text-center max-w-lg mx-auto"
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          End your day with these tasty and satisfying dinner recipes. From
-          light and healthy options to hearty meals, you'll find the perfect
-          dish to suit your evening.
+          Discover delicious dinner recipes that are perfect for a satisfying evening meal.
         </motion.p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {dinnerRecipes.map((recipe, index) => (
+          {allRecipes.map((recipe, index) => (
             <motion.div
-              key={recipe.name}
-              className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300"
+              key={recipe.id || recipe.name}
+              className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 "
               whileHover={{ y: -5, scale: 1.02 }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: 0.1 * index,
-                duration: 0.5,
-                type: "spring",
-                stiffness: 100,
-                damping: 20,
-              }}
+              transition={{ delay: 0.1 * index, duration: 0.5 }}
             >
               <Link
-                to={`/dinner-recipes/${recipe.name
+                to={`/dinner-recipes/${(recipe.title || recipe.name)
                   .toLowerCase()
                   .replace(/\s/g, "-")}`}
               >
                 <img
                   src={recipe.image}
-                  alt={recipe.name}
+                  alt={recipe.title || recipe.name}
                   className="w-full h-56 object-cover"
                 />
-                <div className="px-6 py-2">
-                  <h3 className="text-xl font-semibold mb-2">{recipe.name}</h3>
-                  <div className="flex justify-between items-center text-sm text-gray-500 mb-2">
+                <div className="px-6 py-3">
+                  <h3 className="text-xl font-semibold mb-2">{recipe.title || recipe.name}</h3>
+                  <div className="flex justify-between items-center text-sm text-gray-500">
                     <span className="flex items-center">
                       <Clock size={16} className="mr-1" /> {recipe.time}
                     </span>
                     <span className="flex items-center">
-                      <Users size={16} className="mr-1" /> {recipe.servings}{" "}
-                      servings
+                      <Users size={16} className="mr-1" /> {recipe.servings} servings
                     </span>
                     <span className="flex items-center text-yellow-500">
                       <Star size={16} className="mr-1" fill="currentColor" />{" "}
-                      {recipe.rating}
+                      {recipe.rating || recipe.difficulty || "N/A"}
                     </span>
                   </div>
                 </div>

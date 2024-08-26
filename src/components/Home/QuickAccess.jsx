@@ -12,7 +12,7 @@ const QuickAccess = () => {
     { id: 'top', label: 'Top Picks', icon: Award, color: 'bg-green-500' },
     { id: 'nutrition', label: 'Nutrition', icon: Apple, color: 'bg-purple-500' },
     { id: 'testimonials', label: 'Reviews', icon: MessageCircle, color: 'bg-pink-500' },
-    { id: 'cta', label: 'Join Us', icon: Gift, color: 'bg-indigo-500' },
+    { id: 'cta', label: 'Seasonal Specials', icon: Gift, color: 'bg-indigo-500' },
   ];
 
   const scrollToSection = (id) => {
