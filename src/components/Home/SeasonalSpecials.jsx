@@ -2,67 +2,20 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
+import { currentSeason, seasonalIngredients, featuredRecipes } from "../../data/seasonalRecipes";
 
 const SeasonalSpecials = () => {
-  const currentSeason = "Rainy Season";
-  
-  const seasonalIngredients = [
-    { name: "Green Chilies", icon: "🌶️" },
-    { name: "Corn", icon: "🌽" },
-    { name: "Spinach", icon: "🍃" },
-    { name: "Mushrooms", icon: "🍄" },
-    { name: "Ginger", icon: "🥢" },
-    { name: "Lemongrass", icon: "🌿" },
-    { name: "Okra", icon: "🥬" },
-    { name: "Eggplant", icon: "🍆" },
-  ];
-
-  const featuredRecipes = [
-    {
-      name: "Spicy Corn Pakoras",
-      image: "Spicy Corn Pakoras.jpg",
-      chef: "Chef Priya",
-      prepTime: "25 mins",
-      slug: "spicy-corn-pakoras"
-    },
-    {
-      name: "Mushroom Hot & Sour Soup",
-      image: "Mushroom Hot & Sour Soup.jpg",
-      chef: "Chef Raj",
-      prepTime: "30 mins",
-      slug: "mushroom-hot-sour-soup"
-    },
-    {
-      name: "Onion Bhaji",
-      image: "Onion Bhaji.jpg",
-      chef: "Chef Anita",
-      prepTime: "20 mins",
-      slug: "onion-bhaji"
-    },
-    {
-      name: "Spinach and Corn Curry",
-      image: "Spinach and Corn Curry.jpg",
-      chef: "Chef Vikram",
-      prepTime: "35 mins",
-      slug: "spinach-corn-curry"
-    },
-    {
-      name: "Masala Chai with Pakoras",
-      image: "Masala Chai with Pakoras.jpg",
-      chef: "Chef Suresh",
-      prepTime: "30 mins",
-      slug: "masala-chai-pakoras"
-    }
-  ];
-  
   const [currentRecipe, setCurrentRecipe] = useState(0);
   const [currentIngredientPage, setCurrentIngredientPage] = useState(0);
+  const [direction, setDirection] = useState(1);
 
   const nextRecipe = () => {
+    setDirection(1);
     setCurrentRecipe((prev) => (prev + 1) % featuredRecipes.length);
   };
 
   const prevRecipe = () => {
+    setDirection(-1);
     setCurrentRecipe((prev) => (prev - 1 + featuredRecipes.length) % featuredRecipes.length);
   };
 
@@ -75,6 +28,23 @@ const SeasonalSpecials = () => {
   };
 
   const currentIngredients = seasonalIngredients.slice(currentIngredientPage * 4, (currentIngredientPage + 1) * 4);
+
+  const variants = {
+    enter: (direction) => ({
+      x: direction > 0 ? 1000 : -1000,
+      opacity: 0,
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction) => ({
+      zIndex: 0,
+      x: direction < 0 ? 1000 : -1000,
+      opacity: 0,
+    }),
+  };
 
   return (
     <section className="py-10 bg-gradient-to-br from-blue-100 via-teal-100 to-green-100 overflow-hidden relative my-4 rounded-[30px]">
@@ -157,22 +127,27 @@ const SeasonalSpecials = () => {
             </div>
           </motion.div>
 
-          {/* Featured Monsoon Recipes */}
-          <motion.div
+           {/* Featured Monsoon Recipes */}
+           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             className="bg-white bg-opacity-80 px-8 py-6 rounded-2xl shadow-lg backdrop-filter backdrop-blur-lg relative overflow-hidden"
           >
             <h3 className="text-2xl font-semibold text-teal-700 mb-1">Featured Monsoon Recipes</h3>
-            <div className="relative h-64 mb-6 ">
-              <AnimatePresence mode="wait">
+            <div className="relative h-64 mb-6">
+              <AnimatePresence initial={false} custom={direction}>
                 <motion.div
                   key={currentRecipe}
-                  initial={{ opacity: 0, x: 100 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -100 }}
-                  transition={{ duration: 0.5 }}
+                  custom={direction}
+                  variants={variants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{
+                    x: { type: "spring", stiffness: 300, damping: 30 },
+                    opacity: { duration: 0.2 },
+                  }}
                   className="absolute inset-0 flex items-center"
                 >
                   <img
@@ -211,21 +186,6 @@ const SeasonalSpecials = () => {
             </div>
           </motion.div>
         </div>
-
-        {/* <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-center"
-        >
-          <Link
-            to="/seasonal-specials"
-            className="inline-flex items-center bg-teal-500 text-white py-3 px-10 rounded-full text-lg font-semibold hover:bg-teal-600 transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
-          >
-            Discover More Seasonal Delights
-            <ArrowRight className="w-6 h-6 ml-2" />
-          </Link>
-        </motion.div> */}
       </div>
     </section>
   );

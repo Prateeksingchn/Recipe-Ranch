@@ -1,120 +1,191 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { Clock, Users, ChefHat, ArrowLeft } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Clock, Users, ChefHat, ArrowLeft, Thermometer, Droplets, Utensils, Leaf } from "lucide-react";
+import { featuredRecipes } from "../../data/seasonalRecipes";
 
-const recipes = {
-  "spicy-corn-pakoras": {
-    name: "Spicy Corn Pakoras",
-    image: "spicy-corn-pakoras.jpg",
-    chef: "Chef Priya",
-    prepTime: "25 mins",
-    servings: 4,
-    ingredients: [
-      "2 cups fresh corn kernels",
-      "1 cup chickpea flour (besan)",
-      "1/4 cup rice flour",
-      "1 onion, finely chopped",
-      "2 green chilies, finely chopped",
-      "1 tsp cumin seeds",
-      "1/4 cup chopped coriander leaves",
-      "Salt to taste",
-      "Oil for deep frying"
-    ],
-    instructions: [
-      "In a large bowl, mix corn kernels, chickpea flour, rice flour, onion, green chilies, cumin seeds, coriander leaves, and salt.",
-      "Add water gradually to make a thick batter.",
-      "Heat oil in a deep pan over medium heat.",
-      "Drop spoonfuls of the batter into the hot oil and fry until golden brown and crispy.",
-      "Remove with a slotted spoon and drain on paper towels.",
-      "Serve hot with chutney or ketchup."
-    ]
-  },
-  "mushroom-hot-sour-soup": {
-    name: "Mushroom Hot & Sour Soup",
-    image: "mushroom-hot-sour-soup.jpg",
-    chef: "Chef Raj",
-    prepTime: "30 mins",
-    servings: 4,
-    ingredients: [
-      "200g mushrooms, sliced",
-      "4 cups vegetable broth",
-      "1/4 cup rice vinegar",
-      "1/4 cup soy sauce",
-      "1 tsp white pepper",
-      "2 tbsp cornstarch",
-      "1 egg, beaten",
-      "2 green onions, chopped",
-      "1 tbsp sesame oil"
-    ],
-    instructions: [
-      "In a large pot, bring the vegetable broth to a boil.",
-      "Add mushrooms, vinegar, soy sauce, and white pepper. Simmer for 5 minutes.",
-      "Mix cornstarch with a little water and add to the soup, stirring until it thickens.",
-      "Slowly pour in the beaten egg while stirring the soup.",
-      "Remove from heat and add sesame oil and green onions.",
-      "Serve hot, garnished with extra green onions if desired."
-    ]
-  },
-  // Add more recipes here...
-};
+const RainDrop = ({ delay }) => (
+  <motion.div
+    className="absolute w-0.5 h-10 bg-blue-300 opacity-20 rounded-full"
+    style={{
+      left: `${Math.random() * 100}%`,
+      top: -40,
+    }}
+    animate={{
+      y: ["0vh", "100vh"],
+    }}
+    transition={{
+      duration: 0.8 + Math.random() * 0.3,
+      repeat: Infinity,
+      ease: "linear",
+      delay: delay,
+    }}
+  />
+);
 
 const SeasonalRecipeDetails = () => {
   const { slug } = useParams();
-  const recipe = recipes[slug];
+  const recipe = featuredRecipes.find(recipe => recipe.slug === slug);
+  const [activeTab, setActiveTab] = useState("ingredients");
 
   if (!recipe) {
-    return <div>Recipe not found</div>;
+    return (
+      <div className="container mx-auto px-4 py-16 text-center">
+        <h1 className="text-4xl font-bold text-red-600 mb-6">Recipe not found</h1>
+        <Link to="/seasonal-specials" className="inline-flex items-center text-teal-600 hover:text-teal-700 text-lg">
+          <ArrowLeft className="w-5 h-5 mr-2" />
+          Back to Seasonal Specials
+        </Link>
+      </div>
+    );
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.5 }}
-      className="container mx-auto px-4 py-8"
-    >
-      <Link to="/seasonal-specials" className="inline-flex items-center text-teal-600 hover:text-teal-700 mb-6">
-        <ArrowLeft className="w-4 h-4 mr-2" />
-        Back to Seasonal Specials
-      </Link>
-      
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-        <img src={recipe.image} alt={recipe.name} className="w-full h-64 object-cover" />
-        
-        <div className="p-6">
-          <h1 className="text-3xl font-bold text-gray-800 mb-4">{recipe.name}</h1>
-          
-          <div className="flex items-center text-gray-600 mb-6">
-            <ChefHat className="w-5 h-5 mr-2" />
-            <span className="mr-4">{recipe.chef}</span>
-            <Clock className="w-5 h-5 mr-2" />
-            <span className="mr-4">{recipe.prepTime}</span>
-            <Users className="w-5 h-5 mr-2" />
-            <span>{recipe.servings} servings</span>
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-teal-50 to-green-100 py-12 px-4 sm:px-6 lg:px-8 overflow-hidden relative">
+      {/* Rain effect */}
+      {[...Array(50)].map((_, i) => (
+        <RainDrop key={i} delay={i * 0.1} />
+      ))}
+
+      <div className="max-w-6xl mx-auto relative z-10">
+        <Link to="/seasonal-specials" className="inline-flex items-center text-teal-600 hover:text-teal-700 mb-8 text-lg font-medium transition-colors duration-300">
+          <ArrowLeft className="w-5 h-5 mr-2" />
+          Back to Seasonal Specials
+        </Link>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="bg-white bg-opacity-90 rounded-3xl shadow-xl overflow-hidden backdrop-blur-lg"
+        >
+          <div className="flex flex-col lg:flex-row">
+            {/* Left Section - Image and Quick Info */}
+            <div className="lg:w-2/5 p-8 bg-teal-50 bg-opacity-50">
+              <div className="relative h-72 rounded-2xl overflow-hidden mb-6 shadow-lg">
+                <img src={recipe.image} alt={recipe.name} className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                <h1 className="absolute bottom-4 left-4 right-4 text-3xl font-bold text-white font-serif leading-tight">{recipe.name}</h1>
+              </div>
+              <div className="space-y-4">
+                <div className="flex items-center text-gray-700">
+                  <ChefHat className="w-5 h-5 mr-3 text-teal-600" />
+                  <span className="font-medium">{recipe.chef}</span>
+                </div>
+                <div className="flex items-center text-gray-700">
+                  <Clock className="w-5 h-5 mr-3 text-teal-600" />
+                  <span className="font-medium">{recipe.prepTime}</span>
+                </div>
+                <div className="flex items-center text-gray-700">
+                  <Users className="w-5 h-5 mr-3 text-teal-600" />
+                  <span className="font-medium">{recipe.servings} servings</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Section - Ingredients and Instructions */}
+            <div className="lg:w-3/5 p-8">
+              <div className="flex mb-6">
+                <button
+                  onClick={() => setActiveTab("ingredients")}
+                  className={`flex-1 py-2 px-4 text-center font-medium rounded-tl-lg rounded-bl-lg transition-colors duration-300 ${activeTab === "ingredients" ? "bg-teal-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`}
+                >
+                  Ingredients
+                </button>
+                <button
+                  onClick={() => setActiveTab("instructions")}
+                  className={`flex-1 py-2 px-4 text-center font-medium rounded-tr-lg rounded-br-lg transition-colors duration-300 ${activeTab === "instructions" ? "bg-teal-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`}
+                >
+                  Instructions
+                </button>
+              </div>
+
+              <AnimatePresence mode="wait">
+                {activeTab === "ingredients" && (
+                  <motion.div
+                    key="ingredients"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {recipe.ingredients.map((ingredient, index) => (
+                        <motion.li
+                          key={index}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3, delay: index * 0.05 }}
+                          className="flex items-center bg-teal-50 rounded-lg p-3 text-sm shadow-sm"
+                        >
+                          <Leaf className="w-4 h-4 mr-2 text-teal-600" />
+                          {ingredient}
+                        </motion.li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                )}
+
+                {activeTab === "instructions" && (
+                  <motion.div
+                    key="instructions"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <ol className="space-y-4">
+                      {recipe.instructions.map((step, index) => (
+                        <motion.li
+                          key={index}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.3, delay: index * 0.1 }}
+                          className="flex items-start text-gray-700"
+                        >
+                          <span className="flex-shrink-0 w-6 h-6 bg-teal-500 text-white rounded-full flex items-center justify-center mr-3 mt-0.5 text-sm font-bold">
+                            {index + 1}
+                          </span>
+                          <p className="text-sm">{step}</p>
+                        </motion.li>
+                      ))}
+                    </ol>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
-          
-          <div className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">Ingredients</h2>
-            <ul className="list-disc list-inside">
-              {recipe.ingredients.map((ingredient, index) => (
-                <li key={index} className="mb-2 text-gray-700">{ingredient}</li>
-              ))}
-            </ul>
+
+          {/* Bottom Section - Fun Seasonal Elements */}
+          <div className="bg-teal-100 bg-opacity-50 p-8 rounded-b-3xl">
+            <h3 className="text-xl font-semibold text-teal-700 mb-6 font-serif">Seasonal Highlights</h3>
+            <div className="flex flex-wrap justify-around gap-6">
+              <motion.div 
+                className="flex items-center bg-white rounded-full px-5 py-3 shadow-md"
+                whileHover={{ scale: 1.05, boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)" }}
+              >
+                <Thermometer className="w-6 h-6 mr-3 text-teal-600" />
+                <span className="text-sm font-medium">Perfect for rainy days!</span>
+              </motion.div>
+              <motion.div 
+                className="flex items-center bg-white rounded-full px-5 py-3 shadow-md"
+                whileHover={{ scale: 1.05, boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)" }}
+              >
+                <Droplets className="w-6 h-6 mr-3 text-teal-600" />
+                <span className="text-sm font-medium">Monsoon special ingredients</span>
+              </motion.div>
+              <motion.div 
+                className="flex items-center bg-white rounded-full px-5 py-3 shadow-md"
+                whileHover={{ scale: 1.05, boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)" }}
+              >
+                <Utensils className="w-6 h-6 mr-3 text-teal-600" />
+                <span className="text-sm font-medium">Comfort food for the season</span>
+              </motion.div>
+            </div>
           </div>
-          
-          <div>
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">Instructions</h2>
-            <ol className="list-decimal list-inside">
-              {recipe.instructions.map((step, index) => (
-                <li key={index} className="mb-3 text-gray-700">{step}</li>
-              ))}
-            </ol>
-          </div>
-        </div>
+        </motion.div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
