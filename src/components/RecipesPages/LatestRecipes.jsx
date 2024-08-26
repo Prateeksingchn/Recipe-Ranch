@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import {
   ArrowLeft,
   ArrowRight,
+  PlusCircle,
   Clock,
   Users,
   ChefHat,
@@ -108,7 +109,7 @@ const LatestRecipes = () => {
 
   return (
     <motion.div
-      className="w-full mx-auto px-24 pt-6 pb-12  bg-gradient-to-b from-green-200 to-blue-200 my-4 rounded-3xl"
+      className="w-full mx-auto px-24 pt-6 pb-12  bg-gradient-to-b from-[#c5c5db] via-[#9b9bc2] to-blue-200 my-4 rounded-3xl"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -129,19 +130,27 @@ const LatestRecipes = () => {
       </div>
 
       <h1
-        className="text-5xl font-bold text-[#04039B] mb-12 text-center"
+        className="text-6xl font-bold text-[#EE4130] mb-12 text-center"
         style={{ fontFamily: "Lobster, cursive" }}
       >
         Latest Recipes
       </h1>
-      <div className="mb-8">
+      <div className="mb-8 flex gap-20 bg-[#f8f8f8] shadow-lg rounded-3xl py-6 px-8 ">
         <input
           type="text"
           placeholder="Search recipes..."
           value={searchTerm}
           onChange={handleSearch}
-          className="w-full p-4 rounded-full border-2 border-gray-300 focus:outline-none focus:border-green-500 transition-colors duration-300"
+          className="w-full p-2 rounded-full border-2 border-gray-300 focus:outline-none focus:border-green-500 transition-colors duration-300"
         />
+        <Link
+          to="/create-recipe"
+          className="bg-[#2ECC71] hover:bg-[#27AE60] w-[250px] text-white font-semibold py-2 px-6 rounded-full flex items-center justify-center transition-colors duration-300"
+        >
+          <PlusCircle className="h-5 w-5 mr-2" />
+          Create Recipe
+        </Link>
+
       </div>
       <AnimatePresence>
         {filteredRecipes.length === 0 ? (

@@ -165,7 +165,7 @@ const SeasonalSpecials = () => {
             className="bg-white bg-opacity-80 px-8 py-6 rounded-2xl shadow-lg backdrop-filter backdrop-blur-lg relative overflow-hidden"
           >
             <h3 className="text-2xl font-semibold text-teal-700 mb-1">Featured Monsoon Recipes</h3>
-            <div className="relative h-64 mb-5 ">
+            <div className="relative h-64 mb-6 ">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentRecipe}
@@ -178,7 +178,7 @@ const SeasonalSpecials = () => {
                   <img
                     src={featuredRecipes[currentRecipe].image}
                     alt={featuredRecipes[currentRecipe].name}
-                    className="w-52 h-56 object-cover rounded-lg mr-8"
+                    className="w-[250px] h-[225px] object-cover rounded-lg mr-8"
                   />
                   <div>
                     <h4 className="text-2xl font-semibold mb-1">{featuredRecipes[currentRecipe].name}</h4>
@@ -212,7 +212,7 @@ const SeasonalSpecials = () => {
           </motion.div>
         </div>
 
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -225,7 +225,7 @@ const SeasonalSpecials = () => {
             Discover More Seasonal Delights
             <ArrowRight className="w-6 h-6 ml-2" />
           </Link>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );
