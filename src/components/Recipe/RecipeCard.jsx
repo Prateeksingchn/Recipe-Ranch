@@ -25,9 +25,9 @@ const RecipeCard = ({ recipe, isUserCreated }) => {
         <h3 className="text-lg font-semibold">
           {recipe.label || recipe.title}
         </h3>
-        <p className="text-gray-600 mt-2">
+        {/* <p className="text-gray-600 mt-2">
           {recipe.source || recipe.chefName}
-        </p>
+        </p> */}
         <div className="mt-2 space-y-1">
           {(recipe.cuisineType?.[0] || recipe.category) && (
             <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">

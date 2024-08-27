@@ -8,6 +8,7 @@ import TestimonialsSection from "./Home/TestimonialsSection";
 import SeasonalSpecials from "./Home/SeasonalSpecials";
 import NutritionRecipes from "./Home/NutritionRecipes";
 import QuickAccess from "./Home/QuickAccess";
+import { featuredRecipes } from "../data/seasonalRecipes";
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -24,6 +25,8 @@ const Home = () => {
   useEffect(() => {
     if (location.hash === "#explore" && exploreSectionRef.current) {
       exploreSectionRef.current.scrollIntoView({ behavior: "smooth" });
+    } else if (location.hash === "#featured" && featuredRecipes.current) {
+      featuredRecipesRef.current.scrollIntoView({ behavior: "smooth" });
     } else if (location.hash === "#top" && topRecipesSectionRef.current) {
       topRecipesSectionRef.current.scrollIntoView({ behavior: "smooth" });
     } else if (
@@ -48,7 +51,7 @@ const Home = () => {
         <section id="explore">
           <ExploreSection ref={exploreSectionRef} />
         </section>
-        <section id="featured">
+        <section id="featured" ref={featuredRecipes}>
           <FeaturedRecipes />
         </section>
         <section id="top" ref={topRecipesSectionRef}>

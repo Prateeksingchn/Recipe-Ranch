@@ -73,9 +73,9 @@ const FeaturedRecipes = () => {
 
   useEffect(() => {
     // Sort recipes by creation date (newest first) and take the last 4
-    const sortedRecipes = [...createdRecipes].sort((a, b) => 
-      new Date(b.createdAt) - new Date(a.createdAt)
-    ).slice(0, 4);
+    const sortedRecipes = [...createdRecipes]
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      .slice(0, 4);
     setFilteredRecipes(sortedRecipes);
   }, [createdRecipes]);
 
@@ -95,12 +95,12 @@ const FeaturedRecipes = () => {
 
   return (
     <motion.section
-      className="py-10 px-6 bg-gradient-to-b from-green-200 to-blue-100 rounded-[30px] my-4"
+      className="py-10 px-6 bg-gradient-to-b from-green-100 via-cyan-100 to-blue-100 rounded-[30px] my-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
-      <div className="container mx-auto ">
+      <div className="container mx-auto">
         <h2
           className="text-5xl font-bold text-[#5a6167] mb-8 text-center"
           style={{ fontFamily: "Lobster, cursive" }}
