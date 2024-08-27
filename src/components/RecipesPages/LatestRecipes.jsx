@@ -12,6 +12,7 @@ import {
   Filter,
   Users,
 } from "lucide-react";
+import recipes from "../../data/recipes";
 
 const RecipeCard = ({ recipe }) => {
   const [likes, setLikes] = useState(0);

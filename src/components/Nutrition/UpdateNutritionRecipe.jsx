@@ -48,118 +48,158 @@ const UpdateNutritionRecipe = ({ recipe, onUpdate, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
-      <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold">Update Nutrition Recipe</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4 overflow-y-auto">
+      <div className="bg-white rounded-lg p-8 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-3xl font-bold text-gray-700">Update Nutrition Recipe</h2>
+          <button onClick={onClose} className="text-gray-500 hover:text-gray-700 transition-colors">
             <X size={24} />
           </button>
         </div>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="text"
-            name="title"
-            value={updatedRecipe.title}
-            onChange={handleChange}
-            placeholder="Recipe Title"
-            className="w-full p-2 border rounded"
-            required
-          />
-          <input
-            type="text"
-            name="chef"
-            value={updatedRecipe.chef}
-            onChange={handleChange}
-            placeholder="Chef Name"
-            className="w-full p-2 border rounded"
-            required
-          />
-          <input
-            type="text"
-            name="image"
-            value={updatedRecipe.image}
-            onChange={handleChange}
-            placeholder="Image URL"
-            className="w-full p-2 border rounded"
-            required
-          />
-          <div className="grid grid-cols-2 gap-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label htmlFor="title" className="block text-sm font-medium text-gray-700">Recipe Title</label>
+              <input
+                id="title"
+                type="text"
+                name="title"
+                value={updatedRecipe.title}
+                onChange={handleChange}
+                placeholder="Enter recipe title"
+                className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="chef" className="block text-sm font-medium text-gray-700">Chef Name</label>
+              <input
+                id="chef"
+                type="text"
+                name="chef"
+                value={updatedRecipe.chef}
+                onChange={handleChange}
+                placeholder="Enter chef name"
+                className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="image" className="block text-sm font-medium text-gray-700">Image URL</label>
             <input
-              type="number"
-              name="calories"
-              value={updatedRecipe.calories}
+              id="image"
+              type="text"
+              name="image"
+              value={updatedRecipe.image}
               onChange={handleChange}
-              placeholder="Calories"
-              className="w-full p-2 border rounded"
-              required
-            />
-            <input
-              type="number"
-              name="time"
-              value={updatedRecipe.time}
-              onChange={handleChange}
-              placeholder="Time (minutes)"
-              className="w-full p-2 border rounded"
+              placeholder="Enter image URL"
+              className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               required
             />
           </div>
-          <select
-            name="dietType"
-            value={updatedRecipe.dietType}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-            required
-          >
-            <option value="">Select Diet Type</option>
-            <option value="Vegan">Vegan</option>
-            <option value="Vegetarian">Vegetarian</option>
-            <option value="Keto">Keto</option>
-            <option value="Low-Carb">Low-Carb</option>
-            <option value="High-Protein">High-Protein</option>
-            <option value="Gluten-Free">Gluten-Free</option>
-          </select>
-          <select
-            name="mealCategory"
-            value={updatedRecipe.mealCategory}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-            required
-          >
-            <option value="">Select Meal Category</option>
-            <option value="Breakfast">Breakfast</option>
-            <option value="Lunch">Lunch</option>
-            <option value="Dinner">Dinner</option>
-            <option value="Snack">Snack</option>
-          </select>
-          <select
-            name="difficulty"
-            value={updatedRecipe.difficulty}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-            required
-          >
-            <option value="">Select Difficulty</option>
-            <option value="Easy">Easy</option>
-            <option value="Medium">Medium</option>
-            <option value="Hard">Hard</option>
-          </select>
-          <div>
-            <h3 className="font-semibold mb-2">Ingredients</h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="space-y-2">
+              <label htmlFor="calories" className="block text-sm font-medium text-gray-700">Calories</label>
+              <input
+                id="calories"
+                type="number"
+                name="calories"
+                value={updatedRecipe.calories}
+                onChange={handleChange}
+                placeholder="Enter calories"
+                className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="time" className="block text-sm font-medium text-gray-700">Time (minutes)</label>
+              <input
+                id="time"
+                type="number"
+                name="time"
+                value={updatedRecipe.time}
+                onChange={handleChange}
+                placeholder="Enter cooking time"
+                className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="difficulty" className="block text-sm font-medium text-gray-700">Difficulty</label>
+              <select
+                id="difficulty"
+                name="difficulty"
+                value={updatedRecipe.difficulty}
+                onChange={handleChange}
+                className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                required
+              >
+                <option value="">Select Difficulty</option>
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label htmlFor="dietType" className="block text-sm font-medium text-gray-700">Diet Type</label>
+              <select
+                id="dietType"
+                name="dietType"
+                value={updatedRecipe.dietType}
+                onChange={handleChange}
+                className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                required
+              >
+                <option value="">Select Diet Type</option>
+                <option value="Vegan">Vegan</option>
+                <option value="Vegetarian">Vegetarian</option>
+                <option value="Keto">Keto</option>
+                <option value="Low-Carb">Low-Carb</option>
+                <option value="High-Protein">High-Protein</option>
+                <option value="Gluten-Free">Gluten-Free</option>
+              </select>
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="mealCategory" className="block text-sm font-medium text-gray-700">Meal Category</label>
+              <select
+                id="mealCategory"
+                name="mealCategory"
+                value={updatedRecipe.mealCategory}
+                onChange={handleChange}
+                className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                required
+              >
+                <option value="">Select Meal Category</option>
+                <option value="Breakfast">Breakfast</option>
+                <option value="Lunch">Lunch</option>
+                <option value="Dinner">Dinner</option>
+                <option value="Snack">Snack</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-gray-800">Ingredients</h3>
             {updatedRecipe.ingredients.map((ingredient, index) => (
-              <div key={index} className="flex mb-2">
+              <div key={index} className="flex space-x-2">
                 <input
                   type="text"
                   value={ingredient}
                   onChange={(e) => handleArrayChange(index, 'ingredients', e.target.value)}
                   placeholder={`Ingredient ${index + 1}`}
-                  className="flex-grow p-2 border rounded-l"
+                  className="flex-grow p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => removeArrayField('ingredients', index)}
-                  className="bg-red-500 text-white p-2 rounded-r"
+                  className="p-3 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
                 >
                   <X size={20} />
                 </button>
@@ -168,27 +208,28 @@ const UpdateNutritionRecipe = ({ recipe, onUpdate, onClose }) => {
             <button
               type="button"
               onClick={() => addArrayField('ingredients')}
-              className="w-full bg-green-500 text-white p-2 rounded flex items-center justify-center"
+              className="w-full p-3 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors flex items-center justify-center"
             >
               <Plus size={20} className="mr-2" /> Add Ingredient
             </button>
           </div>
-          <div>
-            <h3 className="font-semibold mb-2">Instructions</h3>
+
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-gray-800">Instructions</h3>
             {updatedRecipe.instructions.map((instruction, index) => (
-              <div key={index} className="flex mb-2">
+              <div key={index} className="flex space-x-2">
                 <input
                   type="text"
                   value={instruction}
                   onChange={(e) => handleArrayChange(index, 'instructions', e.target.value)}
                   placeholder={`Step ${index + 1}`}
-                  className="flex-grow p-2 border rounded-l"
+                  className="flex-grow p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => removeArrayField('instructions', index)}
-                  className="bg-red-500 text-white p-2 rounded-r"
+                  className="p-3 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
                 >
                   <X size={20} />
                 </button>
@@ -197,55 +238,36 @@ const UpdateNutritionRecipe = ({ recipe, onUpdate, onClose }) => {
             <button
               type="button"
               onClick={() => addArrayField('instructions')}
-              className="w-full bg-green-500 text-white p-2 rounded flex items-center justify-center"
+              className="w-full p-3 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors flex items-center justify-center"
             >
               <Plus size={20} className="mr-2" /> Add Instruction
             </button>
           </div>
-          <div>
-            <h3 className="font-semibold mb-2">Nutrition Facts (in grams)</h3>
+
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-gray-800">Nutrition Facts (in grams)</h3>
             <div className="grid grid-cols-2 gap-4">
-              <input
-                type="number"
-                name="protein"
-                value={updatedRecipe.nutritionFacts.protein}
-                onChange={handleNutritionChange}
-                placeholder="Protein"
-                className="w-full p-2 border rounded"
-                required
-              />
-              <input
-                type="number"
-                name="carbs"
-                value={updatedRecipe.nutritionFacts.carbs}
-                onChange={handleNutritionChange}
-                placeholder="Carbs"
-                className="w-full p-2 border rounded"
-                required
-              />
-              <input
-                type="number"
-                name="fat"
-                value={updatedRecipe.nutritionFacts.fat}
-                onChange={handleNutritionChange}
-                placeholder="Fat"
-                className="w-full p-2 border rounded"
-                required
-              />
-              <input
-                type="number"
-                name="fiber"
-                value={updatedRecipe.nutritionFacts.fiber}
-                onChange={handleNutritionChange}
-                placeholder="Fiber"
-                className="w-full p-2 border rounded"
-                required
-              />
+              {Object.entries(updatedRecipe.nutritionFacts).map(([key, value]) => (
+                <div key={key} className="space-y-2">
+                  <label htmlFor={key} className="block text-sm font-medium text-gray-700 capitalize">{key}</label>
+                  <input
+                    id={key}
+                    type="number"
+                    name={key}
+                    value={value}
+                    onChange={handleNutritionChange}
+                    placeholder={`Enter ${key}`}
+                    className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    required
+                  />
+                </div>
+              ))}
             </div>
           </div>
+
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-600 transition-colors"
+            className="w-full p-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors text-lg font-semibold"
           >
             Update Recipe
           </button>

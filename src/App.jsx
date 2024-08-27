@@ -67,6 +67,7 @@ const App = () => {
         <Route path="/dinner-recipes/:recipeSlug" element={<DinnerRecipeDetails />} />
         {/* Recipe Pages end */}
 
+        <Route path="/recipe/:id" element={<Details />} />
         <Route path="/recipeblogdetail/:id" element={<RecipeBlogDetail />} />
         <Route path="/created-recipes/:id" element={<CreatedRecipeDetail />} />
         <Route path="latest" element={<LatestRecipes />} />
