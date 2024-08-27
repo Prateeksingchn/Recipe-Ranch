@@ -28,7 +28,7 @@ const recipes = [
     },
     {
         id: 4,
-        name: "Beef Tacos",
+        name: "Chicken Tacos",
         category: "Mexican",
         image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f",
         description: "Delicious beef tacos with fresh toppings.",

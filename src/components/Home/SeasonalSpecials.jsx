@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
-import { currentSeason, seasonalIngredients, featuredRecipes } from "../../data/seasonalRecipes";
+import {
+  currentSeason,
+  seasonalIngredients,
+  featuredRecipes,
+} from "../../data/seasonalRecipes";
 
 const SeasonalSpecials = () => {
   const [currentRecipe, setCurrentRecipe] = useState(0);
@@ -16,7 +20,9 @@ const SeasonalSpecials = () => {
 
   const prevRecipe = () => {
     setDirection(-1);
-    setCurrentRecipe((prev) => (prev - 1 + featuredRecipes.length) % featuredRecipes.length);
+    setCurrentRecipe(
+      (prev) => (prev - 1 + featuredRecipes.length) % featuredRecipes.length
+    );
   };
 
   const nextIngredientPage = () => {
@@ -27,7 +33,10 @@ const SeasonalSpecials = () => {
     setCurrentIngredientPage((prev) => (prev - 1 + 2) % 2);
   };
 
-  const currentIngredients = seasonalIngredients.slice(currentIngredientPage * 4, (currentIngredientPage + 1) * 4);
+  const currentIngredients = seasonalIngredients.slice(
+    currentIngredientPage * 4,
+    (currentIngredientPage + 1) * 4
+  );
 
   const variants = {
     enter: (direction) => ({
@@ -47,9 +56,9 @@ const SeasonalSpecials = () => {
   };
 
   return (
-    <section className="py-10 bg-gradient-to-br from-blue-100 via-teal-100 to-green-100 overflow-hidden relative my-4 rounded-[30px]">
+    <section className="py-10 bg-gradient-to-b from-blue-100 via-cyan-100 to-green-200 overflow-hidden relative my-4 rounded-[30px]">
       {/* Animated raindrops */}
-      {[...Array(20)].map((_, i) => (
+      {[...Array(25)].map((_, i) => (
         <motion.div
           key={i}
           className="absolute w-1 h-10 bg-blue-300 opacity-50 rounded-full"
@@ -68,7 +77,7 @@ const SeasonalSpecials = () => {
           }}
         />
       ))}
-      
+
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -76,16 +85,19 @@ const SeasonalSpecials = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-12"
         >
-          <h2 className="text-5xl font-bold text-teal-700 mb-4">
+          <h2
+            className="text-5xl font-bold text-teal-700 mb-4"
+            style={{ fontFamily: "Lobster, cursive" }}
+          >
             {currentSeason} Delights
           </h2>
           <p className="text-xl text-gray-700 max-w-2xl mx-auto">
-            Embrace the monsoon with these comforting recipes and seasonal ingredients!
+            Embrace the monsoon with these comforting recipes and seasonal
+            ingredients!
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-8 mb-12 mx-10">
-
           {/* Seasonal Ingredients */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -93,7 +105,9 @@ const SeasonalSpecials = () => {
             transition={{ duration: 0.5 }}
             className="bg-white bg-opacity-80 px-8 py-6 rounded-2xl shadow-lg backdrop-filter backdrop-blur-lg relative"
           >
-            <h3 className="text-2xl font-semibold text-teal-700 mb-5">Seasonal Ingredients</h3>
+            <h3 className="text-2xl font-semibold text-teal-700 mb-5">
+              Seasonal Ingredients
+            </h3>
             <div className="grid grid-cols-2 gap-4 h-52">
               <AnimatePresence mode="wait">
                 {currentIngredients.map((ingredient, index) => (
@@ -106,7 +120,9 @@ const SeasonalSpecials = () => {
                     className="flex flex-col items-center justify-center bg-teal-100 hover:bg-teal-200 hover:rounded-xl transition duration-300 pointer p-4 rounded-lg"
                   >
                     <span className="text-4xl mb-2">{ingredient.icon}</span>
-                    <span className="text-sm font-medium text-center">{ingredient.name}</span>
+                    <span className="text-sm font-medium text-center">
+                      {ingredient.name}
+                    </span>
                   </motion.div>
                 ))}
               </AnimatePresence>
@@ -127,14 +143,16 @@ const SeasonalSpecials = () => {
             </div>
           </motion.div>
 
-           {/* Featured Monsoon Recipes */}
-           <motion.div
+          {/* Featured Monsoon Recipes */}
+          <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             className="bg-white bg-opacity-80 px-8 py-6 rounded-2xl shadow-lg backdrop-filter backdrop-blur-lg relative overflow-hidden"
           >
-            <h3 className="text-2xl font-semibold text-teal-700 mb-1">Featured Monsoon Recipes</h3>
+            <h3 className="text-2xl font-semibold text-teal-700 mb-1">
+              Featured Monsoon Recipes
+            </h3>
             <div className="relative h-64 mb-6">
               <AnimatePresence initial={false} custom={direction}>
                 <motion.div
@@ -156,9 +174,15 @@ const SeasonalSpecials = () => {
                     className="w-[250px] h-[225px] object-cover rounded-lg mr-8"
                   />
                   <div>
-                    <h4 className="text-2xl font-semibold mb-1">{featuredRecipes[currentRecipe].name}</h4>
-                    <p className="text-sm text-gray-600 mb-1">by {featuredRecipes[currentRecipe].chef}</p>
-                    <p className="text-sm text-gray-600 mb-3">Prep time: {featuredRecipes[currentRecipe].prepTime}</p>
+                    <h4 className="text-2xl font-semibold mb-1">
+                      {featuredRecipes[currentRecipe].name}
+                    </h4>
+                    <p className="text-sm text-gray-600 mb-1">
+                      by {featuredRecipes[currentRecipe].chef}
+                    </p>
+                    <p className="text-sm text-gray-600 mb-3">
+                      Prep time: {featuredRecipes[currentRecipe].prepTime}
+                    </p>
                     <Link
                       to={`/seasonal-recipe/${featuredRecipes[currentRecipe].slug}`}
                       className="inline-flex items-center bg-teal-500 text-white py-2 px-4 rounded-full text-sm font-semibold hover:bg-teal-600 transition-colors duration-300"

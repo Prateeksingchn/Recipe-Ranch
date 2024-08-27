@@ -19,16 +19,22 @@ const Nav = () => {
   const isHomePage = location.pathname === "/";
 
   return (
-    <nav className={`bg-[#EE4130] text-white ${isHomePage ? 'rounded-t-[30px]' : 'rounded-[30px]'}`}>
+    <nav
+      className={`bg-[#EE4130] text-white ${
+        isHomePage ? "rounded-t-[30px]" : "rounded-[30px]"
+      }`}
+    >
       <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-14 py-4">
         <div className="flex justify-between items-center">
-          <div className="flex-shrink-0 flex items-center ">
-            <img
-              className="h-[47px] w-[75px] rounded-xl"
-              src="https://static.vecteezy.com/system/resources/thumbnails/008/212/813/small/cooking-logo-design-vector.jpg"
-              alt="Logo"
-            />
-          </div>
+          <Link to="/">
+            <div className="flex-shrink-0 flex items-center ">
+              <img
+                className="h-[47px] w-[75px] rounded-xl"
+                src="https://static.vecteezy.com/system/resources/thumbnails/008/212/813/small/cooking-logo-design-vector.jpg"
+                alt="Logo"
+              />
+            </div>
+          </Link>
           <div className="hidden sm:flex sm:space-x-8">
             {navItems.map((item) => (
               <motion.div

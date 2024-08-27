@@ -20,16 +20,23 @@ const TestimonialsSection = () => {
         }}
       >
         {[...testimonials, ...testimonials].map((testimonial, index) => (
-          <div key={index} className="bg-white rounded-lg shadow-lg p-6 w-80 h-40 flex-shrink-0">
+          <div
+            key={index}
+            className="bg-white rounded-lg shadow-lg p-6 w-80 h-40 flex-shrink-0"
+          >
             <div className="flex items-center mb-4">
               <img
                 src={testimonial.avatar}
                 alt={testimonial.name}
                 className="w-12 h-12 rounded-full mr-4 object-cover"
               />
-              <h3 className="font-semibold text-gray-800">{testimonial.name}</h3>
+              <h3 className="font-semibold text-gray-800">
+                {testimonial.name}
+              </h3>
             </div>
-            <p className="text-gray-600 italic text-sm h-24 overflow-hidden text-wrap">"{testimonial.comment}"</p>
+            <p className="text-gray-600 italic text-sm h-24 overflow-hidden text-wrap">
+              "{testimonial.comment}"
+            </p>
           </div>
         ))}
       </motion.div>
@@ -45,11 +52,15 @@ const TestimonialsSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl font-bold text-green-600 mb-4">
+          <h2
+            className="text-5xl font-bold text-green-600 mb-4"
+            style={{ fontFamily: "Lobster, cursive" }}
+          >
             Culinary Voices
           </h2>
           <p className="text-xl text-gray-600 max-w-sm mx-auto">
-            Discover the impact of our recipes through the words of our passionate community.
+            Discover the impact of our recipes through the words of our
+            passionate community.
           </p>
         </motion.div>
         <div className="space-y-3 overflow-hidden">

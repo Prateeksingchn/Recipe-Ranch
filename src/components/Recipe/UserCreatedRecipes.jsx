@@ -1,35 +1,41 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { ArrowRight, Plus } from "lucide-react";
-import RecipeCard from './RecipeCard';  // Adjust the path if necessary
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, Plus, Leaf } from "lucide-react";
+import SimplifiedNutritionRecipeCard from './SimplifiedNutritionRecipeCard';
 
-const UserCreatedRecipes = ({ userCreatedRecipes }) => {
-  const limitedRecipes = userCreatedRecipes.slice(0, 4);
+const NutritionRecipesSection = ({ nutritionRecipes }) => {
+  const limitedRecipes = nutritionRecipes.slice(0, 4);
 
-  return (       
-    <div className="">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-3xl font-bold text-[#cc0000] ">Latest Recipes</h2>
-        {userCreatedRecipes.length > 4 && (
-          <Link to="/latest" className="text-blue-500 hover:text-blue-700 flex items-center">
-            View All
-            <ArrowRight className="ml-1 h-4 w-4" />
+  return (
+    <div className="bg-white p-6 rounded-lg shadow-md">
+      <div className="mb-6 flex justify-between items-center">
+        <h2 className="text-3xl font-bold text-green-800">Nutrition Recipes</h2>
+        {nutritionRecipes.length > 4 && (
+          <Link to="/nutrition">
+            <button className="flex items-center gap-2 text-green-600 hover:text-green-800 transition-colors duration-300">
+              View All
+              <ArrowRight className="h-5 w-5" />
+            </button>
           </Link>
         )}
       </div>
-      
-      {userCreatedRecipes.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {nutritionRecipes.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {limitedRecipes.map((recipe) => (
-            <RecipeCard key={recipe.id} recipe={recipe} />
+            <SimplifiedNutritionRecipeCard key={recipe.id} recipe={recipe} />
           ))}
         </div>
       ) : (
-        <div className="text-center py-8">
-          <p className="mb-4">No recipes yet. Create your first recipe!</p>
-          <Link to="/create-recipe" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 inline-flex items-center">
-            <Plus className="mr-2 h-4 w-4" />
-            Create Recipe
+        <div className="text-center py-12 bg-gray-50 rounded-lg">
+          <Leaf className="mx-auto h-16 w-16 text-green-400 mb-4" />
+          <h3 className="text-xl font-semibold text-gray-700 mb-2">No nutrition recipes yet</h3>
+          <p className="text-gray-500 mb-6">Start your journey to healthier eating by creating your first nutrition recipe!</p>
+          <Link
+            to="/create-nutrition-recipe"
+            className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-full hover:bg-green-700 transition-colors duration-300"
+          >
+            <Plus className="h-5 w-5 mr-2" />
+            Create Nutrition Recipe
           </Link>
         </div>
       )}
@@ -37,4 +43,4 @@ const UserCreatedRecipes = ({ userCreatedRecipes }) => {
   );
 };
 
-export default UserCreatedRecipes;
+export default NutritionRecipesSection;

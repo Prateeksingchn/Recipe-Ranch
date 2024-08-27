@@ -15,6 +15,7 @@ const Home = () => {
   const exploreSectionRef = useRef(null);
   const topRecipesSectionRef = useRef(null);
   const nutritionRecipesSectionRef = useRef(null);
+  const seasonalSpecialsSectionRef = useRef(null);
 
   useEffect(() => {
     document.title = "Culinary Delights | Home";
@@ -30,6 +31,8 @@ const Home = () => {
       nutritionRecipesSectionRef.current
     ) {
       nutritionRecipesSectionRef.current.scrollIntoView({ behavior: "smooth" });
+    } else if (location.hash === "#cta" && seasonalSpecialsSectionRef.current) {
+      seasonalSpecialsSectionRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [location]);
 
@@ -57,7 +60,7 @@ const Home = () => {
         <section id="testimonials">
           <TestimonialsSection />
         </section>
-        <section id="cta">
+        <section id="cta" ref={seasonalSpecialsSectionRef}>
           <SeasonalSpecials />
         </section>
       </main>

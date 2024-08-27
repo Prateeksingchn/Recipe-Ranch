@@ -1,12 +1,23 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Clock, Users, ChefHat, ArrowLeft, Thermometer, Droplets, Utensils, Leaf } from "lucide-react";
+import {
+  Clock,
+  Users,
+  ChefHat,
+  ArrowLeft,
+  Thermometer,
+  Droplets,
+  Utensils,
+  Leaf,
+} from "lucide-react";
 import { featuredRecipes } from "../../data/seasonalRecipes";
 
 const RainDrop = ({ delay }) => (
   <motion.div
-    className="absolute w-0.5 h-10 bg-blue-300 opacity-20 rounded-full"
+    className="absolute w-0.5 h-10 bg-blue-600 opacity-20 rounded-full"
     style={{
       left: `${Math.random() * 100}%`,
       top: -40,
@@ -15,7 +26,7 @@ const RainDrop = ({ delay }) => (
       y: ["0vh", "100vh"],
     }}
     transition={{
-      duration: 0.8 + Math.random() * 0.3,
+      duration: 0.9 + Math.random() * 0.3,
       repeat: Infinity,
       ease: "linear",
       delay: delay,
@@ -25,49 +36,68 @@ const RainDrop = ({ delay }) => (
 
 const SeasonalRecipeDetails = () => {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const recipe = featuredRecipes.find(recipe => recipe.slug === slug);
   const [activeTab, setActiveTab] = useState("ingredients");
+
+  const handleBackClick = (e) => {
+    e.preventDefault();
+    navigate('/#cta');
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   if (!recipe) {
     return (
       <div className="container mx-auto px-4 py-16 text-center">
         <h1 className="text-4xl font-bold text-red-600 mb-6">Recipe not found</h1>
-        <Link to="/seasonal-specials" className="inline-flex items-center text-teal-600 hover:text-teal-700 text-lg">
+        <button onClick={handleBackClick} className="inline-flex items-center text-teal-600 hover:text-teal-700 text-lg">
           <ArrowLeft className="w-5 h-5 mr-2" />
           Back to Seasonal Specials
-        </Link>
+        </button>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-teal-50 to-green-100 py-12 px-4 sm:px-6 lg:px-8 overflow-hidden relative">
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-cyan-100 to-pink-50 py-8 px-4 sm:px-6 lg:px-8 overflow-hidden relative my-4 rounded-[30px] ">
       {/* Rain effect */}
       {[...Array(50)].map((_, i) => (
         <RainDrop key={i} delay={i * 0.1} />
       ))}
 
       <div className="max-w-6xl mx-auto relative z-10">
-        <Link to="/seasonal-specials" className="inline-flex items-center text-teal-600 hover:text-teal-700 mb-8 text-lg font-medium transition-colors duration-300">
+        <button
+          onClick={handleBackClick}
+          className="inline-flex items-center text-teal-600 hover:text-teal-700 mb-8 text-lg font-medium transition-colors duration-300"
+        >
           <ArrowLeft className="w-5 h-5 mr-2" />
           Back to Seasonal Specials
-        </Link>
+        </button>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="bg-white bg-opacity-90 rounded-3xl shadow-xl overflow-hidden backdrop-blur-lg"
+          className="bg-white bg-opacity-90 rounded-3xl shadow-xl shadow-neutral-400 overflow-hidden backdrop-blur-lg"
         >
           <div className="flex flex-col lg:flex-row">
             {/* Left Section - Image and Quick Info */}
             <div className="lg:w-2/5 p-8 bg-teal-50 bg-opacity-50">
               <div className="relative h-72 rounded-2xl overflow-hidden mb-6 shadow-lg">
-                <img src={recipe.image} alt={recipe.name} className="w-full h-full object-cover" />
+                <img
+                  src={recipe.image}
+                  alt={recipe.name}
+                  className="w-full h-full object-cover"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                <h1 className="absolute bottom-4 left-4 right-4 text-3xl font-bold text-white font-serif leading-tight">{recipe.name}</h1>
+                <h1 className="absolute bottom-4 left-4 right-4 text-3xl font-bold text-white leading-tight">
+                  {recipe.name}
+                </h1>
               </div>
-              <div className="space-y-4">
+              <div className="flex items-center justify-between px-2">
                 <div className="flex items-center text-gray-700">
                   <ChefHat className="w-5 h-5 mr-3 text-teal-600" />
                   <span className="font-medium">{recipe.chef}</span>
@@ -78,7 +108,9 @@ const SeasonalRecipeDetails = () => {
                 </div>
                 <div className="flex items-center text-gray-700">
                   <Users className="w-5 h-5 mr-3 text-teal-600" />
-                  <span className="font-medium">{recipe.servings} servings</span>
+                  <span className="font-medium">
+                    {recipe.servings} servings
+                  </span>
                 </div>
               </div>
             </div>
@@ -88,13 +120,21 @@ const SeasonalRecipeDetails = () => {
               <div className="flex mb-6">
                 <button
                   onClick={() => setActiveTab("ingredients")}
-                  className={`flex-1 py-2 px-4 text-center font-medium rounded-tl-lg rounded-bl-lg transition-colors duration-300 ${activeTab === "ingredients" ? "bg-teal-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`}
+                  className={`flex-1 py-2 px-4 text-center font-medium rounded-tl-lg rounded-bl-lg transition-colors duration-300 ${
+                    activeTab === "ingredients"
+                      ? "bg-teal-600 text-white"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
                 >
                   Ingredients
                 </button>
                 <button
                   onClick={() => setActiveTab("instructions")}
-                  className={`flex-1 py-2 px-4 text-center font-medium rounded-tr-lg rounded-br-lg transition-colors duration-300 ${activeTab === "instructions" ? "bg-teal-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`}
+                  className={`flex-1 py-2 px-4 text-center font-medium rounded-tr-lg rounded-br-lg transition-colors duration-300 ${
+                    activeTab === "instructions"
+                      ? "bg-teal-600 text-white"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
                 >
                   Instructions
                 </button>
@@ -158,28 +198,45 @@ const SeasonalRecipeDetails = () => {
 
           {/* Bottom Section - Fun Seasonal Elements */}
           <div className="bg-teal-100 bg-opacity-50 p-8 rounded-b-3xl">
-            <h3 className="text-xl font-semibold text-teal-700 mb-6 font-serif">Seasonal Highlights</h3>
+            <h3 className="text-xl font-semibold text-teal-700 mb-6">
+              Seasonal Highlights
+            </h3>
             <div className="flex flex-wrap justify-around gap-6">
-              <motion.div 
+              <motion.div
                 className="flex items-center bg-white rounded-full px-5 py-3 shadow-md"
-                whileHover={{ scale: 1.05, boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)" }}
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+                }}
               >
                 <Thermometer className="w-6 h-6 mr-3 text-teal-600" />
-                <span className="text-sm font-medium">Perfect for rainy days!</span>
+                <span className="text-sm font-medium">
+                  Perfect for rainy days!
+                </span>
               </motion.div>
-              <motion.div 
+              <motion.div
                 className="flex items-center bg-white rounded-full px-5 py-3 shadow-md"
-                whileHover={{ scale: 1.05, boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)" }}
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+                }}
               >
                 <Droplets className="w-6 h-6 mr-3 text-teal-600" />
-                <span className="text-sm font-medium">Monsoon special ingredients</span>
+                <span className="text-sm font-medium">
+                  Monsoon special ingredients
+                </span>
               </motion.div>
-              <motion.div 
+              <motion.div
                 className="flex items-center bg-white rounded-full px-5 py-3 shadow-md"
-                whileHover={{ scale: 1.05, boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)" }}
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+                }}
               >
                 <Utensils className="w-6 h-6 mr-3 text-teal-600" />
-                <span className="text-sm font-medium">Comfort food for the season</span>
+                <span className="text-sm font-medium">
+                  Comfort food for the season
+                </span>
               </motion.div>
             </div>
           </div>
