@@ -12,7 +12,7 @@ const QuickAccess = () => {
     { id: 'top', label: 'Top Picks', icon: Award, color: 'bg-green-500' },
     { id: 'nutrition', label: 'Nutrition', icon: Apple, color: 'bg-purple-500' },
     { id: 'testimonials', label: 'Reviews', icon: MessageCircle, color: 'bg-pink-500' },
-    { id: 'cta', label: 'Seasonal Specials', icon: Gift, color: 'bg-indigo-500' },
+    { id: 'cta', label: 'Seasonal', icon: Gift, color: 'bg-indigo-500' },
   ];
 
   const scrollToSection = (id) => {
@@ -26,7 +26,7 @@ const QuickAccess = () => {
   return (
     <div 
       className={`fixed right-6 top-1/2 transform -translate-y-1/2 bg-white/80 backdrop-blur-md shadow-lg rounded-[30px] transition-all duration-300 ease-in-out ${
-        isExpanded ? 'w-[140px] p-3' : 'w-14 p-2'
+        isExpanded ? 'w-[150px] p-3' : 'w-14 p-2'
       }`}
       onMouseEnter={() => setIsExpanded(true)}
       onMouseLeave={() => setIsExpanded(false)}
