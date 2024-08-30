@@ -79,19 +79,19 @@ const FeaturedRecipes = () => {
     setFilteredRecipes(sortedRecipes);
   }, [createdRecipes]);
 
-  const handleSearch = (e) => {
-    const term = e.target.value.toLowerCase();
-    setSearchTerm(term);
-    const filtered = createdRecipes
-      .filter(
-        (recipe) =>
-          recipe.title.toLowerCase().includes(term) ||
-          recipe.category.toLowerCase().includes(term)
-      )
-      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-      .slice(0, 4);
-    setFilteredRecipes(filtered);
-  };
+  // const handleSearch = (e) => {
+  //   const term = e.target.value.toLowerCase();
+  //   setSearchTerm(term);
+  //   const filtered = createdRecipes
+  //     .filter(
+  //       (recipe) =>
+  //         recipe.title.toLowerCase().includes(term) ||
+  //         recipe.category.toLowerCase().includes(term)
+  //     )
+  //     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+  //     .slice(0, 4);
+  //   setFilteredRecipes(filtered);
+  // };
 
   return (
     <motion.section
@@ -102,12 +102,14 @@ const FeaturedRecipes = () => {
     >
       <div className="container mx-auto">
         <h2
-          className="text-5xl font-bold text-[#5a6167] mb-8 text-center"
+          className="text-6xl font-bold text-[#6495c1] mb-8 text-center"
           style={{ fontFamily: "Lobster, cursive" }}
         >
           Featured Recipes
         </h2>
-        <div className="mb-8 flex justify-center">
+
+        {/* Search bar */}
+        {/* <div className="mb-8 flex justify-center">
           <div className="relative w-full max-w-md">
             <input
               type="text"
@@ -121,7 +123,8 @@ const FeaturedRecipes = () => {
               size={20}
             />
           </div>
-        </div>
+        </div> */}
+
         <AnimatePresence>
           {filteredRecipes.length === 0 ? (
             <motion.p

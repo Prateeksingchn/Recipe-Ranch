@@ -4,7 +4,7 @@ const recipes = [
         name: "Butter Naan",
         category: "Dinner",
         subcategory: "indian", // Updated
-        image: "https://images.unsplash.com/photo-1600718375227-6d3e9805879e",
+        image: "https://i.pinimg.com/236x/6d/9a/5d/6d9a5db24704b60c8249681ded09bd48.jpg",
         description: "Butter naan is a popular Indian flatbread made from unleavened dough. It's characterized by its soft, chewy texture and buttery flavor. It's often served with curries, kebabs, and other Indian dishes.",
         ingredients: [
             "1 cup all-purpose flour",
@@ -36,7 +36,7 @@ const recipes = [
         name: "Chicken Tikka Masala",
         category: "Dinner",
         subcategory: "indian", // Updated
-        image: "https://images.unsplash.com/photo-1600718375227-6d3e9805879e",
+        image: "https://i.pinimg.com/236x/0d/11/07/0d1107398ea6d5c5cca32cc841c78504.jpg",
         description: "A popular Indian curry dish with marinated chicken in a creamy tomato sauce.",
         ingredients: ["Chicken", "Yogurt", "Tomato sauce", "Cream", "Spices"],
         instructions: ["Marinate chicken", "Grill chicken", "Prepare sauce", "Combine chicken and sauce"],
@@ -50,7 +50,7 @@ const recipes = [
         name: "Caesar Salad",
         category: "Lunch",
         subcategory: "other", // Updated
-        image: "https://images.unsplash.com/photo-1571091718767-1e7c0a9e1560",
+        image: "https://i.pinimg.com/236x/16/98/3c/16983c21eeeb368245c4dbf04dc36658.jpg",
         description: "A refreshing salad with romaine lettuce, croutons, and Caesar dressing.",
         ingredients: ["Romaine lettuce", "Croutons", "Parmesan cheese", "Caesar dressing"],
         instructions: ["Wash and chop lettuce", "Prepare dressing", "Combine ingredients", "Toss salad"],
@@ -64,7 +64,7 @@ const recipes = [
         name: "Chicken Tacos",
         category: "Lunch",
         subcategory: "mexican", // Updated
-        image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f",
+        image: "https://i.pinimg.com/236x/c9/63/f4/c963f4d6d09ff814d154c44cdcaec411.jpg",
         description: "Delicious chicken tacos with fresh toppings.",
         ingredients: ["Ground chicken", "Taco shells", "Lettuce", "Tomato", "Cheese"],
         instructions: ["Cook chicken", "Prepare toppings", "Assemble tacos"],
@@ -78,7 +78,7 @@ const recipes = [
         name: "Vegetable Stir Fry",
         category: "Dinner",
         subcategory: "chinese", // Updated
-        image: "https://images.unsplash.com/photo-1562967916-eb82221dfb9e",
+        image: "https://i.pinimg.com/236x/70/af/49/70af4918398e455a33e9f80ba61d8a51.jpg",
         description: "A quick and healthy vegetable stir fry.",
         ingredients: ["Mixed vegetables", "Soy sauce", "Garlic", "Ginger", "Oil"],
         instructions: ["Chop vegetables", "Heat oil", "Stir fry vegetables", "Add sauce"],
@@ -92,7 +92,7 @@ const recipes = [
         name: "Margherita Pizza",
         category: "Dinner",
         subcategory: "italian", // Updated
-        image: "https://images.unsplash.com/photo-1571091655789-11f98fbb3366",
+        image: "https://i.pinimg.com/474x/a0/22/34/a02234da91c98548c4647ef8471438a9.jpg",
         description: "A simple pizza topped with fresh tomatoes, mozzarella cheese, and basil.",
         ingredients: [
             "1 cup all-purpose flour",
@@ -118,7 +118,7 @@ const recipes = [
         name: "Alfredo Pasta",
         category: "Dinner",
         subcategory: "italian", // Updated
-        image: "https://images.unsplash.com/photo-1562967916-eb82221dfb9e",
+        image: "https://i.pinimg.com/236x/80/97/b5/8097b5a5fdcc2434493304dea031b3d6.jpg",
         description: "A rich and creamy Alfredo pasta dish.",
         ingredients: [
             "1 pound fettuccine or linguine pasta",
@@ -145,7 +145,7 @@ const recipes = [
         name: "Blueberry Pancakes",
         category: "Breakfast",
         subcategory: "american", // Updated
-        image: "https://images.unsplash.com/photo-1623776050935-052bb0d12eb7",
+        image: "https://i.pinimg.com/236x/39/92/c2/3992c2c3a765b1efc62ddf76c27b5709.jpg",
         description: "Fluffy pancakes filled with fresh blueberries.",
         ingredients: ["Flour", "Milk", "Eggs", "Blueberries", "Baking powder", "Sugar", "Butter"],
         instructions: [
@@ -165,7 +165,7 @@ const recipes = [
         name: "Crispy French Fries",
         category: "Lunch", // Updated to match the category options
         subcategory: "french", // Updated to match the subcategory options
-        image: "https://images.unsplash.com/photo-1567306226416-28f0efdc88ce",
+        image: "https://i.pinimg.com/236x/d3/35/2b/d3352b478577a405415310a24c226601.jpg",
         description: "Golden and crispy French fries, perfect as a snack or side dish.",
         ingredients: [
             "4 large russet potatoes",
@@ -193,7 +193,7 @@ const recipes = [
         name: "Chocolate Brownies",
         category: "Dessert",
         subcategory: "other", // Updated
-        image: "https://images.unsplash.com/photo-1606312616463-c35ae53891e7",
+        image: "https://i.pinimg.com/236x/81/f5/6b/81f56b4e1ec0b3d0d129e03be8470b33.jpg",
         description: "Rich, fudgy chocolate brownies with a crispy top and gooey center.",
         ingredients: ["Chocolate", "Butter", "Sugar", "Eggs", "Flour"],
         instructions: [
