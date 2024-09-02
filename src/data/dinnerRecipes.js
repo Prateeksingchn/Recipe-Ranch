@@ -2,7 +2,7 @@ const dinnerRecipes = [
   {
     name: "Grilled Salmon with Quinoa",
     image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=500&auto=format&fit=crop&q=60",
-    time: "30 min",
+    time: "30",
     servings: 2,
     rating: 4.7,
     description: "Tender grilled salmon fillet served over a bed of fluffy quinoa, making for a healthy and delicious dinner.",
@@ -26,7 +26,7 @@ const dinnerRecipes = [
   {
     name: "Spaghetti Carbonara",
     image: "https://images.pexels.com/photos/4518844/pexels-photo-4518844.jpeg?auto=compress&cs=tinysrgb&w=600",
-    time: "25 min",
+    time: "25",
     servings: 4,
     rating: 4.8,
     description: "A classic Italian pasta dish made with eggs, cheese, pancetta, and pepper, creating a creamy and savory sauce.",
@@ -53,7 +53,7 @@ const dinnerRecipes = [
   {
     name: "Roasted Chicken with Vegetables",
     image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=500&auto=format&fit=crop&q=60",
-    time: "1 hr",
+    time: "60",
     servings: 4,
     rating: 4.9,
     description: "Juicy roasted chicken served with a medley of roasted vegetables, a perfect family dinner.",
@@ -80,7 +80,7 @@ const dinnerRecipes = [
   {
     name: "Chicken Fry",
     image: "https://plus.unsplash.com/premium_photo-1683139918895-06f8f3b9939e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y2hpY2tlbiUyMCUyMEZyeXxlbnwwfHwwfHx8MA%3D%3D",
-    time: "20 min",
+    time: "20",
     servings: 3,
     rating: 4.6,
     description: "Crispy and flavorful fried chicken, a quick and satisfying meal perfect for any day.",
@@ -106,7 +106,7 @@ const dinnerRecipes = [
   {
     name: "Vegetarian Tacos",
     image: "https://images.unsplash.com/photo-1613591797545-3ff9eba2ac34?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8VmVnZXRhcmlhbiUyMFRhY29zfGVufDB8fDB8fHww",
-    time: "25 min",
+    time: "25",
     servings: 4,
     rating: 4.5,
     description: "Flavorful and healthy vegetarian tacos filled with black beans, corn, avocado, and fresh salsa.",
@@ -131,7 +131,7 @@ const dinnerRecipes = [
   {
     name: "Seafood Paella",
     image: "https://images.unsplash.com/photo-1623961990059-28356e226a77?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8U2VhZm9vZCUyMFBhZWxsYXxlbnwwfHwwfHx8MA%3D%3D",
-    time: "45 min",
+    time: "45",
     servings: 5,
     rating: 4.8,
     description: "A traditional Spanish dish made with saffron-infused rice, fresh seafood, and vibrant vegetables.",
@@ -167,7 +167,7 @@ const dinnerRecipes = [
   {
     name: "Butter Chicken",
     image: "https://images.pexels.com/photos/7625056/pexels-photo-7625056.jpeg?auto=compress&cs=tinysrgb&w=600",
-    time: "40 min",
+    time: "40",
     servings: 4,
     rating: 4.9,
     description: "A rich and creamy curry made with tender chicken in a spiced tomato sauce, served with naan or rice.",
@@ -200,7 +200,7 @@ const dinnerRecipes = [
   {
     name: "Vegetable Biryani",
     image: "https://images.pexels.com/photos/7593230/pexels-photo-7593230.jpeg?auto=compress&cs=tinysrgb&w=600",
-    time: "1 hr",
+    time: "60",
     servings: 4,
     rating: 4.8,
     description: "A flavorful rice dish cooked with mixed vegetables, aromatic spices, and saffron, served with raita.",
@@ -233,7 +233,7 @@ const dinnerRecipes = [
   {
     name: "Greek Moussaka",
     image: "https://images.pexels.com/photos/22698519/pexels-photo-22698519/free-photo-of-close-up-of-a-slice-of-a-greek-kadayif-dessert.jpeg?auto=compress&cs=tinysrgb&w=600",
-    time: "1 hr 15 min",
+    time: "1 hr 15",
     servings: 6,
     rating: 4.7,
     description: "A layered Greek dish with eggplant, ground meat, and béchamel sauce, baked to golden perfection.",
@@ -264,7 +264,7 @@ const dinnerRecipes = [
   {
     name: "Falafel with Tahini Sauce",
     image: "https://images.pexels.com/photos/6252745/pexels-photo-6252745.jpeg?auto=compress&cs=tinysrgb&w=600",
-    time: "40 min",
+    time: "40",
     servings: 4,
     rating: 4.8,
     description: "Crispy chickpea fritters served with creamy tahini sauce, a popular Middle Eastern dish.",

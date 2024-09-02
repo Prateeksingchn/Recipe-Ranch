@@ -48,7 +48,7 @@ const TopRecipes = forwardRef((props, ref) => {
   return (
     <section ref={ref} className="py-8 sm:py-12 md:py-16 bg-gray-100 rounded-[20px] sm:rounded-[30px]">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-center mb-8 sm:mb-12 text-[#333] relative inline-block left-1/2 transform -translate-x-1/2">
+        <h2 className="text-[27px] sm:text-5xl md:text-6xl font-bold text-center mb-8 sm:mb-12 text-[#333] relative inline-block left-1/2 transform -translate-x-1/2">
           <span
             className="relative z-10"
             style={{ fontFamily: "Lobster, cursive" }}

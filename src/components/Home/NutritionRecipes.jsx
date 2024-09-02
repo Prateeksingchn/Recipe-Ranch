@@ -130,7 +130,7 @@ const NutritionRecipes = forwardRef((props, ref) => {
           transition={{ duration: 0.5 }}
           className="text-center mb-4 sm:mb-6"
         >
-          <h2 className="text-4xl sm:text-5xl md:text-6xl text-[#d94f4f] font-bold text-center mb-2 sm:mb-4 relative inline-block">
+          <h2 className="text-[29px] sm:text-5xl md:text-6xl text-[#d94f4f] font-bold text-center mb-2 sm:mb-4 relative inline-block">
             <span
               className="relative z-10"
               style={{ fontFamily: "Lobster, cursive" }}

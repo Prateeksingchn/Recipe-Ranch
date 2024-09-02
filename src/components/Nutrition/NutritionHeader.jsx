@@ -9,12 +9,12 @@ const NutritionHeader = ({ onAddRecipe }) => {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="flex items-center justify-between mb-8"
+      className="flex flex-col sm:flex-row items-start justify-between mb-8"
     >
-      <div className="flex items-center">
+      <div className="flex flex-col sm:flex-col md:flex-row lg:flex-row items-start mb-4 sm:mb-0">
         <Link
           to="/#nutrition"
-          className="mr-4 p-2 rounded-full bg-white shadow-md hover:bg-gray-100 transition-colors duration-300"
+          className="mr-4 p-2 rounded-full bg-white shadow-md hover:bg-gray-100 transition-colors duration-300 mb-4"
         >
           <ArrowLeft size={24} className="text-gray-600" />
         </Link>

@@ -39,7 +39,7 @@ const BreakfastRecipeDetails = () => {
 
   return (
     <motion.section
-      className="pt-5 pb-10 px-6 my-4 bg-gradient-to-br from-[#C2E1F8] to-[#E6F4FF] rounded-3xl"
+      className="pt-5 pb-10 px-4 sm:px-4 md:px-6 lg:px-6 my-4 bg-gradient-to-br from-[#C2E1F8] to-[#E6F4FF] rounded-3xl"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
@@ -51,9 +51,9 @@ const BreakfastRecipeDetails = () => {
         </button>
       </Link>
 
-      <div className="max-w-4xl mx-auto ">
+      <div className="max-w-4xl mx-auto">
         <motion.div
-          className="bg-white rounded-xl shadow-xl shadow-neutral-300 overflow-hidden p-10"
+          className="bg-white rounded-xl shadow-xl shadow-neutral-300 overflow-hidden p-2 sm:p-4 md:p-6 lg:p-10 "
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -62,12 +62,12 @@ const BreakfastRecipeDetails = () => {
             <img
               src={recipe.image}
               alt={recipe.title || recipe.name}
-              className="w-[600px] h-[400px] object-cover mx-auto rounded-lg"
+              className="w-full h-[400px] object-cover mx-auto rounded-lg md:w-[600px] md:h-[400px]"
             />
           </div>
-          <div className="w-[600px] mx-auto px-5 mt-5 flex flex-col items-center justify-center">
+          <div className="w-full px-2 sm:px-2 md:px-5 lg:px-5 mt-5 flex flex-col items-center justify-center md:w-[600px] md:mx-auto">
             <h1 className="text-3xl font-semibold mb-6">{recipe.title || recipe.name}</h1>
-            <div className="flex justify-start items-center gap-20 text-sm text-gray-500 mb-6">
+            <div className="flex justify-start items-center gap-4 sm:gap-2 md:gap-6 lg:gap-6 text-sm text-gray-500 mb-6">
               <span className="flex items-center">
                 <Clock size={20} className="mr-1" /> {recipe.time} min
               </span>
@@ -81,7 +81,7 @@ const BreakfastRecipeDetails = () => {
             </div>
             <p className="text-gray-700 mb-6 text-center">{recipe.description}</p>
           </div>
-          <div className="p-8 grid grid-cols-2 px-10">
+          <div className="py-4 px-4 sm:py-4 sm:px-4 md:py-8 md:px-10 lg:py-8 lg:px-10 grid grid-cols-1 gap-8 md:grid-cols-2">
             <div>
               <h2 className="text-2xl font-bold mb-4">Ingredients</h2>
               <ul className="list-disc pl-6 mr-6 text-gray-700 mb-6">

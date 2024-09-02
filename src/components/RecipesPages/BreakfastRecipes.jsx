@@ -40,7 +40,7 @@ const BreakfastRecipes = () => {
 
       <div className="container mx-auto">
         <motion.h1
-          className="text-6xl font-bold text-[#04039B] mb-8 text-center"
+          className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#04039B] mb-4 sm:mb-4 md:mb-8 lg:mb-8 text-center"
           style={{ fontFamily: "Lobster, cursive" }}
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -49,7 +49,7 @@ const BreakfastRecipes = () => {
           Breakfast Recipes
         </motion.h1>
         <motion.p
-          className="text-xl text-gray-700 mb-12 text-center max-w-[650px] mx-auto"
+          className="text-base md:text-xl text-gray-700 mb-12 text-center max-w-[650px] mx-auto"
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -58,7 +58,7 @@ const BreakfastRecipes = () => {
           recipes. From quick and healthy options to indulgent weekend treats,
           we've got something for everyone!
         </motion.p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-4 md:gap-6 lg:gap-8 ">
           {allRecipes.map((recipe, index) => (
             <motion.div
               key={recipe.id || recipe.name}
@@ -76,10 +76,10 @@ const BreakfastRecipes = () => {
                 <img
                   src={recipe.image}
                   alt={recipe.title || recipe.name}
-                  className="w-full h-56 object-cover "
+                  className="w-full h-56 sm:h-48 object-cover "
                 />
                 <div className="px-6 py-3">
-                  <h3 className="text-xl font-semibold mb-2">{recipe.title || recipe.name}</h3>
+                  <h3 className="text-lg sm:text-xl font-semibold mb-2">{recipe.title || recipe.name}</h3>
                   <div className="flex justify-between items-center text-sm text-gray-500 mb-2">
                     <span className="flex items-center">
                       <Clock size={16} className="mr-1" /> {recipe.time} min

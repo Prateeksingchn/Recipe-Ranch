@@ -19,17 +19,18 @@ const NutritionRecipeDetail = () => {
       </div>
     );
   }
+
   return (
-    <div className="min-h-screen flex items-center justify-center rounded-3xl -mt-5">
+    <div className="min-h-screen flex items-center justify-center rounded-3xl my-24 sm:my-24 md:-my-14 lg:-my-5">
       <Link
         to="/nutrition"
         className="mr-4 p-2 absolute top-[130px] left-8 rounded-full bg-white shadow-md hover:bg-gray-100 transition-colors duration-300"
       >
         <ArrowLeft size={24} className="text-gray-600" />
       </Link>
-      <div className="bg-[#f5f5f5be] shadow-2xl shadow-slate-400 rounded-xl overflow-hidden flex w-full max-w-7xl h-[650px] p-5">
+      <div className="bg-[#f5f5f5be] h-auto sm:h-auto md:h-[600px] lg:h-[640px] shadow-2xl shadow-slate-400 rounded-xl overflow-hidden flex flex-col md:flex-row w-full max-w-7xl p-5">
         {/* Left side - Image */}
-        <div className="w-[35%] h-auto relative rounded-2xl overflow-hidden ">
+        <div className="w-full sm:w-full md:w-[50%] lg:w-[35%] h-auto sm:h-[500px] md:h-[550px] relative rounded-2xl overflow-hidden">
           <img
             src={`/${recipe.image}`}
             alt={recipe.title}
@@ -52,9 +53,9 @@ const NutritionRecipeDetail = () => {
         </div>
 
         {/* Right side - Scrollable content */}
-        <div className="w-[65%] overflow-y-auto px-8 py-2">
+        <div className="w-full md:w-[65%] overflow-y-auto px-0 py-2 sm:px-2 sm:py-2 md:px-6 md:py-4 mt-4">
           {/* Recipe quick info */}
-          <h1 className="text-2xl font-semibold mb-4">{recipe.title}</h1>
+          <h1 className="text-2xl font-semibold mb-4 hidden sm:hidden md:block lg:block">{recipe.title}</h1>
           <div className="flex flex-wrap justify-between items-center mb-8 bg-gray-50 p-4 rounded-lg shadow">
             <div className="flex items-center mb-2 mr-4">
               <Clock size={24} className="text-green-500 mr-2" />
@@ -79,7 +80,7 @@ const NutritionRecipeDetail = () => {
           <div className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Nutrition Facts</h2>
             <div className="bg-gray-100 p-6 rounded-lg shadow-inner shadow-slate-400">
-              <div className="grid grid-cols-4 gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 {Object.entries(recipe.nutritionFacts).map(([key, value]) => (
                   <div key={key} className="text-center">
                     <p className="text-3xl font-bold text-green-500">

@@ -23,7 +23,7 @@ const DinnerRecipes = () => {
 
   return (
     <motion.section
-      className="py-5 px-6 bg-gradient-to-br from-[#C2E1F8] to-[#E6F4FF] rounded-3xl my-4"
+      className="py-5 px-5 bg-gradient-to-br from-[#C2E1F8] to-[#E6F4FF] rounded-3xl my-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
@@ -37,7 +37,7 @@ const DinnerRecipes = () => {
 
       <div className="container mx-auto">
         <motion.h1
-          className="text-6xl font-bold text-[#04039B] mb-6 text-center"
+          className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#04039B] mb-4 sm:mb-4 md:mb-6 lg:mb-6 text-center"
           style={{ fontFamily: "Lobster, cursive" }}
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -46,18 +46,18 @@ const DinnerRecipes = () => {
           Dinner Recipes
         </motion.h1>
         <motion.p
-          className="text-xl text-gray-700 mb-12 text-center max-w-lg mx-auto"
+          className="text-base md:text-xl text-gray-700 mb-12 text-center max-w-lg mx-auto"
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           Discover delicious dinner recipes that are perfect for a satisfying evening meal.
         </motion.p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-4 md:gap-6 lg:gap-8">
           {allRecipes.map((recipe, index) => (
             <motion.div
               key={recipe.id || recipe.name}
-              className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 "
+              className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300"
               whileHover={{ y: -5, scale: 1.02 }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -71,13 +71,13 @@ const DinnerRecipes = () => {
                 <img
                   src={recipe.image}
                   alt={recipe.title || recipe.name}
-                  className="w-full h-56 object-cover"
+                  className="w-full h-56 sm:h-48 object-cover"
                 />
-                <div className="px-6 py-3">
-                  <h3 className="text-xl font-semibold mb-2">{recipe.title || recipe.name}</h3>
+                <div className="px-3 sm:px-4 md:px-6 lg:px-6 py-3">
+                  <h3 className="text-lg sm:text-xl font-semibold mb-2">{recipe.title || recipe.name}</h3>
                   <div className="flex justify-between items-center text-sm text-gray-500">
                     <span className="flex items-center">
-                      <Clock size={16} className="mr-1" /> {recipe.time}
+                      <Clock size={16} className="mr-1" /> {recipe.time} min
                     </span>
                     <span className="flex items-center">
                       <Users size={16} className="mr-1" /> {recipe.servings} servings
