@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { motion, AnimatePresence } from "framer-motion";
 import RecipeCard from "./Recipe/RecipeCard";
 import RecipePageHeader from "./Recipe/RecipePageHeader";
 import SearchBar from "./Recipe/SearchBar";
@@ -87,69 +88,86 @@ const Recipes = () => {
 
   const totalPages = Math.min(Math.ceil(totalResults / recipesPerPage), 100);
 
+  const tabVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+    exit: { opacity: 0, y: -20, transition: { duration: 0.5 } }
+  };
+
   return (
-    <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-gray-50 min-h-screen">
+    <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12 bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
       <RecipePageHeader />
 
-      <div className="max-w-8xl mx-auto">
-        <div className="mb-8">
-          <div className="flex justify-center space-x-4 mb-6">
-            <button
-              className={`flex items-center px-6 py-3 text-lg font-semibold rounded-full transition-all duration-300 ${
-                activeTab === "latest"
-                  ? "bg-blue-600 text-white shadow-lg"
-                  : "bg-white text-gray-600 hover:bg-gray-100"
-              }`}
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-8 sm:mb-12">
+          <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 mb-6 sm:mb-8">
+            <TabButton
+              active={activeTab === "latest"}
               onClick={() => setActiveTab("latest")}
-            >
-              <Book className="mr-2 h-5 w-5" />
-              Latest Recipes
-            </button>
-            <button
-              className={`flex items-center px-6 py-3 text-lg font-semibold rounded-full transition-all duration-300 ${
-                activeTab === "nutrition"
-                  ? "bg-green-600 text-white shadow-lg"
-                  : "bg-white text-gray-600 hover:bg-gray-100"
-              }`}
+              icon={<Book className="mr-2 h-5 w-5" />}
+              text="Latest Recipes"
+            />
+            <TabButton
+              active={activeTab === "nutrition"}
               onClick={() => setActiveTab("nutrition")}
+              icon={<Utensils className="mr-2 h-5 w-5" />}
+              text="Nutrition Recipes"
+            />
+          </div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              variants={tabVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="bg-white rounded-3xl shadow-xl p-6 sm:p-8 overflow-hidden transition-all duration-300"
             >
-              <Utensils className="mr-2 h-5 w-5" />
-              Nutrition Recipes
-            </button>
-          </div>
-          <div className="bg-blue-100 rounded-3xl shadow-lg p-6 overflow-hidden transition-all duration-300">
-            {activeTab === "latest" ? (
-              <UserCreatedRecipes userCreatedRecipes={userCreatedRecipes} />
-            ) : (
-              <NutritionRecipes nutritionRecipes={nutritionRecipes} />
-            )}
-          </div>
+              {activeTab === "latest" ? (
+                <UserCreatedRecipes userCreatedRecipes={userCreatedRecipes} />
+              ) : (
+                <NutritionRecipes nutritionRecipes={nutritionRecipes} />
+              )}
+            </motion.div>
+          </AnimatePresence>
         </div>
 
+        <SearchBar
+          categories={categories}
+          setAllRecipes={setAllRecipes}
+          setTotalResults={setTotalResults}
+          onSearch={handleSearch}
+        />
 
-          <SearchBar
-            categories={categories}
-            setAllRecipes={setAllRecipes}
-            setTotalResults={setTotalResults}
-            onSearch={handleSearch}
-          />
-
-
-          <AllRecipes allRecipes={allRecipes} isLoading={isLoading} />
-          {totalPages > 1 && (
-            <div className="mt-8">
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-              />
-            </div>
-          )}
-
-
+        <AllRecipes allRecipes={allRecipes} isLoading={isLoading} />
+        {totalPages > 1 && (
+          <div className="mt-8">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
 };
+
+const TabButton = ({ active, onClick, icon, text }) => (
+  <motion.button
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+    className={`flex items-center justify-center w-full sm:w-auto px-6 py-3 text-lg font-semibold rounded-full transition-all duration-300 ${
+      active
+        ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg"
+        : "bg-white text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+    }`}
+    onClick={onClick}
+  >
+    {icon}
+    <span>{text}</span>
+  </motion.button>
+);
 
 export default Recipes;

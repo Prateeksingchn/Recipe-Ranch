@@ -14,7 +14,7 @@ import nutritionRecipes from "../../data/nutritionRecipes";
 const NutritionRecipeCard = ({ recipe, index }) => (
   <Link to={`/nutrition-recipe/${recipe.id}`} className="block">
     <motion.div
-      className="relative overflow-hidden rounded-[20px] sm:rounded-[30px] shadow-lg w-full h-[400px] sm:h-[450px] md:h-[500px] group"
+      className="relative overflow-hidden rounded-[20px] sm:rounded-[30px] shadow-lg w-full h-[400px] sm:h-[500px] md:h-[500px] group"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 * index }}

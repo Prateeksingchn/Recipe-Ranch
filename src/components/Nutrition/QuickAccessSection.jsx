@@ -19,7 +19,7 @@ const QuickAccessSection = () => {
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
       onHoverStart={() => setIsExpanded(true)}
       onHoverEnd={() => setIsExpanded(false)}
-      className="fixed right-8 bottom-8 transform -translate-y-1/2 bg-green-300 rounded-[30px] shadow-xl px-3 py-4 overflow-hidden"
+      className="fixed right-2 bottom-0 sm:right-2 sm:bottom-0 md:right-8 md:bottom-8 lg:right-8 lg:bottom-8 transform -translate-y-1/2 bg-green-300 rounded-[30px] shadow-xl px-3 py-4 overflow-hidden"
     >
       <AnimatePresence>
         {isExpanded && (

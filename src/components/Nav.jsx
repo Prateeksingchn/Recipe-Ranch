@@ -29,7 +29,7 @@ const Nav = () => {
           <Link to="/">
             <div className="flex-shrink-0 flex items-center ">
               <img
-                className="h-[47px] w-[75px] rounded-xl"
+                className="h-[40px] w-[60px] sm:h-[40px] sm:w-[60px] md:h-[47px] md:w-[75px] lg:h-[47px] lg:w-[75px] rounded-xl"
                 src="https://static.vecteezy.com/system/resources/thumbnails/008/212/813/small/cooking-logo-design-vector.jpg"
                 alt="Logo"
               />

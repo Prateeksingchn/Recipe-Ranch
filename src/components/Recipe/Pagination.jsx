@@ -13,63 +13,51 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
     pageNumbers.push(i);
   }
 
+  const renderPageButton = (number, label = number) => (
+    <li key={number} className="mx-0.5 sm:mx-1">
+      <button
+        onClick={() => onPageChange(number)}
+        className={`px-2 sm:px-3 py-1 sm:py-2 text-sm sm:text-base border rounded ${
+          currentPage === number
+            ? "bg-blue-500 text-white"
+            : "bg-white text-blue-500 hover:bg-blue-100"
+        }`}
+      >
+        {label}
+      </button>
+    </li>
+  );
+
   return (
-    <nav className=" container mx-auto flex justify-center mt-8 rounded-3xl">
-      <ul className="flex items-center">
-        <li className="mx-1">
+    <nav className="container mx-auto flex justify-center mt-4 sm:mt-6 lg:mt-8 rounded-3xl">
+      <ul className="flex flex-wrap items-center justify-center">
+        <li className="mx-0.5 sm:mx-1">
           <button
             onClick={() => onPageChange(Math.max(1, currentPage - 1))}
             disabled={currentPage === 1}
-            className="px-4 py-2 border rounded bg-white text-blue-500 disabled:text-gray-300"
+            className="px-2 sm:px-3 py-1 sm:py-2 text-sm sm:text-base border rounded bg-white text-blue-500 hover:bg-blue-100 disabled:text-gray-300 disabled:hover:bg-white"
           >
-            Previous
+            Prev
           </button>
         </li>
         {startPage > 1 && (
           <>
-            <li className="mx-1">
-              <button
-                onClick={() => onPageChange(1)}
-                className="px-4 py-2 border rounded bg-white text-blue-500"
-              >
-                1
-              </button>
-            </li>
-            {startPage > 2 && <li className="mx-1">...</li>}
+            {renderPageButton(1)}
+            {startPage > 2 && <li className="mx-0.5 sm:mx-1 text-gray-500">...</li>}
           </>
         )}
-        {pageNumbers.map((number) => (
-          <li key={number} className="mx-1">
-            <button
-              onClick={() => onPageChange(number)}
-              className={`px-4 py-2 border rounded ${
-                currentPage === number
-                  ? "bg-blue-500 text-white"
-                  : "bg-white text-blue-500"
-              }`}
-            >
-              {number}
-            </button>
-          </li>
-        ))}
+        {pageNumbers.map((number) => renderPageButton(number))}
         {endPage < totalPages && (
           <>
-            {endPage < totalPages - 1 && <li className="mx-1">...</li>}
-            <li className="mx-1">
-              <button
-                onClick={() => onPageChange(totalPages)}
-                className="px-4 py-2 border rounded bg-white text-blue-500"
-              >
-                {totalPages}
-              </button>
-            </li>
+            {endPage < totalPages - 1 && <li className="mx-0.5 sm:mx-1 text-gray-500">...</li>}
+            {renderPageButton(totalPages)}
           </>
         )}
-        <li className="mx-1">
+        <li className="mx-0.5 sm:mx-1">
           <button
             onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
             disabled={currentPage === totalPages}
-            className="px-4 py-2 border rounded bg-white text-blue-500 disabled:text-gray-300"
+            className="px-2 sm:px-3 py-1 sm:py-2 text-sm sm:text-base border rounded bg-white text-blue-500 hover:bg-blue-100 disabled:text-gray-300 disabled:hover:bg-white"
           >
             Next
           </button>

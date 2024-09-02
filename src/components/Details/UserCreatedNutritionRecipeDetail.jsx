@@ -105,13 +105,13 @@ const UserCreatedNutritionRecipeDetail = () => {
     <div className="min-h-screen flex items-center justify-center rounded-3xl my-24 sm:my-24 md:-my-14 lg:-my-5">
       <Link
         to="/nutrition"
-        className="mr-4 p-2 absolute top-[130px] left-8 rounded-full bg-white shadow-md hover:bg-gray-100 transition-colors duration-300"
+        className="mr-4 p-2 absolute top-[130px] left-8 rounded-full bg-white shadow-xl shadow-slate-200 hover:bg-gray-100 transition-colors duration-300"
       >
         <ArrowLeft size={24} className="text-gray-600" />
       </Link>
-      <div className="bg-[#f5f5f5be] h-auto sm:h-auto md:h-[600px] lg:h-[640px] shadow-2xl shadow-slate-400 rounded-xl overflow-hidden flex flex-col md:flex-row w-full max-w-7xl p-5">
+      <div className="bg-[#f5f5f5be] h-auto sm:h-auto md:h-[600px] lg:h-[640px] shadow-2xl shadow-slate-500 rounded-xl overflow-hidden flex flex-col md:flex-row w-full max-w-7xl p-5">
         {/* Left side - Image */}
-        <div className="w-full sm:w-full md:w-[50%] lg:w-[35%] h-[500px] sm:h-[500px] md:h-[550px] relative rounded-2xl overflow-hidden">
+        <div className="w-full sm:w-full md:w-[50%] lg:w-[35%] h-[500px] sm:h-[500px] md:h-[550px] lg:h-auto relative rounded-2xl overflow-hidden">
           <img
             src={recipe.image}
             alt={recipe.title}
@@ -130,12 +130,12 @@ const UserCreatedNutritionRecipeDetail = () => {
         </div>
 
         {/* Right side - Scrollable content */}
-        <div className="w-full md:w-[65%] overflow-y-auto px-0 py-2 sm:pl-2 sm:py-2 md:pl-6 md:py-0 lg:pl-6 lg:py-4 mt-4">
+        <div className="w-full md:w-[65%] overflow-y-auto px-0 py-2 sm:pl-2 sm:py-2 md:pl-6 md:py-0 lg:pl-6 lg:pb-2 mt-4">
 
           {/* Recipe quick info */}
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 space-y-4 md:space-y-0">
             {/* Recipe Title */}
-            <h1 className="text-[28px] sm:text-[32px] md:text-[36px] lg:text-[40px] font-bold hidden sm:block md:block lg:block">
+            <h1 className="text-[28px] sm:text-[32px] md:text-[36px] lg:text-[30px] font-bold hidden sm:block md:block lg:block">
               {recipe.title}
             </h1>
 

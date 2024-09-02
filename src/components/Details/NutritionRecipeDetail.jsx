@@ -30,7 +30,7 @@ const NutritionRecipeDetail = () => {
       </Link>
       <div className="bg-[#f5f5f5be] h-auto sm:h-auto md:h-[600px] lg:h-[640px] shadow-2xl shadow-slate-400 rounded-xl overflow-hidden flex flex-col md:flex-row w-full max-w-7xl p-5">
         {/* Left side - Image */}
-        <div className="w-full sm:w-full md:w-[50%] lg:w-[35%] h-auto sm:h-[500px] md:h-[550px] relative rounded-2xl overflow-hidden">
+        <div className="w-full sm:w-full md:w-[50%] lg:w-[35%] h-auto sm:h-[500px] md:h-[550px] lg:h-auto relative rounded-2xl overflow-hidden">
           <img
             src={`/${recipe.image}`}
             alt={recipe.title}
@@ -53,9 +53,9 @@ const NutritionRecipeDetail = () => {
         </div>
 
         {/* Right side - Scrollable content */}
-        <div className="w-full md:w-[65%] overflow-y-auto px-0 py-2 sm:px-2 sm:py-2 md:px-6 md:py-4 mt-4">
+        <div className="w-full md:w-[65%] overflow-y-auto px-0 py-2 sm:px-2 sm:py-2 md:px-6 md:py-4 lg:py-0 mt-4">
           {/* Recipe quick info */}
-          <h1 className="text-2xl font-semibold mb-4 hidden sm:hidden md:block lg:block">{recipe.title}</h1>
+          <h1 className="text-2xl md:text-[32px] lg:txet-[30px] font-semibold mb-4 hidden sm:hidden md:block lg:block">{recipe.title}</h1>
           <div className="flex flex-wrap justify-between items-center mb-8 bg-gray-50 p-4 rounded-lg shadow">
             <div className="flex items-center mb-2 mr-4">
               <Clock size={24} className="text-green-500 mr-2" />
