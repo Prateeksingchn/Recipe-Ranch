@@ -7,7 +7,7 @@ const RecipeGrid = ({ recipes, userCreatedRecipes, onDeleteUserRecipe }) => {
   const renderRecipes = (recipeList, title, isUserCreated = false) => (
     <>
       {recipeList.length > 0 && (
-        <h2 className="text-3xl text-[#cc0000] font-bold mb-4 mt-8 ml-2 border-b-4 border-yellow-200 w-[max-content] ">{title}</h2>
+        <h2 className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl text-center text-[#cc0000] font-bold mb-4 mt-8 ml-2 border-b-4 border-yellow-200 w-[max-content] ">{title}</h2>
       )}
       <motion.div
         layout
