@@ -46,7 +46,7 @@ const App = () => {
   }, []);
 
   return (
-    <div className="w-full m-auto p-4 bg-white ">
+    <div className="w-full m-auto p-2 sm:p-3 md:p-4 lg:p-4 bg-white ">
       <Nav />
 
       <Routes>
