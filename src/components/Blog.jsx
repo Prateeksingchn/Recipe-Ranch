@@ -48,98 +48,34 @@ const RecipeCard = ({ recipe, onClick }) => (
     className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300"
   >
     <div className="relative">
-      <div className="p-4">
-        <img
-          src={recipe.image}
-          alt={recipe.title}
-          className="w-full h-[350px] object-cover rounded-2xl"
-        />
-        <div className="absolute top-6 left-6 bg-amber-500 text-white px-3 py-[4px] rounded-2xl text-sm font-semibold">
-          {recipe.dishTypes[0] || "Recipe"}
-        </div>
+      <img
+        src={recipe.image}
+        alt={recipe.title}
+        className="w-full h-48 object-cover"
+      />
+      <div className="absolute top-4 left-4 bg-amber-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
+        {recipe.dishTypes[0] || "Recipe"}
       </div>
     </div>
-    <div className="p-5">
-      <div className="flex items-center text-gray-600 text-sm mb-3">
+    <div className="p-6">
+      <h3 className="text-2xl font-bold text-gray-800 mb-2 line-clamp-2">
+        {recipe.title}
+      </h3>
+      <div className="flex items-center text-gray-600 text-sm mb-4">
         <Clock className="w-4 h-4 mr-1" />
         <span className="mr-3">{recipe.readyInMinutes} min</span>
         <User className="w-4 h-4 mr-1" />
         <span>{recipe.servings} servings</span>
       </div>
-      <h3 className="text-xl font-bold text-gray-800 mb-2 line-clamp-2">
-        {recipe.title}
-      </h3>
-
       <p className="text-gray-600 text-sm mb-4 line-clamp-3">
         {recipe.summary.replace(/<[^>]*>/g, "")}
       </p>
-      <div className="p-4 bg-green-50">
-        <Link to={`/recipeblogdetail/${recipe.id}`}>
-          <Button className="w-full flex items-center justify-center text-sm">
-            View Recipe <ChevronRight className="ml-2 h-4 w-4" />
-          </Button>
-        </Link>
-      </div>
+      <Link to={`/recipeblogdetail/${recipe.id}`}>
+        <Button className="w-full flex items-center justify-center text-sm">
+          Read More <ChevronRight className="ml-2 h-4 w-4" />
+        </Button>
+      </Link>
     </div>
-  </motion.div>
-);
-
-// RecipeModal Component
-const RecipeModal = ({ recipe, onClose }) => (
-  <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-    className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
-  >
-    <motion.div
-      initial={{ y: 50, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      exit={{ y: 50, opacity: 0 }}
-      className="bg-white rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-    >
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-3xl font-serif font-bold text-gray-800">
-          {recipe.title}
-        </h2>
-        <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-          <X size={24} />
-        </button>
-      </div>
-      <img
-        src={recipe.image}
-        alt={recipe.title}
-        className="w-full h-64 object-cover rounded-lg mb-4"
-      />
-      <div className="flex items-center text-gray-600 text-sm mb-4">
-        <Clock className="w-4 h-4 mr-1" />
-        <span>{recipe.readyInMinutes} min</span>
-        <User className="w-4 h-4 ml-4 mr-1" />
-        <span>{recipe.servings} servings</span>
-      </div>
-      <div
-        className="prose max-w-none mb-6"
-        dangerouslySetInnerHTML={{ __html: recipe.summary }}
-      />
-      <h3 className="text-xl font-serif font-semibold mt-6 mb-2">
-        Ingredients:
-      </h3>
-      <ul className="list-disc pl-5 mb-4">
-        {recipe.extendedIngredients.map((ingredient, index) => (
-          <li key={index} className="text-gray-700">
-            {ingredient.original}
-          </li>
-        ))}
-      </ul>
-      <h3 className="text-xl font-serif font-semibold mb-2">Instructions:</h3>
-      <ol className="list-decimal pl-5">
-        {recipe.analyzedInstructions[0]?.steps.map((step, index) => (
-          <li key={index} className="text-gray-700 mb-2">
-            {step.step}
-          </li>
-        ))}
-      </ol>
-    </motion.div>
   </motion.div>
 );
 
@@ -147,21 +83,23 @@ const RecipeModal = ({ recipe, onClose }) => (
 const RecipeBlog = () => {
   const [recipes, setRecipes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
   const [apiLimitReached, setApiLimitReached] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const resultsPerPage = 8;
+  const resultsPerPage = 9;
 
   const fetchRecipes = async () => {
     setIsLoading(true);
     setError(null);
+
+    const randomOffset = Math.floor(Math.random() * 100); // Random offset for different results on reload
+
     try {
       const response = await fetch(
         `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=${resultsPerPage}&offset=${
-          (currentPage - 1) * resultsPerPage
+          (currentPage - 1) * resultsPerPage + randomOffset
         }&addRecipeInformation=true&query=${searchTerm}`
       );
 
@@ -198,13 +136,13 @@ const RecipeBlog = () => {
   const totalPages = Math.ceil(totalResults / resultsPerPage);
 
   return (
-    <div className="bg-cyan-200 min-h-screen py-10 my-4 rounded-[30px]">
-      <div className="max-w-6xl mx-auto px-4">
+    <div className="bg-gray-100 min-h-screen rounded-[30px] my-2 ">
+      <div className="max-w-6xl mx-auto px-4 py-12">
         <motion.h1
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-5xl md:text-7xl font-serif font-extrabold text-amber-800 mb-4 text-center"
+          className="text-5xl md:text-6xl font-serif font-bold text-[#36465d] mb-4 text-center"
           style={{ fontFamily: "Lobster, cursive" }}
         >
           The Recipe Chronicle
@@ -214,8 +152,7 @@ const RecipeBlog = () => {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-xl text-gray-700 mb-12 text-center max-w-3xl mx-auto font-serif"
-          style={{ fontFamily: "Lobster, cursive" }}
+          className="text-xl text-gray-600 mb-12 text-center max-w-3xl mx-auto"
         >
           Discover culinary treasures from around the world
         </motion.p>
@@ -237,7 +174,14 @@ const RecipeBlog = () => {
 
         {isLoading && (
           <div className="text-center text-gray-600 font-bold mb-4">
-            Loading recipes...
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              className="loader"
+            >
+              Loading recipes...
+            </motion.div>
           </div>
         )}
 
@@ -253,15 +197,9 @@ const RecipeBlog = () => {
 
         <AnimatePresence>
           {recipes.length > 0 ? (
-            <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+            <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {recipes.map((recipe) => (
-                <RecipeCard
-                  key={recipe.id}
-                  recipe={recipe}
-                  onClick={(selectedRecipe) =>
-                    setSelectedRecipe(selectedRecipe)
-                  }
-                />
+                <RecipeCard key={recipe.id} recipe={recipe} />
               ))}
             </motion.div>
           ) : (
@@ -297,15 +235,6 @@ const RecipeBlog = () => {
             </Button>
           </div>
         )}
-
-        <AnimatePresence>
-          {selectedRecipe && (
-            <RecipeModal
-              recipe={selectedRecipe}
-              onClose={() => setSelectedRecipe(null)}
-            />
-          )}
-        </AnimatePresence>
       </div>
     </div>
   );

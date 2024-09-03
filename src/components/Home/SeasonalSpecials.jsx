@@ -108,7 +108,7 @@ const SeasonalSpecials = () => {
             <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-teal-700 mb-2 sm:mb-3 lg:mb-5">
               Seasonal Ingredients
             </h3>
-            <div className="grid grid-cols-2 gap-2 sm:gap-3 lg:gap-4 h-36 sm:h-40 lg:h-52 mb-6 sm:mb-8 md:mb-0 lg:mb-0 ">
+            <div className="grid grid-cols-2 gap-2 sm:gap-3 lg:gap-4 h-36 sm:h-40 lg:h-52 mb-8 sm:mb-8 md:mb-0 lg:mb-0 ">
               <AnimatePresence mode="wait">
                 {currentIngredients.map((ingredient, index) => (
                   <motion.div
@@ -132,13 +132,13 @@ const SeasonalSpecials = () => {
                 onClick={prevIngredientPage}
                 className="bg-teal-500 text-white p-1 lg:p-2 rounded-full hover:bg-teal-600 transition-colors duration-300"
               >
-                <ChevronLeft className="w-3 h-3 sm:w-4 sm:h-4 lg:w-6 lg:h-6" />
+                <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 md:w-5 md:h-5 lg:w-6 lg:h-6" />
               </button>
               <button
                 onClick={nextIngredientPage}
                 className="bg-teal-500 text-white p-1 lg:p-2 rounded-full hover:bg-teal-600 transition-colors duration-300"
               >
-                <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-6 lg:h-6" />
+                <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 md:w-5 md:h-5 lg:w-6 lg:h-6" />
               </button>
             </div>
           </motion.div>
@@ -150,10 +150,10 @@ const SeasonalSpecials = () => {
             transition={{ duration: 0.5 }}
             className="bg-white bg-opacity-80 px-4 sm:px-4 lg:px-8 py-3 sm:py-4 lg:py-6 rounded-2xl shadow-lg backdrop-filter backdrop-blur-lg relative overflow-hidden"
           >
-            <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-teal-700 mb-1 sm:mb-2 lg:mb-3">
+            <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-teal-700 mb-2 sm:mb-2 lg:mb-3">
               Featured Monsoon Recipes
             </h3>
-            <div className="relative h-[290px] sm:h-[250px] md:h-[200px] lg:h-[250px] mb-2 sm:mb-4 lg:mb-6">
+            <div className="relative h-[310px] sm:h-[250px] md:h-[200px] lg:h-[250px] mb-0 sm:mb-4 lg:mb-6">
               <AnimatePresence initial={false} custom={direction}>
                 <motion.div
                   key={currentRecipe}
@@ -171,7 +171,7 @@ const SeasonalSpecials = () => {
                   <img
                     src={featuredRecipes[currentRecipe].image}
                     alt={featuredRecipes[currentRecipe].name}
-                    className="w-[400px] sm:w-1/2 md:w-[52%] lg:w-[47%] h-[200px] sm:h-full md:h-[185px] lg:h-full object-cover rounded-lg mb-2 sm:mb-0 md:mb-0 lg:mb-0 mr-3 sm:mr-4 md:mr-4 lg:mr-4"
+                    className="w-[400px] sm:w-1/2 md:w-[52%] lg:w-[47%] h-[200px] sm:h-full md:h-[185px] lg:h-full object-cover rounded-lg mb-4 sm:mb-0 md:mb-0 lg:mb-0 mr-3 sm:mr-4 md:mr-4 lg:mr-4"
                   />
                   <div className="flex-1 flex flex-col items-start justify-start sm:items-start sm:justify-start md:justify-center md:items-start lg:items-start lg:justify-center">
                     <h4 className="text-[15px] sm:text-lg md:text-xl lg:text-2xl font-semibold mb-1 sm:mb-2">

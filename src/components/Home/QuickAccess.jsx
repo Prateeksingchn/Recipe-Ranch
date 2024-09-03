@@ -110,7 +110,7 @@ const QuickAccess = () => {
   const ToggleButton = () => (
     <motion.button
       onClick={togglePanel}
-      className="fixed bottom-4 right-4 z-[1000] bg-orange-500 text-white p-3 rounded-full shadow-lg hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50"
+      className="fixed bottom-6 right-5 z-[1000] bg-orange-500 text-white p-3 rounded-full shadow-lg hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50"
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
     >

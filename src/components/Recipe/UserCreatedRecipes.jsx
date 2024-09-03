@@ -9,7 +9,7 @@ const UserCreatedRecipes = ({ userCreatedRecipes = [] }) => {
   const limitedRecipes = recipes.slice(0, 4);
 
   return (
-    <div className="mb-12">
+    <div className="bg-cyan-300">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
         <h2 className="text-2xl sm:text-3xl font-bold text-red-600 mb-2 sm:mb-0">Latest Recipes</h2>
         {recipes.length > 0 && (

@@ -95,7 +95,7 @@ const Recipes = () => {
   };
 
   return (
-    <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12 bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12 bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-100 min-h-screen">
       <RecipePageHeader />
 
       <div className="max-w-7xl mx-auto">
@@ -121,7 +121,7 @@ const Recipes = () => {
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="bg-white rounded-3xl shadow-xl p-6 sm:p-8 overflow-hidden transition-all duration-300"
+              className="bg-cyan-300 rounded-3xl shadow-xl p-4 sm:p-8 md:p-4 lg:p-6 overflow-hidden transition-all duration-300"
             >
               {activeTab === "latest" ? (
                 <UserCreatedRecipes userCreatedRecipes={userCreatedRecipes} />

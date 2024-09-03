@@ -13,7 +13,7 @@ const Nav = () => {
     { name: "Home", path: "/" },
     { name: "Recipes", path: "/recipes" },
     { name: "Blog", path: "/blog" },
-    { name: "About", path: "/about" },
+    // { name: "About", path: "/about" },
   ];
 
   const isHomePage = location.pathname === "/";
