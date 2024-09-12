@@ -33,8 +33,6 @@ const Recipes = () => {
   }, [currentPage, currentSearchTerm]);
 
   const fetchRecipes = async (page, searchTerm) => {
-    const APP_ID = "7b948bd8";
-    const APP_KEY = "c1f4f91b2d5ffb2918347647551d908f";
     const from = (page - 1) * recipesPerPage;
     const to = from + recipesPerPage;
     const defaultSearchTerms = [
@@ -55,14 +53,11 @@ const Recipes = () => {
       searchTerm ||
       defaultSearchTerms[Math.floor(Math.random() * defaultSearchTerms.length)];
 
-    const url = `https://api.edamam.com/search?app_id=${APP_ID}&app_key=${APP_KEY}&from=${from}&to=${to}&q=${encodeURIComponent(
-      query
-    )}`;
-
     try {
       setIsLoading(true);
-      const response = await fetch(url);
+      const response = await fetch(`/api/recipes?page=${page}&query=${encodeURIComponent(query)}`);
       const data = await response.json();
+      console.log('Received data:', data);
       setAllRecipes(data.hits.map((hit) => hit.recipe));
       setTotalResults(data.count);
       const uniqueCategories = [

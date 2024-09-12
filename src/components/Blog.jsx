@@ -11,8 +11,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
-// API Key (replace with your actual Spoonacular API key)
-const API_KEY = "52355b06aa4549bfa510d9b4f808b77a";
+
 
 // Styled Components
 const Card = ({ children, className }) => (
@@ -91,30 +90,45 @@ const RecipeBlog = () => {
   const resultsPerPage = 9;
 
   const fetchRecipes = async () => {
+    console.log('Fetching recipes...');
     setIsLoading(true);
     setError(null);
 
-    const randomOffset = Math.floor(Math.random() * 100); // Random offset for different results on reload
+    const randomOffset = Math.floor(Math.random() * 100);
+    const API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
+
+    console.log('API Key:', API_KEY);
+
+    const url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=${resultsPerPage}&offset=${
+      (currentPage - 1) * resultsPerPage + randomOffset
+    }&addRecipeInformation=true&query=${searchTerm}`;
+
+    console.log('Fetching from URL:', url);
 
     try {
-      const response = await fetch(
-        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=${resultsPerPage}&offset=${
-          (currentPage - 1) * resultsPerPage + randomOffset
-        }&addRecipeInformation=true&query=${searchTerm}`
-      );
+      const response = await fetch(url);
+      console.log('Response status:', response.status);
 
       if (!response.ok) {
         if (response.status === 402) {
           setApiLimitReached(true);
           throw new Error("API limit reached. Please try again later.");
         }
-        throw new Error("Failed to fetch recipes");
+        throw new Error(`Failed to fetch recipes: ${response.status}`);
       }
 
       const data = await response.json();
-      setRecipes(data.results);
-      setTotalResults(data.totalResults);
-      setApiLimitReached(false);
+      console.log('Received data:', data);
+
+      if (data.results && data.results.length > 0) {
+        setRecipes(data.results);
+        setTotalResults(data.totalResults);
+        setApiLimitReached(false);
+      } else {
+        console.log('No recipes found in the response');
+        setRecipes([]);
+        setTotalResults(0);
+      }
     } catch (error) {
       console.error("Error fetching recipes:", error);
       setError(error.message);
