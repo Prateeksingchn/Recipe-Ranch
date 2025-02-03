@@ -37,6 +37,8 @@ import CreateNutritionRecipe from "./components/Nutrition/CreateNutritionRecipe"
 // Import SeasonalSpecials component
 import SeasonalSpecials from "./components/Home/SeasonalSpecials";
 import SeasonalRecipeDetails from "./components/Details/SeasonalRecipeDetails";
+import Login from './components/Auth/Login';
+import Signup from './components/Auth/Signup';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -86,6 +88,8 @@ const App = () => {
         {/* New routes for seasonal specials */}
         <Route path="/seasonal-specials" element={<SeasonalSpecials />} />
         <Route path="/seasonal-recipe/:slug" element={<SeasonalRecipeDetails />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
 
       <Footer />
