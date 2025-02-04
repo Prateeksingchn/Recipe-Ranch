@@ -7,14 +7,19 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
 import { store } from "./store/store.jsx";
+import { AuthProvider } from "./context/AuthContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
     <BrowserRouter>
-        <Provider store={store}>
-            <App />
-            <ToastContainer />
-        </Provider>
+      <Provider store={store}>
+        <AuthProvider>
+          <App />
+          <ToastContainer position="top-right" autoClose={3000} />
+        </AuthProvider>
+      </Provider>
     </BrowserRouter>
+  </React.StrictMode>
 );
 
 /*

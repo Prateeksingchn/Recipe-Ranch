@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { asyncgetrecipies } from "./store/actions/recipeActions";
+import { useAuth } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import Nav from "./components/Nav";
 import Layout from "./components/Layout";
@@ -42,20 +44,37 @@ import Signup from './components/Auth/Signup';
 
 const App = () => {
   const dispatch = useDispatch();
+  const { user } = useAuth();
 
   useEffect(() => {
     dispatch(asyncgetrecipies());
   }, []);
 
   return (
-    <div className="w-full m-auto p-2 sm:p-3 md:p-4 lg:p-4 bg-white ">
-      <Nav />
-
+    <div className="w-full m-auto p-2 sm:p-3 md:p-4 lg:p-4 bg-white">
+      {user && <Nav />}
       <Routes>
-        <Route path="/" element={<Layout />} />
-        <Route path="/create-recipe" element={<Create />} />
+        {/* Public routes */}
+        <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
+        <Route path="/signup" element={!user ? <Signup /> : <Navigate to="/" />} />
+
+        {/* Protected routes */}
+        <Route path="/" element={
+          <ProtectedRoute>
+            <Layout />
+          </ProtectedRoute>
+        } />
+        <Route path="/create-recipe" element={
+          <ProtectedRoute>
+            <Create />
+          </ProtectedRoute>
+        } />
         <Route path="/update-recipe/:id" element={<Update />} />
-        <Route path="/recipes/*" element={<Recipes />} />
+        <Route path="/recipes/*" element={
+          <ProtectedRoute>
+            <Recipes />
+          </ProtectedRoute>
+        } />
         <Route path="/recipe/:id" element={<Details />} />
         <Route path="/about" element={<About />} />
         <Route path="/blog" element={<Blog />} />
@@ -88,11 +107,8 @@ const App = () => {
         {/* New routes for seasonal specials */}
         <Route path="/seasonal-specials" element={<SeasonalSpecials />} />
         <Route path="/seasonal-recipe/:slug" element={<SeasonalRecipeDetails />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
       </Routes>
-
-      <Footer />
+      {user && <Footer />}
     </div>
   );
 };

@@ -1,11 +1,15 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { auth } from '../firebase/config';
+import { signOut } from 'firebase/auth';
+import { toast } from 'react-toastify';
 
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -17,6 +21,16 @@ const Nav = () => {
   ];
 
   const isHomePage = location.pathname === "/";
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      toast.success('Logged out successfully');
+      navigate('/login');
+    } catch (error) {
+      toast.error('Error logging out');
+    }
+  };
 
   return (
     <nav
@@ -50,6 +64,14 @@ const Nav = () => {
                 </Link>
               </motion.div>
             ))}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleLogout}
+              className="text-white bg-red-700 hover:bg-red-800 px-4 py-2 rounded-md text-sm font-medium transition duration-200"
+            >
+              Logout
+            </motion.button>
           </div>
           <div className="flex items-center sm:hidden">
             <motion.button
@@ -85,8 +107,38 @@ const Nav = () => {
               {item.name}
             </Link>
           ))}
+          <button
+            onClick={() => {
+              handleLogout();
+              toggleMenu();
+            }}
+            className="text-white hover:text-yellow-200 block w-full text-left px-3 py-2 rounded-md text-base font-medium"
+          >
+            Logout
+          </button>
         </div>
       </motion.div>
+
+      {/* <div className="flex gap-4">
+        <Link 
+          to="/login" 
+          className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-indigo-600"
+        >
+          Login
+        </Link>
+        <Link 
+          to="/signup" 
+          className="px-4 py-2 text-sm font-medium bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+        >
+          Sign Up
+        </Link>
+        <button 
+          onClick={handleLogout}
+          className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700"
+        >
+          Logout
+        </button>
+      </div> */}
     </nav>
   );
 };
