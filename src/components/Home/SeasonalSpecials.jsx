@@ -56,21 +56,50 @@ const SeasonalSpecials = () => {
   };
 
   return (
-    <section className="py-4 sm:py-6 lg:py-10 bg-gradient-to-b from-blue-100 via-cyan-100 to-green-200 overflow-hidden relative my-2 sm:my-4 rounded-[20px] sm:rounded-[30px]">
-      {/* Animated raindrops */}
-      {[...Array(25)].map((_, i) => (
+    <section className="py-4 sm:py-6 lg:py-10 bg-gradient-to-b from-blue-200 via-blue-100 to-slate-200 overflow-hidden relative my-2 sm:my-4 rounded-[20px] sm:rounded-[30px]">
+      {/* Animated snowflakes */}
+      {[...Array(30)].map((_, i) => (
         <motion.div
           key={i}
-          className="absolute w-1 h-10 bg-blue-300 opacity-50 rounded-full"
+          className="absolute w-3 h-3 bg-white rounded-full shadow-lg"
           style={{
             left: `${Math.random() * 100}%`,
-            top: -40,
+            top: -10,
+            opacity: 0.8 + Math.random() * 0.2,
+            scale: 0.8 + Math.random() * 0.5,
+            filter: 'blur(0.5px)',
           }}
           animate={{
             y: ["0%", "100vh"],
+            x: ["0%", `${(Math.random() - 0.5) * 80}%`],
+            rotate: [0, 360],
           }}
           transition={{
-            duration: 1.5 + Math.random(),
+            duration: 6 + Math.random() * 4,
+            repeat: Infinity,
+            ease: "linear",
+            delay: Math.random() * 3,
+          }}
+        />
+      ))}
+      
+      {/* Wind effect particles */}
+      {[...Array(20)].map((_, i) => (
+        <motion.div
+          key={`wind-${i}`}
+          className="absolute h-[2px] bg-gradient-to-r from-transparent via-white to-transparent"
+          style={{
+            width: 50 + Math.random() * 100,
+            top: `${Math.random() * 100}%`,
+            left: -100,
+            opacity: 0.4,
+          }}
+          animate={{
+            x: ["0%", "200vw"],
+            opacity: [0, 0.7, 0],
+          }}
+          transition={{
+            duration: 2 + Math.random() * 2,
             repeat: Infinity,
             ease: "linear",
             delay: Math.random() * 2,
@@ -78,7 +107,7 @@ const SeasonalSpecials = () => {
         />
       ))}
 
-      <div className="container mx-auto px-2 sm:px-4  relative z-10">
+      <div className="container mx-auto px-2 sm:px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -92,8 +121,8 @@ const SeasonalSpecials = () => {
             {currentSeason} Delights
           </h2>
           <p className="text-sm sm:text-base lg:text-xl text-gray-700 max-w-2xl mx-auto px-2 sm:px-4">
-            Embrace the monsoon with these comforting recipes and seasonal
-            ingredients!
+            Embrace the winter with these comforting recipes and seasonal
+            ingredients, perfect for the chilly winds and soft snow!
           </p>
         </motion.div>
 

@@ -9,24 +9,25 @@ import {
   ChefHat,
   ArrowLeft,
   Thermometer,
-  Droplets,
   Utensils,
+  Snowflake,
   Leaf,
 } from "lucide-react";
 import { featuredRecipes } from "../../data/seasonalRecipes";
 
-const RainDrop = ({ delay }) => (
+const SnowFlake = ({ delay }) => (
   <motion.div
-    className="absolute w-0.5 h-10 bg-blue-600 opacity-20 rounded-full"
+    className="absolute w-2 h-2 bg-white rounded-full"
     style={{
       left: `${Math.random() * 100}%`,
-      top: -40,
+      top: -10,
     }}
     animate={{
       y: ["0vh", "100vh"],
+      x: ["0%", `${(Math.random() - 0.5) * 50}%`],
     }}
     transition={{
-      duration: 0.9 + Math.random() * 0.3,
+      duration: 3 + Math.random() * 2,
       repeat: Infinity,
       ease: "linear",
       delay: delay,
@@ -63,9 +64,9 @@ const SeasonalRecipeDetails = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 via-cyan-100 to-pink-50 py-8 px-4 sm:px-6 lg:px-8 overflow-hidden relative my-4 rounded-[30px] ">
-      {/* Rain effect */}
+      {/* Snow effect */}
       {[...Array(50)].map((_, i) => (
-        <RainDrop key={i} delay={i * 0.1} />
+        <SnowFlake key={i} delay={i * 0.1} />
       ))}
 
       <div className="max-w-6xl mx-auto relative z-10">
@@ -211,7 +212,7 @@ const SeasonalRecipeDetails = () => {
               >
                 <Thermometer className="w-6 h-6 mr-3 text-teal-600" />
                 <span className="text-sm font-medium">
-                  Perfect for rainy days!
+                  Perfect for chilly nights!
                 </span>
               </motion.div>
               <motion.div
@@ -221,9 +222,9 @@ const SeasonalRecipeDetails = () => {
                   boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
                 }}
               >
-                <Droplets className="w-6 h-6 mr-3 text-teal-600" />
+                <Snowflake className="w-6 h-6 mr-3 text-teal-600" />
                 <span className="text-sm font-medium">
-                  Monsoon special ingredients
+                  Winter special ingredients
                 </span>
               </motion.div>
               <motion.div

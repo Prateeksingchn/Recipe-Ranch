@@ -1,166 +1,136 @@
 // src/data/seasonalRecipes.js
 
-export const currentSeason = "Rainy Season";
+export const currentSeason = "Winter Season";
 
 export const seasonalIngredients = [
-  { name: "Green Chilies", icon: "🌶️" },
-  { name: "Corn", icon: "🌽" },
+  { name: "Carrots", icon: "🥕" },
+  { name: "Sweet Potato", icon: "🍠" },
   { name: "Spinach", icon: "🍃" },
-  { name: "Mushrooms", icon: "🍄" },
-  { name: "Ginger", icon: "🥢" },
-  { name: "Lemongrass", icon: "🌿" },
-  { name: "Okra", icon: "🥬" },
-  { name: "Eggplant", icon: "🍆" },
+  { name: "Mustard Greens", icon: "🥬" },
+  { name: "Peanuts", icon: "🥜" },
+  { name: "Sesame Seeds", icon: "⚪" },
+  { name: "Green Peas", icon: "🫛" },
+  { name: "Radish", icon: "🥗" },
 ];
 
 export const featuredRecipes = [
   {
-    name: "Spicy Corn Pakoras",
-    image: "/Spicy Corn Pakoras.jpg",
+    name: "Gajar Ka Halwa",
+    image: "https://i.pinimg.com/236x/18/ab/d1/18abd13a1afd2243126aab4464945fef.jpg",
     chef: "Chef Priya",
-    prepTime: "25 mins",
-    slug: "spicy-corn-pakoras",
-    servings: 4,
+    prepTime: "45 mins",
+    slug: "gajar-ka-halwa",
+    servings: 6,
     ingredients: [
-      "2 cups fresh corn kernels",
-      "1 cup chickpea flour (besan)",
-      "1/4 cup rice flour",
-      "1 onion, finely chopped",
-      "2 green chilies, finely chopped",
-      "1 tsp cumin seeds",
-      "1/4 cup chopped coriander leaves",
-      "Salt to taste",
-      "Oil for deep frying"
+      "1 kg carrots, grated",
+      "1 liter full-fat milk",
+      "1/2 cup ghee",
+      "1 cup sugar",
+      "1/4 cup mixed nuts (almonds, pistachios)",
+      "1/2 tsp cardamom powder",
+      "Saffron strands (optional)"
     ],
     instructions: [
-      "In a large bowl, mix corn kernels, chickpea flour, rice flour, onion, green chilies, cumin seeds, coriander leaves, and salt.",
-      "Add water gradually to make a thick batter.",
-      "Heat oil in a deep pan over medium heat.",
-      "Drop spoonfuls of the batter into the hot oil and fry until golden brown and crispy.",
-      "Remove with a slotted spoon and drain on paper towels.",
-      "Serve hot with chutney or ketchup."
+      "In a heavy-bottomed pan, cook grated carrots and milk until milk reduces completely.",
+      "Add ghee and continue cooking on medium heat.",
+      "Add sugar and cardamom powder, cook until mixture thickens.",
+      "Garnish with nuts and serve hot."
     ]
   },
   {
-    name: "Mushroom Hot & Sour Soup",
-    image: "/Mushroom Hot & Sour Soup.jpg",
+    name: "Sarson Ka Saag",
+    image: "https://i.pinimg.com/236x/2a/ae/83/2aae834323edc03eded3a6c3e629ba1b.jpg",
     chef: "Chef Raj",
-    prepTime: "30 mins",
-    slug: "mushroom-hot-sour-soup",
+    prepTime: "60 mins",
+    slug: "sarson-ka-saag",
     servings: 4,
     ingredients: [
-      "200g mushrooms, sliced",
-      "4 cups vegetable broth",
-      "1/4 cup rice vinegar",
-      "1/4 cup soy sauce",
-      "1 tsp white pepper",
-      "2 tbsp cornstarch",
-      "1 egg, beaten",
-      "2 green onions, chopped",
-      "1 tbsp sesame oil"
+      "500g mustard greens, chopped",
+      "250g spinach, chopped",
+      "2 onions, chopped",
+      "2 tomatoes, chopped",
+      "2 tbsp ginger-garlic paste",
+      "Ghee for tempering",
+      "Spices (red chili, garam masala)",
+      "Makki ki roti to serve"
     ],
     instructions: [
-      "In a large pot, bring the vegetable broth to a boil.",
-      "Add mushrooms, vinegar, soy sauce, and white pepper. Simmer for 5 minutes.",
-      "Mix cornstarch with a little water and add to the soup, stirring until it thickens.",
-      "Slowly pour in the beaten egg while stirring the soup.",
-      "Remove from heat and add sesame oil and green onions.",
-      "Serve hot, garnished with extra green onions if desired."
+      "Pressure cook mustard greens and spinach until soft.",
+      "Blend to a coarse paste.",
+      "Prepare tempering with ghee, onions, tomatoes, and spices.",
+      "Mix with greens paste and simmer.",
+      "Serve hot with makki ki roti and butter."
     ]
   },
   {
-    name: "Onion Bhaji",
-    image: "/Onion Bhaji.jpg",
+    name: "Sweet Potato Chaat",
+    image: "https://i.pinimg.com/236x/15/57/d9/1557d9ff6c4643fae91400a8700880d3.jpg",
     chef: "Chef Anita",
-    prepTime: "20 mins",
-    slug: "onion-bhaji",
-    servings: 4,
-    ingredients: [
-      "2 large onions, thinly sliced",
-      "1 cup chickpea flour (besan)",
-      "1 tsp cumin seeds",
-      "1 tsp coriander powder",
-      "1/2 tsp turmeric powder",
-      "1/2 tsp red chili powder",
-      "Salt to taste",
-      "Water as needed",
-      "Oil for deep frying"
-    ],
-    instructions: [
-      "In a large bowl, mix sliced onions, chickpea flour, cumin seeds, coriander powder, turmeric powder, red chili powder, and salt.",
-      "Add water gradually to make a thick batter that coats the onions well.",
-      "Heat oil in a deep pan over medium heat.",
-      "Drop spoonfuls of the onion mixture into the hot oil and fry until golden brown and crispy.",
-      "Remove with a slotted spoon and drain on paper towels.",
-      "Serve hot with mint chutney or tamarind sauce."
-    ]
-  },
-  {
-    name: "Spinach and Corn Curry",
-    image: "/Spinach and Corn Curry.jpg",
-    chef: "Chef Vikram",
-    prepTime: "35 mins",
-    slug: "spinach-corn-curry",
-    servings: 4,
-    ingredients: [
-      "2 cups chopped spinach",
-      "1 cup corn kernels",
-      "1 onion, finely chopped",
-      "2 tomatoes, pureed",
-      "2 tbsp oil",
-      "1 tsp cumin seeds",
-      "1 tbsp ginger-garlic paste",
-      "1 tsp garam masala",
-      "Salt to taste",
-      "1/2 cup cream (optional)"
-    ],
-    instructions: [
-      "Heat oil in a pan, add cumin seeds and let them sizzle.",
-      "Add chopped onions and sauté until golden brown.",
-      "Add ginger-garlic paste and cook for a minute.",
-      "Add tomato puree and cook until oil separates.",
-      "Add chopped spinach and corn kernels. Cook for 5-7 minutes.",
-      "Add garam masala and salt. Cook for another 2-3 minutes.",
-      "If using, stir in cream and simmer for 2 minutes.",
-      "Serve hot with rice or roti."
-    ]
-  },
-  {
-    name: "Masala Chai with Pakoras",
-    image: "/Masala Chai with Pakoras.jpg",
-    chef: "Chef Suresh",
     prepTime: "30 mins",
-    slug: "masala-chai-pakoras",
+    slug: "sweet-potato-chaat",
     servings: 4,
     ingredients: [
-      "For Masala Chai:",
-      "4 cups water",
-      "2 tbsp black tea leaves",
-      "4 tbsp sugar (adjust to taste)",
-      "4 cardamom pods, crushed",
-      "1-inch piece of ginger, crushed",
-      "1 cinnamon stick",
-      "2 cloves",
-      "1 cup milk",
-      "For Pakoras:",
-      "1 cup chickpea flour (besan)",
-      "1 onion, thinly sliced",
-      "1 potato, thinly sliced",
-      "1 green chili, finely chopped",
-      "1/4 tsp turmeric powder",
-      "Salt to taste",
-      "Oil for deep frying"
+      "4 sweet potatoes, boiled and cubed",
+      "1 cup mixed sprouts",
+      "Chaat masala to taste",
+      "Tamarind chutney",
+      "Mint chutney",
+      "Roasted peanuts",
+      "Fresh coriander",
+      "Sev for garnish"
     ],
     instructions: [
-      "For Masala Chai:",
-      "Boil water with tea leaves, sugar, cardamom, ginger, cinnamon, and cloves for 3-4 minutes.",
-      "Add milk and simmer for 2-3 minutes.",
-      "Strain and serve hot.",
-      "For Pakoras:",
-      "Mix chickpea flour, onion, potato, green chili, turmeric, and salt. Add water to make a thick batter.",
-      "Heat oil in a deep pan.",
-      "Drop spoonfuls of the batter into the hot oil and fry until golden brown.",
-      "Drain on paper towels and serve hot with the masala chai."
+      "Arrange sweet potato cubes in a serving dish.",
+      "Top with sprouts and both chutneys.",
+      "Sprinkle chaat masala and roasted peanuts.",
+      "Garnish with coriander and sev.",
+      "Serve immediately while warm."
+    ]
+  },
+  {
+    name: "Methi Thepla",
+    image: "https://i.pinimg.com/236x/ee/18/dd/ee18ddbd952e167606ace8e7d78b5c5a.jpg",
+    chef: "Chef Neeta",
+    prepTime: "30 mins",
+    slug: "methi-thepla",
+    servings: 4,
+    ingredients: [
+      "2 cups whole wheat flour",
+      "1 cup fresh fenugreek leaves, chopped",
+      "1/2 cup yogurt",
+      "1 tsp turmeric powder",
+      "1 tsp red chili powder",
+      "1 tsp cumin seeds",
+      "Salt to taste",
+      "Oil for cooking"
+    ],
+    instructions: [
+      "Mix all ingredients to form a soft dough.",
+      "Divide into small balls and roll out into thin circles.",
+      "Cook on a hot griddle with a little oil until golden brown on both sides.",
+      "Serve hot with yogurt or pickle."
+    ]
+  },
+  {
+    name: "Peanut Gur Chikki",
+    image: "https://i.pinimg.com/474x/f4/c5/ba/f4c5ba744d568a7f9edaf04d18891c07.jpg",
+    chef: "Chef Suresh",
+    prepTime: "40 mins",
+    slug: "peanut-gur-chikki",
+    servings: 8,
+    ingredients: [
+      "2 cups roasted peanuts",
+      "2 cups jaggery (gur)",
+      "1 tsp ghee",
+      "1/2 tsp cardamom powder",
+      "Sesame seeds (optional)"
+    ],
+    instructions: [
+      "Coarsely crush roasted peanuts.",
+      "Melt jaggery in a pan until right consistency.",
+      "Mix in peanuts and cardamom powder.",
+      "Spread on greased surface and cut while warm.",
+      "Let cool completely before storing."
     ]
   }
 ];
