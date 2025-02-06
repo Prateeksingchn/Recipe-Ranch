@@ -176,13 +176,25 @@ const Signup = () => {
   const handleGoogleSignIn = async () => {
     setLoading(true);
     try {
-      await signInWithPopup(auth, googleProvider);
-      toast.success('Welcome to Culinary Delights! 🎉');
+      const result = await signInWithPopup(auth, googleProvider);
+      // Check if this is a new user
+      if (result._tokenResponse?.isNewUser) {
+        toast.success('Welcome to Culinary Delights! 🎉');
+      } else {
+        toast.info('Welcome back to Culinary Delights! 🎉');
+      }
       navigate('/');
     } catch (error) {
       console.error('Google sign-in error:', error);
-      setError(error.message);
-      toast.error('Google sign-up failed. Please try again.');
+      // More specific error handling
+      let errorMessage = 'Google sign-up failed. Please try again.';
+      if (error.code === 'auth/popup-closed-by-user') {
+        errorMessage = 'Sign-up cancelled. Please try again.';
+      } else if (error.code === 'auth/popup-blocked') {
+        errorMessage = 'Pop-up blocked by browser. Please allow pop-ups and try again.';
+      }
+      setError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
