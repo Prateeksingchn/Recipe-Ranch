@@ -49,7 +49,7 @@ const Nav = () => {
               />
             </div>
           </Link>
-          <div className="hidden sm:flex sm:space-x-8">
+          <div className="hidden sm:flex sm:space-x-8 items-center">
             {navItems.map((item) => (
               <motion.div
                 key={item.name}
@@ -68,7 +68,7 @@ const Nav = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleLogout}
-              className="text-white bg-red-700 hover:bg-red-800 px-4 py-2 rounded-md text-sm font-medium transition duration-200"
+              className="text-white bg-red-700 hover:bg-red-800 px-4 py-2 rounded-md text-sm font-medium transition duration-200 ml-2"
             >
               Logout
             </motion.button>

@@ -55,35 +55,34 @@ const ExploreSection = forwardRef((props, ref) => {
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {mealTypes.map((mealType, index) => (
-            <motion.div
-              key={mealType.name}
-              className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300"
-              whileHover={{ y: -5, scale: 1.02 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 * index, duration: 0.1 }}
-            >
-              <img
-                src={mealType.image}
-                alt={mealType.name}
-                className="w-full h-48 sm:h-60 object-cover"
-              />
-              <div className="px-4 sm:px-6 pt-2 pb-4">
-                <h3 className="text-xl sm:text-2xl font-semibold mb-2">
-                  {mealType.name} Recipes
-                </h3>
-                <p className="text-gray-600 text-sm mb-4">
-                  Discover mouthwatering {mealType.name.toLowerCase()} ideas for
-                  every day.
-                </p>
-                <Link
-                  to={mealType.route}
-                  className="inline-flex items-center text-green-600 font-semibold hover:text-green-700 transition-colors duration-200"
-                >
-                  Explore Recipes <ChevronRight className="ml-2" size={20} />
-                </Link>
-              </div>
-            </motion.div>
+            <Link to={mealType.route}>
+              <motion.div
+                key={mealType.name}
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer"
+                whileHover={{ y: -5, scale: 1.02 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 * index, duration: 0.1 }}
+              >
+                <img
+                  src={mealType.image}
+                  alt={mealType.name}
+                  className="w-full h-48 sm:h-60 object-cover"
+                />
+                <div className="px-4 sm:px-6 py-5">
+                  <h3 className="text-xl sm:text-2xl font-semibold mb-2">
+                    {mealType.name} Recipes
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-4">
+                    Discover mouthwatering {mealType.name.toLowerCase()} ideas for
+                    every day.
+                  </p>
+                  <div className="inline-flex items-center text-green-600 font-semibold hover:text-green-700 transition-colors duration-200">
+                    Explore Recipes <ChevronRight className="ml-2" size={20} />
+                  </div>
+                </div>
+              </motion.div>
+            </Link>
           ))}
         </div>
         <div className="mt-8 sm:mt-12 text-center">
