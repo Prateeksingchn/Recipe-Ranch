@@ -8,6 +8,7 @@ import TestimonialsSection from "./Home/TestimonialsSection";
 import SeasonalSpecials from "./Home/SeasonalSpecials";
 import NutritionRecipes from "./Home/NutritionRecipes";
 import QuickAccess from "./Home/QuickAccess";
+import AIRecipeGenerator from "./Home/AIRecipeGenerator";
 import { featuredRecipes } from "../data/seasonalRecipes";
 
 const Home = () => {
@@ -17,6 +18,7 @@ const Home = () => {
   const topRecipesSectionRef = useRef(null);
   const nutritionRecipesSectionRef = useRef(null);
   const seasonalSpecialsSectionRef = useRef(null);
+  const aiRecipeSectionRef = useRef(null);
 
   useEffect(() => {
     document.title = "Culinary Delights | Home";
@@ -25,6 +27,8 @@ const Home = () => {
   useEffect(() => {
     if (location.hash === "#explore" && exploreSectionRef.current) {
       exploreSectionRef.current.scrollIntoView({ behavior: "smooth" });
+    } else if (location.hash === "#ai-recipe" && aiRecipeSectionRef.current) {
+      aiRecipeSectionRef.current.scrollIntoView({ behavior: "smooth" });
     } else if (location.hash === "#featured" && featuredRecipes.current) {
       featuredRecipesRef.current.scrollIntoView({ behavior: "smooth" });
     } else if (location.hash === "#top" && topRecipesSectionRef.current) {
@@ -48,8 +52,11 @@ const Home = () => {
             setSearchQuery={setSearchQuery}
           />
         </section>
-        <section id="explore">
-          <ExploreSection ref={exploreSectionRef} />
+        <section id="explore" ref={exploreSectionRef}>
+          <ExploreSection />
+        </section>
+        <section id="ai-recipe" ref={aiRecipeSectionRef}>
+          <AIRecipeGenerator />
         </section>
         <section id="featured" ref={featuredRecipes}>
           <FeaturedRecipes />
