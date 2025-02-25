@@ -3,7 +3,7 @@
 A modern recipe management application built with React, Vite, and Firebase, featuring recipe creation, nutrition tracking, and AI-powered recipe generation.
 
 ## 🌐 Live Demo
-[Visit Recipe Ranch](https://recipe-application-2e710.web.app)
+[Visit Recipe Ranch](https://reciperanch.vercel.app/)
 
 ## ✨ Features
 
